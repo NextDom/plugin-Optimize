@@ -1,0 +1,15 @@
+{
+    "id": "Optimize",
+    "name": "Optimize",
+    "licence": "GPL",
+    "require": "3.0",
+    "version": "1.0.0",
+    "category": "programming",
+    "hasDependency": false,
+    "hasOwnDaemon": false,
+    "maxDependancyInstallTime": 0,
+    "documentation": "https://github.com/Sylvaner/plugin-Optimize/tree/master/docs/#language#/",
+    "changelog": "https://github.com/Sylvaner/plugin-Optimize/tree/master/docs/#language#/changelog",
+    "description": "Optimisation de votre installation Jeedom",
+    "author": "Sylvain DANGIN"
+}
