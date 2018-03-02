@@ -8,8 +8,8 @@
   "hasDependency": false,
   "hasOwnDaemon": false,
   "maxDependancyInstallTime": 0,
-  "documentation": "https://github.com/Jeedom-Plugins-Extra/plugin-Optimize/blob/master/docs/#language#/changelog.md",
-  "changelog": "https://github.com/Jeedom-Plugins-Extra/plugin-Optimize/blob/master/docs/#language#/index.md",
+  "documentation": "https://github.com/Jeedom-Plugins-Extra/plugin-Optimize/blob/master/docs/#language#/index.md",
+  "changelog": "https://github.com/Jeedom-Plugins-Extra/plugin-Optimize/blob/master/docs/#language#/changelog.md",
   "description": "Optimisation de votre installation Jeedom",
   "author": "Sylvain DANGIN"
 }
