@@ -25,7 +25,7 @@ try
 
     if (!isConnect('admin'))
     {
-        throw new Exception(__('401 - Refused access', __FILE__));
+        throw new \Exception(__('401 - Refused access', __FILE__));
     }
 
     require_once(dirname(__FILE__) . '/../class/OptimizeParser.class.php');
@@ -44,9 +44,9 @@ try
         ajax::success();
     }
 
-    throw new Exception(__('No method corresponding to : ', __FILE__) . init('category'));
+    throw new \Exception(__('No method corresponding to : ', __FILE__) . init('category'));
 
-} catch (Exception $e)
+} catch (\Exception $e)
 {
     ajax::error(displayExeption($e), $e->getCode());
 }
