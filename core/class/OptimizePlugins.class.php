@@ -46,14 +46,12 @@ class OptimizePlugins
         $informations['filepath'] = $plugin->getFilepath();
         // Chaque type de log est stocké dans un tableau et identifié par un nombre sauf "default"
         // 1000 représente "Aucun"
-        foreach ($pluginLogConfig as $logType => $value)
-        {
-            if ($value == 1 && $logType != 1000)
-            {
+        foreach ($pluginLogConfig as $logType => $value) {
+            if ($value == 1 && $logType != 1000) {
                 $informations['log'] = true;
             }
         }
-        $informations['active'] = $plugin->isActive();
+        $informations['enabled'] = $plugin->isActive();
 
         return $informations;
     }
@@ -73,27 +71,24 @@ class OptimizePlugins
         $rating['score'] = 0;
         $rating['log'] = 'ok';
         $rating['path'] = 'ok';
-        $rating['active'] = 'ok';
+        $rating['enabled'] = 'ok';
 
         // Les logs doivent être désactivés
-        if ($informations['log'] === true)
-        {
+        if ($informations['log'] === true) {
             $rating['score']++;
             $rating['log'] = 'warn';
         }
 
         // Chemin vers le plugin
-        if (!file_exists(dirname(__FILE__) . '/../../../' . $informations['id']))
-        {
+        if (!file_exists(dirname(__FILE__) . '/../../../' . $informations['id'])) {
             $rating['score']++;
             $rating['path'] = 'warn';
         }
 
         // Les plugins doivent être activés
-        if ($informations['active'] == 0)
-        {
+        if ($informations['enabled'] == 0) {
             $rating['score']++;
-            $rating['active'] = 'warn';
+            $rating['enabled'] = 'warn';
         }
 
         return $rating;
@@ -109,8 +104,7 @@ class OptimizePlugins
         $plugins = $this->getAllPlugins();
         $informations = array();
 
-        foreach ($plugins as $plugin)
-        {
+        foreach ($plugins as $plugin) {
             $pluginInformations = $this->getInformationsFromPlugin($plugin);
             $rating = $this->ratePluginInformations($pluginInformations);
             $pluginInformations['rating'] = $rating;
@@ -150,10 +144,8 @@ class OptimizePlugins
     {
         $plugin = $this->getPluginById($pluginId);
         $pluginLogConfig = config::byKey('log::level::' . $plugin->getId());
-        foreach ($pluginLogConfig as $key => $value)
-        {
-            if ($value != 0)
-            {
+        foreach ($pluginLogConfig as $key => $value) {
+            if ($value != 0) {
                 $pluginLogConfig[$key] = 0;
             }
         }
@@ -171,16 +163,13 @@ class OptimizePlugins
         // Le plugin n'est pas accessible par son identifiant directement
         $pluginsList = $this->getAllPlugins();
         $infoJsonPath = '';
-        foreach ($pluginsList as $plugin)
-        {
-            if ($plugin->getId() == $pluginId)
-            {
+        foreach ($pluginsList as $plugin) {
+            if ($plugin->getId() == $pluginId) {
                 // Filepath renvoie le chemin vers le fichier info.json
                 $infoJsonPath = $plugin->getFilepath();
             }
         }
-        if (strlen($infoJsonPath) > 0)
-        {
+        if (strlen($infoJsonPath) > 0) {
             $currentPluginDirectory = strstr($infoJsonPath, '/plugin_info/info.json', true);
             rename($currentPluginDirectory, $this->getPluginsDirectory() . '/' . $pluginId);
         }
@@ -194,17 +183,12 @@ class OptimizePlugins
     private function deleteDirectory($path)
     {
         $items = scandir($path);
-        foreach ($items as $item)
-        {
-            if ($item != '.' && $item != '..')
-            {
+        foreach ($items as $item) {
+            if ($item != '.' && $item != '..') {
                 $currentItemPath = $path . '/' . $item;
-                if (is_dir($currentItemPath))
-                {
+                if (is_dir($currentItemPath)) {
                     $this->deleteDirectory($currentItemPath);
-                }
-                else
-                {
+                } else {
                     unlink($currentItemPath);
                 }
             }
@@ -217,21 +201,17 @@ class OptimizePlugins
      *
      * @param integer $pluginId Identifiant du plugin
      */
-    public function removeIfInactive($pluginId)
+    public function removeIfDisabled($pluginId)
     {
-        if ($this->getPluginById($pluginId)->isActive() == 0)
-        {
+        if ($this->getPluginById($pluginId)->isActive() == 0) {
             $update = update::byId($pluginId);
-            if (!is_object($update))
-            {
+            if (!is_object($update)) {
                 $update = update::byLogicalId($pluginId);
             }
-            if (is_object($update))
-            {
+            if (is_object($update)) {
                 // Suppression par Jeedom
                 $update->deleteObjet();
-            } else
-            {
+            } else {
                 $this->deleteDirectory($this->getPluginsDirectory() . '/' . $pluginId);
             }
         }

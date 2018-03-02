@@ -43,7 +43,7 @@ class OptimizeScenarios
         $informations['name'] = $scenario->getName();
         $informations['log'] = $scenario->getConfiguration('logmode');
         $informations['syncmode'] = $scenario->getConfiguration('syncmode');
-        $informations['active'] = $scenario->getIsActive();
+        $informations['enabled'] = $scenario->getIsActive();
 
         return $informations;
     }
@@ -63,27 +63,24 @@ class OptimizeScenarios
         $rating['score'] = 0;
         $rating['log'] = 'ok';
         $rating['syncmode'] = 'ok';
-        $rating['active'] = 'ok';
+        $rating['enabled'] = 'ok';
 
         // Les logs doivent être désactivés
-        if ($informations['log'] != 'none')
-        {
+        if ($informations['log'] != 'none') {
             $rating['score']++;
             $rating['log'] = 'warn';
         }
 
         // Les scénarios doivent être exécutés de façon synchrone
-        if ($informations['syncmode'] == 0)
-        {
+        if ($informations['syncmode'] == 0) {
             $rating['score']++;
             $rating['syncmode'] = 'warn';
         }
 
         // Les scénarios doivent être activés
-        if ($informations['active'] == 0)
-        {
+        if ($informations['enabled'] == 0) {
             $rating['score']++;
-            $rating['active'] = 'warn';
+            $rating['enabled'] = 'warn';
         }
 
         return $rating;
@@ -99,8 +96,7 @@ class OptimizeScenarios
         $scenarios = $this->getAll();
         $informations = array();
 
-        foreach ($scenarios as $scenario)
-        {
+        foreach ($scenarios as $scenario) {
             $scenarioInformations = $this->extractInformationsFromScenario($scenario);
             $rating = $this->rateScenarioInformations($scenarioInformations);
             $scenarioInformations['rating'] = $rating;
@@ -150,11 +146,10 @@ class OptimizeScenarios
      *
      * @param integer $scenarioId Identifiant du scénario
      */
-    public function removeIfInactive($scenarioId)
+    public function removeIfDisabled($scenarioId)
     {
         $scenario = $this->getScenarioById($scenarioId);
-        if ($scenario->getIsActive() == 0)
-        {
+        if ($scenario->getIsActive() == 0) {
             $scenario->remove();
         }
     }

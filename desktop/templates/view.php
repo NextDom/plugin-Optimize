@@ -25,22 +25,21 @@
 function showActionCell($rating, $category, $type)
 {
     echo '<td>';
-    if ($rating[$type] == 'ok')
-    {
+    if ($rating[$type] == 'ok') {
         echo '<i class="fa fa-check-circle fa-2x"></i>';
-    }
-    else
-    {
-        echo '<i class="fa fa-exclamation-triangle fa-2x" data-category="'.$category.'" data-type="'.$type.'"></i>';
+    } else {
+        echo '<i class="fa fa-exclamation-triangle fa-2x" data-category="' . $category . '" data-type="' . $type . '"></i>';
     }
     echo '</td>';
 }
+
 ?>
 <div id="optimize-plugin" class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
             <button class="btn btn-primary" data-toggle="collapse" data-target="#scenarios">{{Scenarios}}</button>
-            <button class="btn btn-default" data-toggle="collapse" data-target="#scenarios-informations">{{Informations}}
+            <button class="btn btn-default" data-toggle="collapse" data-target="#scenarios-informations">
+                {{Informations}}
             </button>
         </div>
     </div>
@@ -52,10 +51,12 @@ function showActionCell($rating, $category, $type)
                     {{Logs enabled: Log writing slows down execution. They must be disabled if they are not used,}}
                 </li>
                 <li>
-                    {{Synchronous mode: Scenarios executed in synchronous mode do not wait for a return of commands. Attention, this option can cause malfunctions,}}
+                    {{Synchronous mode: Scenarios executed in synchronous mode do not wait for a return of commands.
+                    Attention, this option can cause malfunctions,}}
                 </li>
                 <li>
-                    {{Disabled: A disabled scenario is stored in the database. It is best to delete it to speed up queries in the database.}}
+                    {{Disabled: A disabled scenario is stored in the database. It is best to delete it to speed up
+                    queries in the database.}}
                 </li>
             </ul>
         </div>
@@ -68,7 +69,7 @@ function showActionCell($rating, $category, $type)
                     <th>{{Name}}</th>
                     <th>{{Logs}}</th>
                     <th>{{Mode}}</th>
-                    <th>{{Activated}}</th>
+                    <th>{{Enabled}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,9 +79,9 @@ function showActionCell($rating, $category, $type)
                             <a href="/index.php?v=d&p=scenario&id=<?php echo $scenario['id']; ?>"><?php echo $scenario['name']; ?></a>
                         </td>
                         <?php
-                            showActionCell($scenario['rating'], 'plugin', 'log');
-                            showActionCell($scenario['rating'], 'plugin', 'syncmode');
-                            showActionCell($scenario['rating'], 'plugin', 'active');
+                        showActionCell($scenario['rating'], 'scenario', 'log');
+                        showActionCell($scenario['rating'], 'scenario', 'syncmode');
+                        showActionCell($scenario['rating'], 'scenario', 'enabled');
                         ?>
                     </tr>
                 <?php endforeach ?>
@@ -106,7 +107,8 @@ function showActionCell($rating, $category, $type)
                     {{Bad path: The plugin is not in the right directory,}}
                 </li>
                 <li>
-                    {{Disabled: Information from all plugins are read even if they are disabled. Removing a plugin that is not used will also save disk space.}}
+                    {{Disabled: Information from all plugins are read even if they are disabled. Removing a plugin that
+                    is not used will also save disk space.}}
                 </li>
             </ul>
         </div>
@@ -119,7 +121,7 @@ function showActionCell($rating, $category, $type)
                     <th>{{Name}}</th>
                     <th>{{Logs}}</th>
                     <th>{{Path}}</th>
-                    <th>{{Activated}}</th>
+                    <th>{{Enabled}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -129,9 +131,9 @@ function showActionCell($rating, $category, $type)
                             <a href="/index.php?v=d&m=<?php echo $plugin['id']; ?>&p=<?php echo $plugin['id']; ?>"><?php echo $plugin['name']; ?></a>
                         </td>
                         <?php
-                            showActionCell($plugin['rating'], 'plugin', 'log');
-                            showActionCell($plugin['rating'], 'plugin', 'path');
-                            showActionCell($plugin['rating'], 'plugin', 'active');
+                        showActionCell($plugin['rating'], 'plugin', 'log');
+                        showActionCell($plugin['rating'], 'plugin', 'path');
+                        showActionCell($plugin['rating'], 'plugin', 'enabled');
                         ?>
                     </tr>
                 <?php endforeach ?>
@@ -166,25 +168,27 @@ function showActionCell($rating, $category, $type)
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($tplData['system'] as $system) : ?>
-                    <tr data-id="<?php echo $plugin['id']; ?>">
+                <?php foreach ($tplData['systemLogs'] as $systemLog) : ?>
+                    <tr data-id="<?php echo $systemLog['id']; ?>">
                         <td>
-                            <?php echo $system['name']; ?>
+                            <?php echo $systemLog['name']; ?>
                         </td>
                         <?php
-                        showActionCell($system['rating'], 'system', 'log');
+                        showActionCell($systemLog['rating'], 'system', 'log');
                         ?>
                     </tr>
                 <?php endforeach ?>
                 </tbody>
             </table>
         </div>
-    </div></div>
+    </div>
+</div>
 <div id="optimize-modal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true">×
+                </button>
                 <h4 class="modal-title">{{Information}}</h4>
             </div>
             <div class="modal-body">
@@ -201,9 +205,9 @@ function showActionCell($rating, $category, $type)
     var msg = [];
     msg['plugin_log'] = '{{Do you want to disable logs for this plugin?}}';
     msg['plugin_path'] = '{{Do you want to rename the plugin directory?}}';
-    msg['plugin_active'] = '{{Do you want to delete this plugin?}}';
+    msg['plugin_enabled'] = '{{Do you want to delete this plugin?}}';
     msg['scenario_log'] = '{{Do you want to disable logs for this scenario?}}';
     msg['scenario_syncmode'] = '{{Do you want to enable synchronous mode for this scenario?}}';
-    msg['scenario_active'] = '{{Do you want to delete this scenario?}}';
+    msg['scenario_enabled'] = '{{Do you want to delete this scenario?}}';
     msg['system_log'] = '{{Do you want to disable logs for this item?}}';
 </script>

@@ -1,5 +1,0 @@
-Description
-===
-
-__Optimize__ recherche et propose des solutions afin d'optimiser 
-votre installation Jeedom.

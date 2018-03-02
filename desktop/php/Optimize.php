@@ -24,8 +24,7 @@ include_file('desktop', 'Optimize', 'css', 'Optimize');
 include_file('desktop', 'Optimize', 'js', 'Optimize');
 include_file('core', 'authentification', 'php');
 
-if (!isConnect('admin'))
-{
+if (!isConnect('admin')) {
     throw new Exception(__('401 - Refused access', __FILE__));
 }
 
@@ -38,7 +37,7 @@ $optimizePlugins = new OptimizePlugins();
 $tplData['plugins'] = $optimizePlugins->getInformations();
 
 $optimizeSystem = new OptimizeSystem();
-$tplData['system'] = $optimizeSystem->getInformations();
+$tplData['systemLogs'] = $optimizeSystem->getInformations();
 
 // Affichage
 include(dirname(__FILE__) . '/../templates/view.php');

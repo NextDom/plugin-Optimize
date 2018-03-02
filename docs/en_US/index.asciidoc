@@ -1,5 +1,0 @@
-Description
-===
-
-__Optimize__ search and propose solutions in order to optimize your 
-Jeedom installation.
