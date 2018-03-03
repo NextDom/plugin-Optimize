@@ -24,10 +24,12 @@
  */
 function showActionCell($rating, $category, $type)
 {
-    echo '<td>';
-    if ($rating[$type] == 'ok') {
+    echo '<td class="action-cell">';
+    if ($rating[$type] == 'ok')
+    {
         echo '<i class="fa fa-check-circle fa-2x"></i>';
-    } else {
+    } else
+    {
         echo '<i class="fa fa-exclamation-triangle fa-2x" data-category="' . $category . '" data-type="' . $type . '"></i>';
     }
     echo '</td>';
@@ -182,6 +184,41 @@ function showActionCell($rating, $category, $type)
             </table>
         </div>
     </div>
+    <?php if ($tplData['rpi'] === true): ?>
+        <div class="row">
+            <div class="col-sm-12">
+                <button class="btn btn-primary" data-toggle="collapse" data-target="#raspberry">{{Raspberry Pi}}</button>
+            </div>
+        </div>
+        <div id="raspberry" class="row collapse">
+            <div class="col-sm-12">
+                <?php if ($tplData['rpi_can_optimize'] === true): ?>
+                    <?php if ($tplData['rpi_sudo'] === false): ?>
+                        <div class="alert alert-warning">{{Jeedom doesn't have sudo rights.}}</div>
+                    <?php endif; ?>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>{{Name}}</th>
+                            <th>{{Description}}</th>
+                            <th>{{Actions}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{GPU memory}}</td>
+                            <td>{{If you don't use display of your Raspberry Pi, you can limit the GPU memory to the minimum. This parameter is called gpu_mem and is stored in the file /boot/config.txt. The default value is 64 but you can limit it to 16.}}</td>
+                            <?php showActionCell($tplData['rating'], 'raspberry', 'gpu_mem'); ?>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div id="raspberry-change-msg" class="alert alert-danger hidden-msg"></div>
+                <?php else: ?>
+                    <div class="alert alert-danger">{{Jeedom can't read the file /boot/config.txt.}}</div>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
 <div id="optimize-modal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -210,4 +247,6 @@ function showActionCell($rating, $category, $type)
     msg['scenario_syncmode'] = '{{Do you want to enable synchronous mode for this scenario?}}';
     msg['scenario_enabled'] = '{{Do you want to delete this scenario?}}';
     msg['system_log'] = '{{Do you want to disable logs for this item?}}';
+    msg['raspberry_config_change'] = '{{A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.}}';
+    msg['raspberry_gpu_mem'] = '{{Do you want to limit GPU memory?}}';
 </script>
