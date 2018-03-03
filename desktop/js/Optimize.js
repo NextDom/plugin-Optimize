@@ -14,8 +14,10 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-$(document).ready(function () {
-    $('.fa-exclamation-triangle').click(function () {
+$(document).ready(function ()
+{
+    $('.fa-exclamation-triangle').click(function ()
+    {
         askForChange($(this));
     });
 });
@@ -25,7 +27,8 @@ $(document).ready(function () {
  *
  * @param item
  */
-function askForChange(item) {
+function askForChange(item)
+{
     var category = item.data('category');
     var row = item.closest('tr');
     var id = row.data('id');
@@ -33,7 +36,8 @@ function askForChange(item) {
 
     $('#optimize-modal-content').html(msg[category + '_' + type]);
     $('#optimize-modal').modal();
-    $('#optimize-modal-valid').click(function () {
+    $('#optimize-modal-valid').click(function ()
+    {
         applyChange(item, category, id, type);
         $('#optimize-modal').modal('hide');
     });
@@ -47,7 +51,8 @@ function askForChange(item) {
  * @param id
  * @param type
  */
-function applyChange(item, category, id, type) {
+function applyChange(item, category, id, type)
+{
     var row = item.closest('tr');
     $.post({
         url: 'plugins/Optimize/core/ajax/Optimize.ajax.php',
@@ -57,21 +62,32 @@ function applyChange(item, category, id, type) {
             type: type
         },
         dataType: 'json',
-        success: function (data, status) {
-            if (data.state !== 'ok' || status !== 'success') {
+        success: function (data, status)
+        {
+            if (data.state !== 'ok' || status !== 'success')
+            {
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
             }
-            else {
-                if (type === 'enabled') {
+            else
+            {
+                if (type === 'enabled')
+                {
                     row.remove();
                 }
-                else {
+                else
+                {
                     item.removeClass('fa-exclamation-triangle');
                     item.addClass('fa-check-circle');
+                    if (category == 'raspberry')
+                    {
+                        $('#raspberry-change-msg').removeClass('hidden-msg');
+                        $('#raspberry-change-msg').html(msg['raspberry_config_change']);
+                    }
                 }
             }
         },
-        error: function (request, status, error) {
+        error: function (request, status, error)
+        {
             handleAjaxError(request, status, error);
         }
     });

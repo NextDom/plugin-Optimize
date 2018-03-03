@@ -19,12 +19,14 @@
 require_once(dirname(__FILE__) . '/../../core/class/OptimizePlugins.class.php');
 require_once(dirname(__FILE__) . '/../../core/class/OptimizeScenarios.class.php');
 require_once(dirname(__FILE__) . '/../../core/class/OptimizeSystem.class.php');
+require_once(dirname(__FILE__) . '/../../core/class/OptimizeRPi.class.php');
 
 include_file('desktop', 'Optimize', 'css', 'Optimize');
 include_file('desktop', 'Optimize', 'js', 'Optimize');
 include_file('core', 'authentification', 'php');
 
-if (!isConnect('admin')) {
+if (!isConnect('admin'))
+{
     throw new Exception(__('401 - Refused access', __FILE__));
 }
 
@@ -38,6 +40,22 @@ $tplData['plugins'] = $optimizePlugins->getInformations();
 
 $optimizeSystem = new OptimizeSystem();
 $tplData['systemLogs'] = $optimizeSystem->getInformations();
+
+$tplData['rpi'] = false;
+$optimizeRPi = new OptimizeRPi();
+if ($optimizeRPi->isRaspberryPi()
+    ||  true // DEBUG
+)
+{
+    $tplData['rpi'] = true;
+    $tplData['rpi_can_optimize'] = $optimizeRPi->canParseSystemConfigFile();
+    if ($tplData['rpi_can_optimize'] === true)
+    {
+        $tplData['rpi_sudo'] = $optimizeRPi->canSudo();
+        $tplData['rating'] = array();
+        $tplData['rating']['gpu_mem'] = $optimizeRPi->checkGpuMemOptimization();
+    }
+}
 
 // Affichage
 include(dirname(__FILE__) . '/../templates/view.php');

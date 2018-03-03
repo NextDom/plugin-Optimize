@@ -19,14 +19,14 @@
 class OptimizeSystem
 {
     private $systemLogs = array(
-        'scenario' => 'Scenario',
-        'plugin' => 'Plugin',
-        'market' => 'Market',
-        'api' => 'Api',
+        'scenario'   => 'Scenario',
+        'plugin'     => 'Plugin',
+        'market'     => 'Market',
+        'api'        => 'Api',
         'connection' => 'Connection',
-        'interact' => 'Interact',
-        'tts' => 'TTS',
-        'report' => 'Report'
+        'interact'   => 'Interact',
+        'tts'        => 'TTS',
+        'report'     => 'Report'
     );
 
     /**
@@ -45,7 +45,8 @@ class OptimizeSystem
         $rating['log'] = 'ok';
 
         // Les logs doivent être désactivés
-        if ($informations['log'] === true) {
+        if ($informations['log'] === true)
+        {
             $rating['score']++;
             $rating['log'] = 'warn';
         }
@@ -62,7 +63,8 @@ class OptimizeSystem
     {
         $informations = array();
 
-        foreach ($this->systemLogs as $systemLogId => $systemLogName) {
+        foreach ($this->systemLogs as $systemLogId => $systemLogName)
+        {
             $systemLogInformations = array();
             $systemLogInformations['id'] = $systemLogId;
             $systemLogInformations['name'] = $systemLogName;
@@ -70,8 +72,10 @@ class OptimizeSystem
             $systemLogInformations['log'] = false;
             // Chaque type de log est stocké dans un tableau et identifié par un nombre sauf "default"
             // 1000 représente "Aucun"
-            foreach ($systemLogConfig as $logType => $value) {
-                if ($value == 1 && $logType != 1000) {
+            foreach ($systemLogConfig as $logType => $value)
+            {
+                if ($value == 1 && $logType != 1000)
+                {
                     $systemLogInformations['log'] = true;
                 }
             }
@@ -90,8 +94,10 @@ class OptimizeSystem
     public function disableLogs($systemLogId)
     {
         $systemLogConfig = config::byKey('log::level::' . $systemLogId);
-        foreach ($systemLogConfig as $key => $value) {
-            if ($value != 0) {
+        foreach ($systemLogConfig as $key => $value)
+        {
+            if ($value != 0)
+            {
                 $systemLogConfig[$key] = 0;
             }
         }

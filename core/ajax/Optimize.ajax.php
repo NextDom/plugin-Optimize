@@ -18,11 +18,13 @@
 
 header('Content-Type: application/json');
 
-try {
+try
+{
     require_once(dirname(__FILE__) . '/../../../../core/php/core.inc.php');
     include_file('core', 'authentification', 'php');
 
-    if (!isConnect('admin')) {
+    if (!isConnect('admin'))
+    {
         throw new \Exception(__('401 - Refused access', __FILE__));
     }
 
@@ -37,12 +39,14 @@ try {
 
     // Analyse de la requête Ajax
     $ajaxParser = new OptimizeParser();
-    if ($ajaxParser->parse($category, $id, $type)) {
+    if ($ajaxParser->parse($category, $id, $type))
+    {
         ajax::success();
     }
 
     throw new \Exception(__('No method corresponding to : ', __FILE__) . init('category'));
 
-} catch (\Exception $e) {
+} catch (\Exception $e)
+{
     ajax::error(displayExeption($e), $e->getCode());
 }

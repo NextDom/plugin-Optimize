@@ -27,6 +27,10 @@
     cursor: pointer;
 }
 
-#optimize-plugin td, #optimize-plugin th {
+#optimize-plugin td.action-cell, #optimize-plugin th {
     text-align: center;
+}
+
+#optimize-plugin .hidden-msg {
+    display: none;
 }

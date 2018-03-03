@@ -21,20 +21,27 @@ class OptimizeParser
     /**
      * Analyse une requête Ajax
      *
-     * @param string $category Catégorie de l'optimisation à apporter
+     * @param string  $category Catégorie de l'optimisation à apporter
      * @param integer $id Identifiant de l'objet à optimiser
-     * @param string $type Type d'optimisation
+     * @param string  $type Type d'optimisation
+     *
      * @return bool True si la requête a été reconnue et exécutée.
      */
     public function parse($category, $id, $type)
     {
         $result = false;
-        if ($category == 'scenario') {
+        if ($category == 'scenario')
+        {
             $result = $this->optimizeScenario($id, $type);
-        } elseif ($category == 'plugin') {
+        } elseif ($category == 'plugin')
+        {
             $result = $this->optimizePlugin($id, $type);
-        } elseif ($category == 'system') {
+        } elseif ($category == 'system')
+        {
             $result = $this->optimizeSystem($id, $type);
+        } elseif ($category == 'raspberry')
+        {
+            $result = $this->optimizeRaspberryPi($type);
         }
         return $result;
     }
@@ -43,7 +50,8 @@ class OptimizeParser
      * Requête d'optimisation d'un scénario
      *
      * @param integer $scenarioId Identifiant du scénario
-     * @param string $type Type d'optimisation
+     * @param string  $type Type d'optimisation
+     *
      * @return bool True si la requête a été reconnue et exécutée.
      */
     private function optimizeScenario($scenarioId, $type)
@@ -52,7 +60,8 @@ class OptimizeParser
         require_once(dirname(__FILE__) . '/OptimizeScenarios.class.php');
 
         $optimizeScenarios = new OptimizeScenarios();
-        switch ($type) {
+        switch ($type)
+        {
             case 'log':
                 $optimizeScenarios->disableLogs($scenarioId);
                 break;
@@ -73,7 +82,8 @@ class OptimizeParser
      * Requête d'optimisation d'un plugin
      *
      * @param integer $pluginId Identifiant du plugin
-     * @param string $type Type d'optimisation
+     * @param string  $type Type d'optimisation
+     *
      * @return bool True si la requête a été reconnue et exécutée.
      */
     private function optimizePlugin($pluginId, $type)
@@ -82,7 +92,8 @@ class OptimizeParser
         require_once(dirname(__FILE__) . '/OptimizePlugins.class.php');
 
         $optimizePlugins = new OptimizePlugins();
-        switch ($type) {
+        switch ($type)
+        {
             case 'log':
                 $optimizePlugins->disableLogs($pluginId);
                 break;
@@ -103,7 +114,8 @@ class OptimizeParser
      * Requête d'optimisation du système
      *
      * @param integer $systemId Identifiant de l'élément à améliorer
-     * @param string $type Type d'optimisation
+     * @param string  $type Type d'optimisation
+     *
      * @return bool True si la requête a été reconnue et exécutée.
      */
     private function optimizeSystem($systemId, $type)
@@ -112,11 +124,31 @@ class OptimizeParser
         require_once(dirname(__FILE__) . '/OptimizeSystem.class.php');
 
         $optimizeSystem = new OptimizeSystem();
-        if ($type == 'log') {
+        if ($type == 'log')
+        {
             $optimizeSystem->disableLogs($systemId);
-        }
-        else {
+        } else
+        {
             $result = false;
+        }
+        return $result;
+    }
+
+    /**
+     * Requête d'optimisation pour Raspberry Pi
+     *
+     * @param string $type Type d'optimisation
+     * @return bool True si la requête a été reconnue et exécutée.
+     */
+    private function optimizeRaspberryPi($type)
+    {
+        $result = false;
+        require_once(dirname(__FILE__) . '/OptimizeRPi.class.php');
+
+        $optimizeRPi = new OptimizeRPi();
+        if ($type == 'gpu_mem')
+        {
+            $result = $optimizeRPi->optimizeGpuMem();
         }
         return $result;
     }
