@@ -16,6 +16,7 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
+require_once(dirname(__FILE__) . '/../../core/class/BaseOptimize.class.php');
 require_once(dirname(__FILE__) . '/../../core/class/OptimizePlugins.class.php');
 require_once(dirname(__FILE__) . '/../../core/class/OptimizeScenarios.class.php');
 require_once(dirname(__FILE__) . '/../../core/class/OptimizeSystem.class.php');
@@ -30,6 +31,7 @@ if (!isConnect('admin')) {
 }
 
 $tplData = array();
+BaseOptimize::initScore();
 
 $optimizeScenarios = new OptimizeScenarios();
 $tplData['scenarios'] = $optimizeScenarios->getInformations();
@@ -42,18 +44,19 @@ $tplData['systemLogs'] = $optimizeSystem->getInformations();
 
 $tplData['rpi'] = false;
 $optimizeRPi = new OptimizeRPi();
-if ($optimizeRPi->isRaspberryPi()
-    ||  true // DEBUG
-) {
+if ($optimizeRPi->isRaspberryPi()) {
     $tplData['rpi'] = true;
     $tplData['rpi_can_optimize'] = $optimizeRPi->canParseSystemConfigFile();
     if ($tplData['rpi_can_optimize'] === true) {
         $tplData['rpi_sudo'] = $optimizeRPi->canSudo();
         $tplData['rating'] = array();
-        $tplData['rating']['gpu_mem'] = $optimizeRPi->rateGpuMemOptimization();
-        $tplData['rating']['l2_cache'] = $optimizeRPi->rateL2CacheOptimization();
+        $tplData['rating']['gpu_mem'] = $optimizeRPi->getGpuMemOptimizationInformation();
+        $tplData['rating']['l2_cache'] = $optimizeRPi->getL2CacheOptimizationInformation();
     }
 }
+
+$tplData['currentScore'] = BaseOptimize::getCurrentScore();
+$tplData['bestScore'] = BaseOptimize::getBestScore();
 
 // Affichage
 include(dirname(__FILE__) . '/../templates/view.php');

@@ -16,7 +16,9 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class OptimizePlugins
+require_once('BaseOptimize.class.php');
+
+class OptimizePlugins extends BaseOptimize
 {
     /**
      * Obtenir la liste de tous les plugins.
@@ -68,26 +70,26 @@ class OptimizePlugins
         $rating = array();
 
         // Valeurs par défaut
-        $rating['score'] = 0;
         $rating['log'] = 'ok';
         $rating['path'] = 'ok';
         $rating['enabled'] = 'ok';
+        self::$bestScore += 3;
 
         // Les logs doivent être désactivés
         if ($informations['log'] === true) {
-            $rating['score']++;
+            self::$badPoints++;
             $rating['log'] = 'warn';
         }
 
         // Chemin vers le plugin
         if (!file_exists(dirname(__FILE__) . '/../../../' . $informations['id'])) {
-            $rating['score']++;
+            self::$badPoints++;
             $rating['path'] = 'warn';
         }
 
         // Les plugins doivent être activés
         if ($informations['enabled'] == 0) {
-            $rating['score']++;
+            self::$badPoints++;
             $rating['enabled'] = 'warn';
         }
 
@@ -178,22 +180,22 @@ class OptimizePlugins
     /**
      * Supprime un répertoire avec son contenu.
      *
-     * @param $path Chemin du répertoire à supprimer
+     * @param string $path Chemin du répertoire à supprimer
      */
     private function deleteDirectory($path)
     {
-        $items = scandir($path);
+        $items = \scandir($path);
         foreach ($items as $item) {
             if ($item != '.' && $item != '..') {
                 $currentItemPath = $path . '/' . $item;
-                if (is_dir($currentItemPath)) {
+                if (\is_dir($currentItemPath)) {
                     $this->deleteDirectory($currentItemPath);
                 } else {
-                    unlink($currentItemPath);
+                    \unlink($currentItemPath);
                 }
             }
         }
-        rmdir($path);
+        \rmdir($path);
     }
 
     /**
@@ -205,10 +207,10 @@ class OptimizePlugins
     {
         if ($this->getPluginById($pluginId)->isActive() == 0) {
             $update = update::byId($pluginId);
-            if (!is_object($update)) {
+            if (!\is_object($update)) {
                 $update = update::byLogicalId($pluginId);
             }
-            if (is_object($update)) {
+            if (\is_object($update)) {
                 // Suppression par Jeedom
                 $update->deleteObjet();
             } else {

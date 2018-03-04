@@ -20,6 +20,7 @@ $(document).ready(function ()
     {
         askForChange($(this));
     });
+    updateProgressBar();
 });
 
 /**
@@ -36,9 +37,10 @@ function askForChange(item)
 
     $('#optimize-modal-content').html(msg[category + '_' + type]);
     $('#optimize-modal').modal();
+    $('#optimize-modal-valid').unbind();
     $('#optimize-modal-valid').click(function ()
     {
-        applyChange(item, category, id, type);
+        startChange(item, category, id, type);
         $('#optimize-modal').modal('hide');
     });
 }
@@ -51,9 +53,8 @@ function askForChange(item)
  * @param id
  * @param type
  */
-function applyChange(item, category, id, type)
+function startChange(item, category, id, type)
 {
-    var row = item.closest('tr');
     $.post({
         url: 'plugins/Optimize/core/ajax/Optimize.ajax.php',
         data: {
@@ -64,26 +65,12 @@ function applyChange(item, category, id, type)
         dataType: 'json',
         success: function (data, status)
         {
-            if (data.state !== 'ok' || status !== 'success')
-            {
+            // Test si l'appel a réussi
+            if (data.state !== 'ok' || status !== 'success') {
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
             }
-            else
-            {
-                if (type === 'enabled')
-                {
-                    row.remove();
-                }
-                else
-                {
-                    item.removeClass('fa-exclamation-triangle');
-                    item.addClass('fa-check-circle');
-                    if (category == 'raspberry')
-                    {
-                        $('#raspberry-change-msg').removeClass('hidden-msg');
-                        $('#raspberry-change-msg').html(msg['raspberry_config_change']);
-                    }
-                }
+            else {
+                applyChange(item, category, type);
             }
         },
         error: function (request, status, error)
@@ -91,4 +78,45 @@ function applyChange(item, category, id, type)
             handleAjaxError(request, status, error);
         }
     });
+}
+
+/**
+ * Applique les changements si la requête réussie
+ *
+ * @param item Elément HTML concerné
+ * @param category Catégorie de la modification
+ * @param type Type de modification
+ */
+function applyChange(item, category, type)
+{
+    var row = item.closest('tr');
+    if (type === 'enabled') {
+        row.remove();
+        var nbCheckItems = row.find('.fa-check-circle').length;
+        var nbWarningItems = row.find('.fa-exclamation-triangle').length;
+        currentScore -= nbCheckItems;
+        bestScore -= nbCheckItems + nbWarningItems;
+    }
+    else {
+        item.removeClass('fa-exclamation-triangle');
+        item.addClass('fa-check-circle');
+        if (category === 'raspberry') {
+            $('#raspberry-change-msg').removeClass('hidden-msg');
+            $('#raspberry-change-msg').html(msg['raspberry_config_change']);
+        }
+        currentScore++;
+    }
+    updateProgressBar();
+}
+
+/**
+ * Met à jour l abarre de progression
+ */
+function updateProgressBar()
+{
+    var percentage = parseInt(currentScore * 100 / bestScore);
+    var scoreBar = $('#score');
+    scoreBar.attr('aria-valuenow', percentage);
+    scoreBar.css('width', percentage + '%');
+    scoreBar.html(currentScore + ' / ' + bestScore);
 }
