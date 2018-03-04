@@ -66,22 +66,19 @@ class OptimizeScenarios
         $rating['enabled'] = 'ok';
 
         // Les logs doivent être désactivés
-        if ($informations['log'] != 'none')
-        {
+        if ($informations['log'] != 'none') {
             $rating['score']++;
             $rating['log'] = 'warn';
         }
 
         // Les scénarios doivent être exécutés de façon synchrone
-        if ($informations['syncmode'] == 0)
-        {
+        if ($informations['syncmode'] == 0) {
             $rating['score']++;
             $rating['syncmode'] = 'warn';
         }
 
         // Les scénarios doivent être activés
-        if ($informations['enabled'] == 0)
-        {
+        if ($informations['enabled'] == 0) {
             $rating['score']++;
             $rating['enabled'] = 'warn';
         }
@@ -99,8 +96,7 @@ class OptimizeScenarios
         $scenarios = $this->getAll();
         $informations = array();
 
-        foreach ($scenarios as $scenario)
-        {
+        foreach ($scenarios as $scenario) {
             $scenarioInformations = $this->extractInformationsFromScenario($scenario);
             $rating = $this->rateScenarioInformations($scenarioInformations);
             $scenarioInformations['rating'] = $rating;
@@ -153,8 +149,7 @@ class OptimizeScenarios
     public function removeIfDisabled($scenarioId)
     {
         $scenario = $this->getScenarioById($scenarioId);
-        if ($scenario->getIsActive() == 0)
-        {
+        if ($scenario->getIsActive() == 0) {
             $scenario->remove();
         }
     }

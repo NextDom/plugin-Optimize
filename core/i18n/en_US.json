@@ -17,6 +17,7 @@
         "Close": "Close",
         "Plugins": "Plugins",
         "System": "System",
+        "Raspberry Pi": "Raspberry Pi",
         "Do you want to disable logs for this plugin?": "Do you want to disable logs for this plugin?",
         "Do you want to rename the plugin directory?": "Do you want to rename the plugin directory?",
         "Do you want to delete this plugin?": "Do you want to delete this plugin?",
@@ -31,6 +32,12 @@
         "Plugins optimization": "Plugins optimization",
         "Bad path: The plugin is not in the right directory,": "Bad path: The plugin is not in the right directory,",
         "Disabled: Information from all plugins are read even if they are disabled. Removing a plugin that is not used will also save disk space.": "Disabled: Information from all plugins are read even if they are disabled. Removing a plugin that is not used will also save disk space.",
-        "System optimization": "System optimize"
+        "System optimization": "System optimize",
+        "If you don't use display of your Raspberry Pi, you can limit the GPU memory to the minimum. This parameter is called gpu_mem and is stored in the file /boot/config.txt. The default value is 64 but you can limit it to 16.": "If you don't use display of your Raspberry Pi, you can limit the GPU memory to the minimum. This parameter is called gpu_mem and is stored in the file /boot/config.txt. The default value is 64 but you can limit it to 16.",
+        "Jeedom can't read the file /boot/config.txt.": "Jeedom can't read the file /boot/config.txt.",
+        "Jeedom doesn't have sudo rights.": "Jeedom doesn't have sudo rights.",
+        "A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.": "A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.",
+        "If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.": "If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.",
+        "Do you want disable L2 Cache?": "Do you want disable L2 Cache?"
     }
 }

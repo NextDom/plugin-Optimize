@@ -33,11 +33,19 @@ class OptimizeRPi
     /**
      * Code du paramètre de la mémoire GPU
      */
-    const GPU_MEM_CODE = 'gpu_mem';
+    const GPU_MEM_NAME = 'gpu_mem';
     /**
      * Valeur idéale du paramètre de la mémoire GPU
      */
     const GPU_MEM_BEST_VALUE = 16;
+    /**
+     * Code du paramètre de la mémoire cache
+     */
+    const L2_CACHE_NAME = 'disable_l2cache';
+    /**
+     * Valeur idéale du paramètre de la mémoire cache
+     */
+    const L2_CACHE_BEST_VALUE = 0;
 
     /**
      * Données du fichier de configurations système
@@ -59,24 +67,8 @@ class OptimizeRPi
 
         // raspberry est testé dans le cas d'un changement de l'intitulé
         if (\strstr($hardwareName, self::RASPBERRY_STRING_TEST_1) !== false ||
-            \strstr($hardwareName, self::RASPBERRY_STRING_TEST_2) !== false)
-        {
+            \strstr($hardwareName, self::RASPBERRY_STRING_TEST_2) !== false) {
             $result = true;
-        }
-        return $result;
-    }
-
-    /**
-     * Test si le fichier de configuration système est lisible et lit son contenu
-     *
-     * @return bool true si la lecture a réussi
-     */
-    public function canParseSystemConfigFile()
-    {
-        $result = false;
-        if ($this->isConfigFileReadable())
-        {
-            return $this->parseSystemConfigFile();
         }
         return $result;
     }
@@ -92,17 +84,52 @@ class OptimizeRPi
     }
 
     /**
-     * Test si l'optimisation de la réduction de la mémoire GPU
+     * Test si le fichier de configuration système est lisible et lit son contenu
+     *
+     * @return bool true si la lecture a réussi
+     */
+    public function canParseSystemConfigFile()
+    {
+        $result = false;
+        if ($this->isSystemConfigFileReadable()) {
+            return $this->parseSystemConfigFile();
+        }
+        return $result;
+    }
+
+    /**
+     * Note l'optimisation de la réduction de la mémoire GPU est appliquée
      *
      * @return bool true si l'optimisation est déjà appliquée.
      */
-    public function checkGpuMemOptimization()
+    public function rateGpuMemOptimization()
+    {
+        return $this->rateOptimization(self::GPU_MEM_NAME, self::GPU_MEM_BEST_VALUE);
+    }
+
+    /**
+     * Note l'optimisation de la mémoire cache est appliquée
+     *
+     * @return bool true si l'optimisation est déjà appliquée.
+     */
+    public function rateL2CacheOptimization()
+    {
+        return $this->rateOptimization(self::L2_CACHE_NAME, self::L2_CACHE_BEST_VALUE);
+    }
+
+    /**
+     * Note une optimisation
+     *
+     * @param $name Nom du paramètre
+     * @param $bestValue Valeur idéale
+     *
+     * @return string Note de l'optimisation
+     */
+    private function rateOptimization($name, $bestValue)
     {
         $result = 'warn';
-        if (\array_key_exists(self::GPU_MEM_CODE, $this->systemConfig))
-        {
-            if ($this->systemConfig[self::GPU_MEM_CODE] == self::GPU_MEM_BEST_VALUE)
-            {
+        if (\array_key_exists($name, $this->systemConfig)) {
+            if ($this->systemConfig[$name] == $bestValue) {
                 $result = 'ok';
             }
         }
@@ -114,13 +141,11 @@ class OptimizeRPi
      *
      * @return bool true si le fichier peut être lu
      */
-    private function isConfigFileReadable()
+    private function isSystemConfigFileReadable()
     {
         $result = false;
-        if (\file_exists(self::SYSTEM_CONFIG_FILE_PATH))
-        {
-            if (\is_readable(self::SYSTEM_CONFIG_FILE_PATH))
-            {
+        if (\file_exists(self::SYSTEM_CONFIG_FILE_PATH)) {
+            if (\is_readable(self::SYSTEM_CONFIG_FILE_PATH)) {
                 $result = true;
             }
         }
@@ -136,18 +161,14 @@ class OptimizeRPi
         $this->systemConfig = array();
 
         $fileHandle = \fopen(self::SYSTEM_CONFIG_FILE_PATH, "r");
-        if ($fileHandle !== false)
-        {
-            while (!\feof($fileHandle))
-            {
+        if ($fileHandle !== false) {
+            while (!\feof($fileHandle)) {
                 $line = \fgets($fileHandle);
                 // Suppression des espaces inutiles au début de la chaine (et à la fin)
                 $line = \trim($line);
-                if ($this->lineContaintsInformation($line))
-                {
+                if ($this->lineContaintsInformation($line)) {
                     $configInformation = $this->readSystemConfigLineInformation($line);
-                    if ($configInformation !== false)
-                    {
+                    if ($configInformation !== false) {
                         $this->systemConfig[$configInformation[0]] = $configInformation[1];
                     }
                 }
@@ -169,11 +190,9 @@ class OptimizeRPi
     {
         $result = false;
         // Test d'une ligne vide
-        if (\strlen($line) > 0)
-        {
+        if (\strlen($line) > 0) {
             // Test d'une ligne de commentaire
-            if ($line[0] != '#')
-            {
+            if ($line[0] != '#') {
                 $result = true;
             }
         }
@@ -191,8 +210,7 @@ class OptimizeRPi
     private function readSystemConfigLineInformation($line)
     {
         $result = false;
-        if (\strpos($line, '=') !== 0)
-        {
+        if (\strpos($line, '=') !== 0) {
             $result = \explode('=', $line);
         }
         return $result;
@@ -205,17 +223,37 @@ class OptimizeRPi
      */
     public function optimizeGpuMem()
     {
+        return $this->optimizeItem(self::GPU_MEM_NAME, self::GPU_MEM_BEST_VALUE);
+    }
+
+    /**
+     * Optimise l'option l2_cache
+     *
+     * @return bool true si l'écriture réussit
+     */
+    public function optimizeL2Cache()
+    {
+        return $this->optimizeItem(self::L2_CACHE_NAME, self::L2_CACHE_BEST_VALUE);
+    }
+
+    /**
+     * Optimise une option
+     *
+     * @param string $name Nom du paramètre
+     * @param string $bestValue Valeur idéale
+     *
+     * @return bool true si l'écriture réussit
+     */
+    private function optimizeItem($name, $bestValue)
+    {
         $result = false;
-        if ($this->createBackupSystemConfigFile() === true)
-        {
-            if ($this->parseSystemConfigFile() === true)
-            {
-                if (\array_key_exists(self::GPU_MEM_CODE, $this->systemConfig))
-                {
+        if ($this->createBackupSystemConfigFile() === true) {
+            if ($this->parseSystemConfigFile() === true) {
+                if (\array_key_exists($name, $this->systemConfig)) {
                     // On commente le paramètre
-                    $this->commentParameter(self::GPU_MEM_CODE);
+                    $this->commentParameter($name);
                 }
-                $this->addParameter(self::GPU_MEM_CODE, self::GPU_MEM_BEST_VALUE);
+                $this->addParameter($name, $bestValue);
                 $result = true;
             }
             return $result;
@@ -231,8 +269,7 @@ class OptimizeRPi
     private function createBackupSystemConfigFile()
     {
         $result = false;
-        if ($this->canSudo())
-        {
+        if ($this->canSudo()) {
             exec(system::getCmdSudo() . ' cp ' . self::SYSTEM_CONFIG_FILE_PATH . ' ' . self::SYSTEM_CONFIG_FILE_PATH . '.bak');
             $result = file_exists(self::SYSTEM_CONFIG_FILE_PATH . '.bak');
         }
