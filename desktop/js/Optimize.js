@@ -37,6 +37,7 @@ function askForChange(item)
 
     $('#optimize-modal-content').html(msg[category + '_' + type]);
     $('#optimize-modal').modal();
+    $('#optimize-modal-valid').unbind();
     $('#optimize-modal-valid').click(function ()
     {
         startChange(item, category, id, type);
@@ -69,10 +70,7 @@ function startChange(item, category, id, type)
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
             }
             else {
-                // Test pour éviter les doubles appels Ajax
-                if (item.hasClass('fa-exclamation-triangle') && item.is(':visible')) {
-                    applyChange(item, category, type);
-                }
+                applyChange(item, category, type);
             }
         },
         error: function (request, status, error)
