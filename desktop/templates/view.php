@@ -25,11 +25,9 @@
 function showActionCell($rating, $category, $type)
 {
     echo '<td class="action-cell">';
-    if ($rating[$type] == 'ok')
-    {
+    if ($rating[$type] == 'ok') {
         echo '<i class="fa fa-check-circle fa-2x"></i>';
-    } else
-    {
+    } else {
         echo '<i class="fa fa-exclamation-triangle fa-2x" data-category="' . $category . '" data-type="' . $type . '"></i>';
     }
     echo '</td>';
@@ -210,6 +208,11 @@ function showActionCell($rating, $category, $type)
                             <td>{{If you don't use display of your Raspberry Pi, you can limit the GPU memory to the minimum. This parameter is called gpu_mem and is stored in the file /boot/config.txt. The default value is 64 but you can limit it to 16.}}</td>
                             <?php showActionCell($tplData['rating'], 'raspberry', 'gpu_mem'); ?>
                         </tr>
+                        <tr>
+                            <td>{{L2 Cache}}</td>
+                            <td>{{If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.}}</td>
+                            <?php showActionCell($tplData['rating'], 'raspberry', 'l2_cache'); ?>
+                        </tr>
                         </tbody>
                     </table>
                     <div id="raspberry-change-msg" class="alert alert-danger hidden-msg"></div>
@@ -249,4 +252,5 @@ function showActionCell($rating, $category, $type)
     msg['system_log'] = '{{Do you want to disable logs for this item?}}';
     msg['raspberry_config_change'] = '{{A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.}}';
     msg['raspberry_gpu_mem'] = '{{Do you want to limit GPU memory?}}';
+    msg['raspberry_l2_cache'] = '{{Do you want disable L2 Cache?}}';
 </script>

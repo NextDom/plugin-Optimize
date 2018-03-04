@@ -30,17 +30,13 @@ class OptimizeParser
     public function parse($category, $id, $type)
     {
         $result = false;
-        if ($category == 'scenario')
-        {
+        if ($category == 'scenario') {
             $result = $this->optimizeScenario($id, $type);
-        } elseif ($category == 'plugin')
-        {
+        } elseif ($category == 'plugin') {
             $result = $this->optimizePlugin($id, $type);
-        } elseif ($category == 'system')
-        {
+        } elseif ($category == 'system') {
             $result = $this->optimizeSystem($id, $type);
-        } elseif ($category == 'raspberry')
-        {
+        } elseif ($category == 'raspberry') {
             $result = $this->optimizeRaspberryPi($type);
         }
         return $result;
@@ -60,8 +56,7 @@ class OptimizeParser
         require_once(dirname(__FILE__) . '/OptimizeScenarios.class.php');
 
         $optimizeScenarios = new OptimizeScenarios();
-        switch ($type)
-        {
+        switch ($type) {
             case 'log':
                 $optimizeScenarios->disableLogs($scenarioId);
                 break;
@@ -92,8 +87,7 @@ class OptimizeParser
         require_once(dirname(__FILE__) . '/OptimizePlugins.class.php');
 
         $optimizePlugins = new OptimizePlugins();
-        switch ($type)
-        {
+        switch ($type) {
             case 'log':
                 $optimizePlugins->disableLogs($pluginId);
                 break;
@@ -124,11 +118,9 @@ class OptimizeParser
         require_once(dirname(__FILE__) . '/OptimizeSystem.class.php');
 
         $optimizeSystem = new OptimizeSystem();
-        if ($type == 'log')
-        {
+        if ($type == 'log') {
             $optimizeSystem->disableLogs($systemId);
-        } else
-        {
+        } else {
             $result = false;
         }
         return $result;
@@ -146,9 +138,10 @@ class OptimizeParser
         require_once(dirname(__FILE__) . '/OptimizeRPi.class.php');
 
         $optimizeRPi = new OptimizeRPi();
-        if ($type == 'gpu_mem')
-        {
+        if ($type == 'gpu_mem') {
             $result = $optimizeRPi->optimizeGpuMem();
+        } elseif ($type == 'l2_cache') {
+            $result = $optimizeRPi->optimizeL2Cache();
         }
         return $result;
     }

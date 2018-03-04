@@ -25,8 +25,7 @@ include_file('desktop', 'Optimize', 'css', 'Optimize');
 include_file('desktop', 'Optimize', 'js', 'Optimize');
 include_file('core', 'authentification', 'php');
 
-if (!isConnect('admin'))
-{
+if (!isConnect('admin')) {
     throw new Exception(__('401 - Refused access', __FILE__));
 }
 
@@ -45,15 +44,14 @@ $tplData['rpi'] = false;
 $optimizeRPi = new OptimizeRPi();
 if ($optimizeRPi->isRaspberryPi()
     ||  true // DEBUG
-)
-{
+) {
     $tplData['rpi'] = true;
     $tplData['rpi_can_optimize'] = $optimizeRPi->canParseSystemConfigFile();
-    if ($tplData['rpi_can_optimize'] === true)
-    {
+    if ($tplData['rpi_can_optimize'] === true) {
         $tplData['rpi_sudo'] = $optimizeRPi->canSudo();
         $tplData['rating'] = array();
-        $tplData['rating']['gpu_mem'] = $optimizeRPi->checkGpuMemOptimization();
+        $tplData['rating']['gpu_mem'] = $optimizeRPi->rateGpuMemOptimization();
+        $tplData['rating']['l2_cache'] = $optimizeRPi->rateL2CacheOptimization();
     }
 }
 
