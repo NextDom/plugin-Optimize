@@ -16,7 +16,9 @@
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class OptimizeRPi
+require_once('BaseOptimize.class.php');
+
+class OptimizeRPi extends BaseOptimize
 {
     /**
      * Chaîne de caractère se trouvant dans l'intitulé du hardware dans le cas d'un Raspberry Pi
@@ -102,9 +104,9 @@ class OptimizeRPi
      *
      * @return bool true si l'optimisation est déjà appliquée.
      */
-    public function rateGpuMemOptimization()
+    public function getGpuMemOptimizationInformation()
     {
-        return $this->rateOptimization(self::GPU_MEM_NAME, self::GPU_MEM_BEST_VALUE);
+        return $this->getOptimizationInformation(self::GPU_MEM_NAME, self::GPU_MEM_BEST_VALUE);
     }
 
     /**
@@ -112,26 +114,30 @@ class OptimizeRPi
      *
      * @return bool true si l'optimisation est déjà appliquée.
      */
-    public function rateL2CacheOptimization()
+    public function getL2CacheOptimizationInformation()
     {
-        return $this->rateOptimization(self::L2_CACHE_NAME, self::L2_CACHE_BEST_VALUE);
+        return $this->getOptimizationInformation(self::L2_CACHE_NAME, self::L2_CACHE_BEST_VALUE);
     }
 
     /**
      * Note une optimisation
      *
-     * @param $name Nom du paramètre
-     * @param $bestValue Valeur idéale
+     * @param string $name Nom du paramètre
+     * @param string $bestValue Valeur idéale
      *
      * @return string Note de l'optimisation
      */
-    private function rateOptimization($name, $bestValue)
+    private function getOptimizationInformation($name, $bestValue)
     {
         $result = 'warn';
+        self::$bestScore++;
         if (\array_key_exists($name, $this->systemConfig)) {
             if ($this->systemConfig[$name] == $bestValue) {
                 $result = 'ok';
             }
+        }
+        if ($result == 'warn') {
+            self::$badPoints++;
         }
         return $result;
     }
@@ -279,7 +285,7 @@ class OptimizeRPi
     /**
      * Commente un paramètre du fichier de configuration système
      *
-     * @param $name Nom du paramètre
+     * @param string $name Nom du paramètre
      */
     private function commentParameter($name)
     {
@@ -289,8 +295,8 @@ class OptimizeRPi
     /**
      * Ajoute un paramètre au fichier de configuration système.
      *
-     * @param $name Nom du paramètre
-     * @param $value Valeur du paramètre
+     * @param string $name Nom du paramètre
+     * @param string $value Valeur du paramètre
      */
     private function addParameter($name, $value)
     {

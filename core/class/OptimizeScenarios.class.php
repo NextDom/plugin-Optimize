@@ -16,7 +16,9 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class OptimizeScenarios
+require_once('BaseOptimize.class.php');
+
+class OptimizeScenarios extends BaseOptimize
 {
     /**
      * Obtenir la liste de tous les scénarios.
@@ -60,26 +62,26 @@ class OptimizeScenarios
         $rating = array();
 
         // Valeurs par défaut
-        $rating['score'] = 0;
         $rating['log'] = 'ok';
         $rating['syncmode'] = 'ok';
         $rating['enabled'] = 'ok';
+        self::$bestScore += 3;
 
         // Les logs doivent être désactivés
         if ($informations['log'] != 'none') {
-            $rating['score']++;
+            self::$badPoints++;
             $rating['log'] = 'warn';
         }
 
         // Les scénarios doivent être exécutés de façon synchrone
         if ($informations['syncmode'] == 0) {
-            $rating['score']++;
+            self::$badPoints++;
             $rating['syncmode'] = 'warn';
         }
 
         // Les scénarios doivent être activés
         if ($informations['enabled'] == 0) {
-            $rating['score']++;
+            self::$badPoints++;
             $rating['enabled'] = 'warn';
         }
 
