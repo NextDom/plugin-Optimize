@@ -16,8 +16,13 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class OptimizeSystem
+require_once('BaseOptimize.class.php');
+
+class OptimizeSystem extends BaseOptimize
 {
+    /**
+     * @var array Tableau des différents logs système
+     */
     private $systemLogs = array(
         'scenario'   => 'Scenario',
         'plugin'     => 'Plugin',
@@ -41,12 +46,12 @@ class OptimizeSystem
         $rating = array();
 
         // Valeurs par défaut
-        $rating['score'] = 0;
         $rating['log'] = 'ok';
+        self::$bestScore++;
 
         // Les logs doivent être désactivés
         if ($informations['log'] === true) {
-            $rating['score']++;
+            self::$badPoints++;
             $rating['log'] = 'warn';
         }
 

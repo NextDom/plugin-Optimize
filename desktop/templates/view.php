@@ -18,9 +18,9 @@
 /**
  * Affiche contenu d'une cellule pouvan nécessiter une action de l'utilisateur
  *
- * @param $rating Note de l'élément
- * @param $category Catégorie
- * @param $type Type de modification
+ * @param array $rating Note de l'élément
+ * @param string $category Catégorie
+ * @param string $type Type de modification
  */
 function showActionCell($rating, $category, $type)
 {
@@ -35,6 +35,14 @@ function showActionCell($rating, $category, $type)
 
 ?>
 <div id="optimize-plugin" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="progress">
+                <div id="score" class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <button class="btn btn-primary" data-toggle="collapse" data-target="#scenarios">{{Scenarios}}</button>
@@ -253,4 +261,7 @@ function showActionCell($rating, $category, $type)
     msg['raspberry_config_change'] = '{{A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.}}';
     msg['raspberry_gpu_mem'] = '{{Do you want to limit GPU memory?}}';
     msg['raspberry_l2_cache'] = '{{Do you want disable L2 Cache?}}';
+
+    var currentScore = <?php echo $tplData['currentScore']; ?>;
+    var bestScore = <?php echo $tplData['bestScore']; ?>;
 </script>

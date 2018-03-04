@@ -38,7 +38,8 @@ try {
     // Analyse de la requête Ajax
     $ajaxParser = new OptimizeParser();
     if ($ajaxParser->parse($category, $id, $type)) {
-        ajax::success();
+        // Renvoie les données pour éviter les doubles appels
+        ajax::success(array('category' => $category, 'id' => $id, 'type' => $type));
     }
 
     throw new \Exception(__('No method corresponding to : ', __FILE__) . init('category'));
