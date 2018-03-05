@@ -23,3 +23,10 @@ The plugin is composed mainly of a page that provides access to all the features
 ## System
 
 * Logs: As for other cases, if you don't have problem with your installation, it is better to disable them.
+
+## Raspberry Pi
+
+If Jeedom is installed on a Raspberry Pi, you can : 
+
+* Limit the video memory,
+* Limit access to the L2 cache to the processor.
