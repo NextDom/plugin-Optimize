@@ -18,18 +18,16 @@
 /**
  * Affiche contenu d'une cellule pouvan nécessiter une action de l'utilisateur
  *
- * @param $rating Note de l'élément
- * @param $category Catégorie
- * @param $type Type de modification
+ * @param array $rating Note de l'élément
+ * @param string $category Catégorie
+ * @param string $type Type de modification
  */
 function showActionCell($rating, $category, $type)
 {
     echo '<td class="action-cell">';
-    if ($rating[$type] == 'ok')
-    {
+    if ($rating[$type] == 'ok') {
         echo '<i class="fa fa-check-circle fa-2x"></i>';
-    } else
-    {
+    } else {
         echo '<i class="fa fa-exclamation-triangle fa-2x" data-category="' . $category . '" data-type="' . $type . '"></i>';
     }
     echo '</td>';
@@ -37,6 +35,14 @@ function showActionCell($rating, $category, $type)
 
 ?>
 <div id="optimize-plugin" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="progress">
+                <div id="score" class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-12">
             <button class="btn btn-primary" data-toggle="collapse" data-target="#scenarios">{{Scenarios}}</button>
@@ -210,6 +216,11 @@ function showActionCell($rating, $category, $type)
                             <td>{{If you don't use display of your Raspberry Pi, you can limit the GPU memory to the minimum. This parameter is called gpu_mem and is stored in the file /boot/config.txt. The default value is 64 but you can limit it to 16.}}</td>
                             <?php showActionCell($tplData['rating'], 'raspberry', 'gpu_mem'); ?>
                         </tr>
+                        <tr>
+                            <td>{{L2 Cache}}</td>
+                            <td>{{If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.}}</td>
+                            <?php showActionCell($tplData['rating'], 'raspberry', 'l2_cache'); ?>
+                        </tr>
                         </tbody>
                     </table>
                     <div id="raspberry-change-msg" class="alert alert-danger hidden-msg"></div>
@@ -249,4 +260,8 @@ function showActionCell($rating, $category, $type)
     msg['system_log'] = '{{Do you want to disable logs for this item?}}';
     msg['raspberry_config_change'] = '{{A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.}}';
     msg['raspberry_gpu_mem'] = '{{Do you want to limit GPU memory?}}';
+    msg['raspberry_l2_cache'] = '{{Do you want disable L2 Cache?}}';
+
+    var currentScore = <?php echo $tplData['currentScore']; ?>;
+    var bestScore = <?php echo $tplData['bestScore']; ?>;
 </script>

@@ -16,7 +16,9 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class OptimizePlugins
+require_once('BaseOptimize.class.php');
+
+class OptimizePlugins extends BaseOptimize
 {
     /**
      * Obtenir la liste de tous les plugins.
@@ -46,10 +48,8 @@ class OptimizePlugins
         $informations['filepath'] = $plugin->getFilepath();
         // Chaque type de log est stocké dans un tableau et identifié par un nombre sauf "default"
         // 1000 représente "Aucun"
-        foreach ($pluginLogConfig as $logType => $value)
-        {
-            if ($value == 1 && $logType != 1000)
-            {
+        foreach ($pluginLogConfig as $logType => $value) {
+            if ($value == 1 && $logType != 1000) {
                 $informations['log'] = true;
             }
         }
@@ -70,29 +70,26 @@ class OptimizePlugins
         $rating = array();
 
         // Valeurs par défaut
-        $rating['score'] = 0;
         $rating['log'] = 'ok';
         $rating['path'] = 'ok';
         $rating['enabled'] = 'ok';
+        self::$bestScore += 3;
 
         // Les logs doivent être désactivés
-        if ($informations['log'] === true)
-        {
-            $rating['score']++;
+        if ($informations['log'] === true) {
+            self::$badPoints++;
             $rating['log'] = 'warn';
         }
 
         // Chemin vers le plugin
-        if (!file_exists(dirname(__FILE__) . '/../../../' . $informations['id']))
-        {
-            $rating['score']++;
+        if (!file_exists(dirname(__FILE__) . '/../../../' . $informations['id'])) {
+            self::$badPoints++;
             $rating['path'] = 'warn';
         }
 
         // Les plugins doivent être activés
-        if ($informations['enabled'] == 0)
-        {
-            $rating['score']++;
+        if ($informations['enabled'] == 0) {
+            self::$badPoints++;
             $rating['enabled'] = 'warn';
         }
 
@@ -109,8 +106,7 @@ class OptimizePlugins
         $plugins = $this->getAllPlugins();
         $informations = array();
 
-        foreach ($plugins as $plugin)
-        {
+        foreach ($plugins as $plugin) {
             $pluginInformations = $this->getInformationsFromPlugin($plugin);
             $rating = $this->ratePluginInformations($pluginInformations);
             $pluginInformations['rating'] = $rating;
@@ -150,10 +146,8 @@ class OptimizePlugins
     {
         $plugin = $this->getPluginById($pluginId);
         $pluginLogConfig = config::byKey('log::level::' . $plugin->getId());
-        foreach ($pluginLogConfig as $key => $value)
-        {
-            if ($value != 0)
-            {
+        foreach ($pluginLogConfig as $key => $value) {
+            if ($value != 0) {
                 $pluginLogConfig[$key] = 0;
             }
         }
@@ -171,16 +165,13 @@ class OptimizePlugins
         // Le plugin n'est pas accessible par son identifiant directement
         $pluginsList = $this->getAllPlugins();
         $infoJsonPath = '';
-        foreach ($pluginsList as $plugin)
-        {
-            if ($plugin->getId() == $pluginId)
-            {
+        foreach ($pluginsList as $plugin) {
+            if ($plugin->getId() == $pluginId) {
                 // Filepath renvoie le chemin vers le fichier info.json
                 $infoJsonPath = $plugin->getFilepath();
             }
         }
-        if (strlen($infoJsonPath) > 0)
-        {
+        if (strlen($infoJsonPath) > 0) {
             $currentPluginDirectory = strstr($infoJsonPath, '/plugin_info/info.json', true);
             rename($currentPluginDirectory, $this->getPluginsDirectory() . '/' . $pluginId);
         }
@@ -189,26 +180,22 @@ class OptimizePlugins
     /**
      * Supprime un répertoire avec son contenu.
      *
-     * @param $path Chemin du répertoire à supprimer
+     * @param string $path Chemin du répertoire à supprimer
      */
     private function deleteDirectory($path)
     {
-        $items = scandir($path);
-        foreach ($items as $item)
-        {
-            if ($item != '.' && $item != '..')
-            {
+        $items = \scandir($path);
+        foreach ($items as $item) {
+            if ($item != '.' && $item != '..') {
                 $currentItemPath = $path . '/' . $item;
-                if (is_dir($currentItemPath))
-                {
+                if (\is_dir($currentItemPath)) {
                     $this->deleteDirectory($currentItemPath);
-                } else
-                {
-                    unlink($currentItemPath);
+                } else {
+                    \unlink($currentItemPath);
                 }
             }
         }
-        rmdir($path);
+        \rmdir($path);
     }
 
     /**
@@ -218,19 +205,15 @@ class OptimizePlugins
      */
     public function removeIfDisabled($pluginId)
     {
-        if ($this->getPluginById($pluginId)->isActive() == 0)
-        {
+        if ($this->getPluginById($pluginId)->isActive() == 0) {
             $update = update::byId($pluginId);
-            if (!is_object($update))
-            {
+            if (!\is_object($update)) {
                 $update = update::byLogicalId($pluginId);
             }
-            if (is_object($update))
-            {
+            if (\is_object($update)) {
                 // Suppression par Jeedom
                 $update->deleteObjet();
-            } else
-            {
+            } else {
                 $this->deleteDirectory($this->getPluginsDirectory() . '/' . $pluginId);
             }
         }

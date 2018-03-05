@@ -16,7 +16,9 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class OptimizeScenarios
+require_once('BaseOptimize.class.php');
+
+class OptimizeScenarios extends BaseOptimize
 {
     /**
      * Obtenir la liste de tous les scénarios.
@@ -60,29 +62,26 @@ class OptimizeScenarios
         $rating = array();
 
         // Valeurs par défaut
-        $rating['score'] = 0;
         $rating['log'] = 'ok';
         $rating['syncmode'] = 'ok';
         $rating['enabled'] = 'ok';
+        self::$bestScore += 3;
 
         // Les logs doivent être désactivés
-        if ($informations['log'] != 'none')
-        {
-            $rating['score']++;
+        if ($informations['log'] != 'none') {
+            self::$badPoints++;
             $rating['log'] = 'warn';
         }
 
         // Les scénarios doivent être exécutés de façon synchrone
-        if ($informations['syncmode'] == 0)
-        {
-            $rating['score']++;
+        if ($informations['syncmode'] == 0) {
+            self::$badPoints++;
             $rating['syncmode'] = 'warn';
         }
 
         // Les scénarios doivent être activés
-        if ($informations['enabled'] == 0)
-        {
-            $rating['score']++;
+        if ($informations['enabled'] == 0) {
+            self::$badPoints++;
             $rating['enabled'] = 'warn';
         }
 
@@ -99,8 +98,7 @@ class OptimizeScenarios
         $scenarios = $this->getAll();
         $informations = array();
 
-        foreach ($scenarios as $scenario)
-        {
+        foreach ($scenarios as $scenario) {
             $scenarioInformations = $this->extractInformationsFromScenario($scenario);
             $rating = $this->rateScenarioInformations($scenarioInformations);
             $scenarioInformations['rating'] = $rating;
@@ -153,8 +151,7 @@ class OptimizeScenarios
     public function removeIfDisabled($scenarioId)
     {
         $scenario = $this->getScenarioById($scenarioId);
-        if ($scenario->getIsActive() == 0)
-        {
+        if ($scenario->getIsActive() == 0) {
             $scenario->remove();
         }
     }
