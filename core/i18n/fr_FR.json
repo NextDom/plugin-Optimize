@@ -38,16 +38,6 @@
         "Jeedom doesn't have sudo rights.": "Jeedom n'a pas de droits sudo.",
         "A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.": "Un fichier de sauvegarde de /boot/config.txt a été créé dans /boot/config.txt.bak. Il est recommandé de redémarrer le système.",
         "If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.": "Si vous n'utilisez pas l'affichage de votre Raspberry Pi, you pouvez limiter l'accès du cache L2 au processeur.",
-        "Do you want disable L2 Cache?": "Voulez-vous désactiver le cache L2 ?",
-        "Python pip is not installed on your system.": "Python pip n'est pas installé sur votre système.",
-        "The Python module 'jsmin' is not installed.": "Le module Python 'jsmin' n'est pas installé.",
-        "The Python module 'csscompressor' is not installed.": "Le module Python 'csscompressor' n'est pas installé.",
-        "Install": "Installer",
-        "Compression: Compress CSS and Javascript to limit bandwidth.": "Compression : Compresser le CSS et le Javascript pour limiter l'usage de la bande passante.",
-        "Compression": "Compression",
-        "Compress CSS": "Compresser le CSS",
-        "Compress Javascript": "Compresser le Javascript",
-        "Do you want to install selected Python module ?": "Voulez-vous installer le module Python sélectionné ?",
-        "Do you want to compress all files of selected type ?": "Voulez-vous compresser tous les fichiers du type sélectionné ?"
+        "Do you want disable L2 Cache?": "Voulez-vous désactiver le cache L2 ?"
     }
 }

@@ -18,11 +18,7 @@ $(document).ready(function ()
 {
     $('.fa-exclamation-triangle').click(function ()
     {
-        askForChange($(this), applyCellChange);
-    });
-    $('.action-button').click(function ()
-    {
-        askForChange($(this), applyButtonChange);
+        askForChange($(this));
     });
     updateProgressBar();
 });
@@ -30,20 +26,13 @@ $(document).ready(function ()
 /**
  * Affiche une fenêtre pour confirmer la modification
  *
- * @param item Elément lié à l'action
- * @param callbackFunction Fonction a appelée après la réception des données de la requête Ajax
+ * @param item
  */
-function askForChange(item, callbackFunction)
+function askForChange(item)
 {
     var category = item.data('category');
-    var id = null;
-    if (item.parent().is('td')) {
-        var row = item.closest('tr');
-        id = row.data('id');
-    }
-    else {
-        id = item.data('id');
-    }
+    var row = item.closest('tr');
+    var id = row.data('id');
     var type = item.data('type');
 
     $('#optimize-modal-content').html(msg[category + '_' + type]);
@@ -51,7 +40,7 @@ function askForChange(item, callbackFunction)
     $('#optimize-modal-valid').unbind();
     $('#optimize-modal-valid').click(function ()
     {
-        ajaxPostRequest(item, category, id, type, callbackFunction);
+        startChange(item, category, id, type);
         $('#optimize-modal').modal('hide');
     });
 }
@@ -59,13 +48,12 @@ function askForChange(item, callbackFunction)
 /**
  * Effectue une requête Ajax qui valide les modifications.
  *
- * @param item Elément HTML concerné
- * @param category Catégorie de la modification
- * @param id Identifiant de l'action
- * @param type Type de modification
- * @param callbackFunction Fonction a appelée après la réception des données de la requête Ajax
+ * @param item
+ * @param category
+ * @param id
+ * @param type
  */
-function ajaxPostRequest(item, category, id, type, callbackFunction)
+function startChange(item, category, id, type)
 {
     $.post({
         url: 'plugins/Optimize/core/ajax/Optimize.ajax.php',
@@ -82,7 +70,7 @@ function ajaxPostRequest(item, category, id, type, callbackFunction)
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
             }
             else {
-                callbackFunction(item, category, type);
+                applyChange(item, category, type);
             }
         },
         error: function (request, status, error)
@@ -99,7 +87,7 @@ function ajaxPostRequest(item, category, id, type, callbackFunction)
  * @param category Catégorie de la modification
  * @param type Type de modification
  */
-function applyCellChange(item, category, type)
+function applyChange(item, category, type)
 {
     var row = item.closest('tr');
     if (type === 'enabled') {
@@ -119,20 +107,6 @@ function applyCellChange(item, category, type)
         currentScore++;
     }
     updateProgressBar();
-}
-
-/**
- * Applique les changements d'un bouton si la requête réussie
- *
- * @param item Elément HTML concerné
- * @param category Catégorie de la modification
- * @param type Type de modification
- */
-function applyButtonChange(item, category, type)
-{
-    if (type === 'install') {
-        location.reload();
-    }
 }
 
 /**

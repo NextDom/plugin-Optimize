@@ -1,5 +1,4 @@
 <?php
-
 /* This file is part of Jeedom.
  *
  * Jeedom is free software: you can redistribute it and/or modify
@@ -19,7 +18,7 @@
 /**
  * Affiche contenu d'une cellule pouvan nécessiter une action de l'utilisateur
  *
- * @param array  $rating Note de l'élément
+ * @param array $rating Note de l'élément
  * @param string $category Catégorie
  * @param string $type Type de modification
  */
@@ -164,70 +163,32 @@ function showActionCell($rating, $category, $type)
                 <li>
                     {{Logs enabled: Log writing slows down execution. They must be disabled if they are not used,}}
                 </li>
-                <li>
-                    {{Compression: Compress CSS and Javascript to limit bandwidth.}}
-                </li>
             </ul>
         </div>
     </div>
-    <div id="system" class="collapse">
-        <div class="row">
-            <div class="col-sm-12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>{{Name}}</th>
-                        <th>{{Logs}}</th>
+    <div id="system" class="row collapse">
+        <div class="col-sm-12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{Name}}</th>
+                    <th>{{Logs}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($tplData['systemLogs'] as $systemLog) : ?>
+                    <tr data-id="<?php echo $systemLog['id']; ?>">
+                        <td>
+                            <?php echo $systemLog['name']; ?>
+                        </td>
+                        <?php
+                        showActionCell($systemLog['rating'], 'system', 'log');
+                        ?>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($tplData['system_logs'] as $systemLog) : ?>
-                        <tr data-id="<?php echo $systemLog['id']; ?>">
-                            <td>
-                                <?php echo $systemLog['name']; ?>
-                            </td>
-                            <?php
-                            showActionCell($systemLog['rating'], 'system', 'log');
-                            ?>
-                        </tr>
-                    <?php endforeach ?>
-                    </tbody>
-                </table>
-            </div>
+                <?php endforeach ?>
+                </tbody>
+            </table>
         </div>
-        <?php if ($tplData['system_pip'] === true) : ?>
-            <div class="row">
-                <div class="col-sm-12">
-                    <h3>{{Compression}}</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <?php if ($tplData['system_csscompressor'] === true) : ?>
-                        <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system" data-type="compress"><i class="fa fa-compress"></i> {{Compress CSS}}</button>
-                    <?php else: ?>
-                        {{The Python module 'csscompressor' is not installed.}}
-                        <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system" data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}</button>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <?php if ($tplData['system_jsmin'] === true) : ?>
-                        <button class="action-button btn btn-primary" data-id="jsmin" data-category="system" data-type="compress"><i class="fa fa-compress"></i> {{Compress Javascript}}</button>
-                    <?php else: ?>
-                        {{The Python module 'jsmin' is not installed.}}
-                        <button class="action-button btn btn-primary" data-id="jsmin" data-category="system" data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}</button>
-                    <?php endif; ?>
-                </div>
-            </div>
-        <?php else: ?>
-            <div class="row">
-                <div class="col-sm-12">
-                    {{Python pip is not installed on your system.}}
-                </div>
-            </div>
-        <?php endif; ?>
     </div>
     <?php if ($tplData['rpi'] === true): ?>
         <div class="row">
@@ -300,8 +261,6 @@ function showActionCell($rating, $category, $type)
     msg['raspberry_config_change'] = '{{A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.}}';
     msg['raspberry_gpu_mem'] = '{{Do you want to limit GPU memory?}}';
     msg['raspberry_l2_cache'] = '{{Do you want disable L2 Cache?}}';
-    msg['system_install'] = '{{Do you want to install selected Python module ?}}';
-    msg['system_compress'] = '{{Do you want to compress all files of selected type ?}}';
 
     var currentScore = <?php echo $tplData['currentScore']; ?>;
     var bestScore = <?php echo $tplData['bestScore']; ?>;
