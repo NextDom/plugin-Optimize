@@ -107,7 +107,7 @@ class OptimizeParser
     /**
      * Requête d'optimisation du système
      *
-     * @param integer $systemId Identifiant de l'élément à améliorer
+     * @param string $systemId Identifiant de l'élément à améliorer
      * @param string  $type Type d'optimisation
      *
      * @return bool True si la requête a été reconnue et exécutée.
@@ -118,10 +118,19 @@ class OptimizeParser
         require_once(dirname(__FILE__) . '/OptimizeSystem.class.php');
 
         $optimizeSystem = new OptimizeSystem();
-        if ($type == 'log') {
-            $optimizeSystem->disableLogs($systemId);
-        } else {
-            $result = false;
+        switch ($type) {
+            case 'log':
+                $optimizeSystem->disableLogs($systemId);
+                break;
+            case 'install':
+                $optimizeSystem->install($systemId);
+                break;
+            case 'compress':
+                $optimizeSystem->compress($systemId);
+                break;
+            default:
+                $result = false;
+                break;
         }
         return $result;
     }
