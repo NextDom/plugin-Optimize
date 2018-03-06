@@ -40,12 +40,7 @@ $optimizePlugins = new OptimizePlugins();
 $tplData['plugins'] = $optimizePlugins->getInformations();
 
 $optimizeSystem = new OptimizeSystem();
-$tplData['system_logs'] = $optimizeSystem->getLogInformations();
-$tplData['system_pip'] = $optimizeSystem->isPipInstalled();
-if ($tplData['system_pip'] === true) {
-    $tplData['system_csscompressor'] = $optimizeSystem->isCssCompressorInstalled();
-    $tplData['system_jsmin'] = $optimizeSystem->isJsMinInstalled();
-}
+$tplData['systemLogs'] = $optimizeSystem->getInformations();
 
 $tplData['rpi'] = false;
 $optimizeRPi = new OptimizeRPi();
@@ -54,7 +49,9 @@ if ($optimizeRPi->isRaspberryPi()) {
     $tplData['rpi_can_optimize'] = $optimizeRPi->canParseSystemConfigFile();
     if ($tplData['rpi_can_optimize'] === true) {
         $tplData['rpi_sudo'] = $optimizeRPi->canSudo();
-        $tplData['rating'] = $optimizeRPi->getRating();
+        $tplData['rating'] = array();
+        $tplData['rating']['gpu_mem'] = $optimizeRPi->getGpuMemOptimizationInformation();
+        $tplData['rating']['l2_cache'] = $optimizeRPi->getL2CacheOptimizationInformation();
     }
 }
 
