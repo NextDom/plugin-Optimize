@@ -38,6 +38,10 @@
         "Jeedom doesn't have sudo rights.": "Jeedom doesn't have sudo rights.",
         "A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.": "A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.",
         "If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.": "If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.",
-        "Do you want disable L2 Cache?": "Do you want disable L2 Cache?"
+        "Do you want disable L2 Cache?": "Do you want disable L2 Cache?",
+        "Python pip is not installed on your system.": "Python pip is not installed on your system.",
+        "The Python module 'jsmin' is not installed.": "The Python module 'jsmin' is not installed.",
+        "The Python module 'csscompressor' is not installed.": "The Python module 'csscompressor' is not installed.",
+        "Install": "Install"
     }
 }

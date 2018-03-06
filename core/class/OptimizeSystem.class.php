@@ -89,8 +89,10 @@ class OptimizeSystem extends BaseOptimize
 
     /**
      * Test si la commande pip est installée sur le système
+     *
+     * @return true si pip a été trouvé
      */
-    public function canPip() {
+    public function isPipInstalled() {
         $return = false;
         // La commande pip --version met trop de temps à se lancer et ralentie le
         // chargement de la page
@@ -101,7 +103,34 @@ class OptimizeSystem extends BaseOptimize
         }
         return $return;
     }
-    
+
+    /**
+     * Test si le module de compression CSS est installé
+     *
+     * @return bool true si csscompressor est installé
+     */
+    public function isCssCompressorInstalled() {
+        return $this->testPipPackage('csscompressor');
+    }
+
+    /**
+     * Test si le module de compression CSS est installé
+     *
+     * @return bool true si csscompressor est installé
+     */
+    public function isJsMinInstalled() {
+        return $this->testPipPackage('jsmin');
+    }
+
+    public function testPipPackage($name) {
+        $return = false;
+        $cmdReturn = exec('pip list | grep '.$name);
+        if ($cmdReturn != '' && strpos($cmdReturn, 'DEPRECATED') !== 0) {
+            $return = true;
+        }
+        return $return;
+    }
+
     /**
      * Désactiver les logs d'un service.
      *

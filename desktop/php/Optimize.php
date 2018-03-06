@@ -41,8 +41,11 @@ $tplData['plugins'] = $optimizePlugins->getInformations();
 
 $optimizeSystem = new OptimizeSystem();
 $tplData['system_logs'] = $optimizeSystem->getLogInformations();
-$tplData['system_can_pip'] = $optimizeSystem->canPip();
-$tplData['system_can_pip'] = $optimizeSystem->canPip();
+$tplData['system_pip'] = $optimizeSystem->isPipInstalled();
+if ($tplData['system_pip'] === true) {
+    $tplData['system_csscompressor'] = $optimizeSystem->isCssCompressorInstalled();
+    $tplData['system_jsmin'] = $optimizeSystem->isJsMinInstalled();
+}
 
 $tplData['rpi'] = false;
 $optimizeRPi = new OptimizeRPi();

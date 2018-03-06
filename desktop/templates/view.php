@@ -191,6 +191,34 @@ function showActionCell($rating, $category, $type)
             </table>
         </div>
     </div>
+    <?php if ($tplData['system_pip'] === true) : ?>
+        <div class="row">
+            <div class="col-sm-12">
+                <?php if ($tplData['system_csscompressor'] === true) : ?>
+
+                <?php else: ?>
+                    {{The Python module 'csscompressor' is not installed.}}
+                    <a href="btn btn-primary">{{Install}}</a>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <?php if ($tplData['system_jsmin'] === true) : ?>
+
+                <?php else: ?>
+                    {{The Python module 'jsmin' is not installed.}}
+                    <a href="btn btn-primary">{{Install}}</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php else: ?>
+    <div class="row">
+        <div class="col-sm-12">
+            {{Python pip is not installed on your system.}}
+        </div>
+    </div>
+    <?php endif; ?>
     <?php if ($tplData['rpi'] === true): ?>
         <div class="row">
             <div class="col-sm-12">
