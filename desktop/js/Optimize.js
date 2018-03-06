@@ -18,7 +18,11 @@ $(document).ready(function ()
 {
     $('.fa-exclamation-triangle').click(function ()
     {
-        askForChange($(this));
+        askForChange($(this), applyCellChange);
+    });
+    $('.action-button').click(function ()
+    {
+        askForChange($(this), applyButtonChange);
     });
     updateProgressBar();
 });
@@ -26,13 +30,20 @@ $(document).ready(function ()
 /**
  * Affiche une fenêtre pour confirmer la modification
  *
- * @param item
+ * @param item Elément lié à l'action
+ * @param callbackFunction Fonction a appelée après la réception des données de la requête Ajax
  */
-function askForChange(item)
+function askForChange(item, callbackFunction)
 {
     var category = item.data('category');
-    var row = item.closest('tr');
-    var id = row.data('id');
+    var id = null;
+    if (item.parent().is('td')) {
+        var row = item.closest('tr');
+        id = row.data('id');
+    }
+    else {
+        id = item.data('id');
+    }
     var type = item.data('type');
 
     $('#optimize-modal-content').html(msg[category + '_' + type]);
@@ -40,7 +51,7 @@ function askForChange(item)
     $('#optimize-modal-valid').unbind();
     $('#optimize-modal-valid').click(function ()
     {
-        startChange(item, category, id, type);
+        ajaxPostRequest(item, category, id, type, callbackFunction);
         $('#optimize-modal').modal('hide');
     });
 }
@@ -48,12 +59,13 @@ function askForChange(item)
 /**
  * Effectue une requête Ajax qui valide les modifications.
  *
- * @param item
- * @param category
- * @param id
- * @param type
+ * @param item Elément HTML concerné
+ * @param category Catégorie de la modification
+ * @param id Identifiant de l'action
+ * @param type Type de modification
+ * @param callbackFunction Fonction a appelée après la réception des données de la requête Ajax
  */
-function startChange(item, category, id, type)
+function ajaxPostRequest(item, category, id, type, callbackFunction)
 {
     $.post({
         url: 'plugins/Optimize/core/ajax/Optimize.ajax.php',
@@ -70,7 +82,7 @@ function startChange(item, category, id, type)
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
             }
             else {
-                applyChange(item, category, type);
+                callbackFunction(item, category, type);
             }
         },
         error: function (request, status, error)
@@ -87,7 +99,7 @@ function startChange(item, category, id, type)
  * @param category Catégorie de la modification
  * @param type Type de modification
  */
-function applyChange(item, category, type)
+function applyCellChange(item, category, type)
 {
     var row = item.closest('tr');
     if (type === 'enabled') {
@@ -107,6 +119,20 @@ function applyChange(item, category, type)
         currentScore++;
     }
     updateProgressBar();
+}
+
+/**
+ * Applique les changements d'un bouton si la requête réussie
+ *
+ * @param item Elément HTML concerné
+ * @param category Catégorie de la modification
+ * @param type Type de modification
+ */
+function applyButtonChange(item, category, type)
+{
+    if (type === 'install') {
+        location.reload();
+    }
 }
 
 /**
