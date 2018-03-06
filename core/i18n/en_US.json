@@ -42,6 +42,12 @@
         "Python pip is not installed on your system.": "Python pip is not installed on your system.",
         "The Python module 'jsmin' is not installed.": "The Python module 'jsmin' is not installed.",
         "The Python module 'csscompressor' is not installed.": "The Python module 'csscompressor' is not installed.",
-        "Install": "Install"
+        "Install": "Install",
+        "Compression: Compress CSS and Javascript to limit bandwidth.": "Compression: Compress CSS and Javascript to limit bandwidth.",
+        "Compression": "Compression",
+        "Compress CSS": "Compress CSS",
+        "Compress Javascript": "Compress Javascript",
+        "Do you want to install selected Python module ?": "Do you want to install selected Python module ?",
+        "Do you want to compress all files of selected type ?": "Do you want to compress all files of selected type ?"
     }
 }

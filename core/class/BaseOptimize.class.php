@@ -66,4 +66,9 @@ class BaseOptimize
     {
         return jeedom::isCapable('sudo');
     }
+
+    public function getJeedomRootDirectory()
+    {
+        return realpath(dirname(__FILE__) . '/../../../../');
+    }
 }

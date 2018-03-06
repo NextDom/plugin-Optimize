@@ -94,7 +94,8 @@ class OptimizeRPi extends BaseOptimize
      *
      * @return array Résultats
      */
-    public function getRating() {
+    public function getRating()
+    {
         $result = array();
         $result['gpu_mem'] = $this->getGpuMemOptimizationInformation();
         $result['l2_cache'] = $this->getL2CacheOptimizationInformation();
