@@ -1,4 +1,5 @@
 <?php
+
 /* This file is part of Jeedom.
  *
  * Jeedom is free software: you can redistribute it and/or modify
@@ -176,7 +177,7 @@ function showActionCell($rating, $category, $type)
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($tplData['systemLogs'] as $systemLog) : ?>
+                <?php foreach ($tplData['system_logs'] as $systemLog) : ?>
                     <tr data-id="<?php echo $systemLog['id']; ?>">
                         <td>
                             <?php echo $systemLog['name']; ?>

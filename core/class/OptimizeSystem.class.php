@@ -63,7 +63,7 @@ class OptimizeSystem extends BaseOptimize
      *
      * @return array Informations sur l'ensemble des scénarios
      */
-    public function getInformations()
+    public function getLogInformations()
     {
         $informations = array();
 
@@ -87,6 +87,21 @@ class OptimizeSystem extends BaseOptimize
         return $informations;
     }
 
+    /**
+     * Test si la commande pip est installée sur le système
+     */
+    public function canPip() {
+        $return = false;
+        // La commande pip --version met trop de temps à se lancer et ralentie le
+        // chargement de la page
+        $cmdReturn = exec('whereis pip');
+        // Test si il y a bien un chemin, en cas d'erreur, la commande renvoie pip:
+        if (\strlen($cmdReturn) > 5) {
+            $return = true;
+        }
+        return $return;
+    }
+    
     /**
      * Désactiver les logs d'un service.
      *
