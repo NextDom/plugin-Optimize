@@ -137,7 +137,8 @@ class OptimizeSystem extends BaseOptimize
         $result = false;
         // Test du lancement du module
         // La commande pip list est trop longue à s'initialiser
-        \exec('python -m ' . $name . ' --help', $output, $returnCode);
+        // python -m pose problème avec jsmin qui plante sans argument
+        \exec('python -c "' . $name . '"', $output, $returnCode);
         if ($returnCode == 0) {
             $result = true;
         }
@@ -192,6 +193,7 @@ class OptimizeSystem extends BaseOptimize
      * Installe un module pyhton avec pip
      *
      * @param string $packageName Nom du module
+     *
      * @return bool true si l'installation a réussie
      */
     private function pipInstall($packageName)
