@@ -214,7 +214,7 @@ class OptimizePlugins extends BaseOptimize
                 // Suppression par Jeedom
                 $update->deleteObjet();
             } else {
-                $this->deleteDirectory($this->get() . '/' . $pluginId);
+                $this->deleteDirectory($this->getPluginsDirectory() . '/' . $pluginId);
             }
         }
     }
