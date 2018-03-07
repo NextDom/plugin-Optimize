@@ -1,4 +1,9 @@
 # Changelog
+
+### Version 1.2.0
+* Minify CSS files
+* Minify Javascript files
+
 ### Version 1.1.0
 * Optimizations for Raspberry Pi
   * Limit for the video memory

@@ -22,7 +22,9 @@ The plugin is composed mainly of a page that provides access to all the features
 
 ## System
 
-* Logs: As for other cases, if you don't have problem with your installation, it is better to disable them.
+* Logs: As for other cases, if you don't have problem with your installation, it is better to disable them,
+* Minify all javascripts files in Jeedom,
+* Minify all CSS files in Jeedom.
 
 ## Raspberry Pi
 

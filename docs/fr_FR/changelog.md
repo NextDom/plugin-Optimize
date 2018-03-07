@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.2.0
+* Minification des fichiers CSS
+* Minification des fichiers Javascript
+
 ### Version 1.1.0
 * Optimisations pour le Rapsberry Pi
   * Limitation de la mémoire vidéo

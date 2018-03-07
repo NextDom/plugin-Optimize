@@ -34,3 +34,12 @@
 #optimize-plugin .hidden-msg {
     display: none;
 }
+
+#optimize-plugin table {
+    margin-bottom: 0;
+}
+
+#optimize-plugin h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}

@@ -31,12 +31,13 @@
     margin: 0;
   }
 
-
   li {
     float: none;
     line-height: $sidenav-item-height;
 
-    &.active { background-color: rgba(0,0,0,.05); }
+    &.active {
+      background-color: rgba(0, 0, 0, .05);
+    }
   }
 
   a {
@@ -47,7 +48,9 @@
     line-height: $sidenav-item-height;
     padding: 0 $sidenav-padding-right;
 
-    &:hover { background-color: rgba(0,0,0,.05);}
+    &:hover {
+      background-color: rgba(0, 0, 0, .05);
+    }
 
     &.btn, &.btn-large, &.btn-flat, &.btn-floating {
       margin: 10px 15px;
@@ -55,15 +58,22 @@
 
     &.btn,
     &.btn-large,
-    &.btn-floating { color: $button-raised-color; }
-    &.btn-flat { color: $button-flat-color; }
+    &.btn-floating {
+      color: $button-raised-color;
+    }
+    &.btn-flat {
+      color: $button-flat-color;
+    }
 
     &.btn:hover,
-    &.btn-large:hover { background-color: lighten($button-raised-background, 5%); }
-    &.btn-floating:hover { background-color: $button-raised-background; }
+    &.btn-large:hover {
+      background-color: lighten($button-raised-background, 5%);
+    }
+    &.btn-floating:hover {
+      background-color: $button-raised-background;
+    }
   }
 }
-
 
 // Touch interaction
 .drag-target {
@@ -74,7 +84,6 @@
   z-index: 998;
 }
 
-
 // Hidden side-nav for all sizes
 .side-nav.fixed {
   a {
@@ -83,7 +92,6 @@
     color: $sidenav-font-color;
   }
 }
-
 
 // Fixed side-nav shown
 .side-nav.fixed {
@@ -109,7 +117,6 @@
   }
 }
 
-
 .side-nav .collapsible-body li.active,
 .side-nav.fixed .collapsible-body li.active {
   background-color: $primary-color;
@@ -118,7 +125,6 @@
   }
 }
 
-
 #sidenav-overlay {
   position: fixed;
   top: 0;
@@ -126,7 +132,7 @@
   right: 0;
 
   height: 120vh;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0, 0, 0, .5);
   z-index: 997;
 
   will-change: opacity;

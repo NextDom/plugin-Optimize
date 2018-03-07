@@ -68,8 +68,8 @@ form p:last-child {
     transform: scale(1);
     border: 0;
     border-radius: 50%;
-    box-shadow: 0 0 0 10px rgba(0,0,0,.1);
-    background-color: rgba(0,0,0,.1);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, .1);
+    background-color: rgba(0, 0, 0, .1);
   }
 }
 
@@ -96,7 +96,7 @@ form p:last-child {
 
 /* Indeterminate checkbox */
 [type="checkbox"]:indeterminate {
-  +label:before {
+  + label:before {
     top: -11px;
     left: -12px;
     width: 10px;
@@ -189,7 +189,7 @@ form p:last-child {
   &.tabbed:focus + label:after {
     border-radius: 2px;
     border-color: $radio-empty-color;
-    background-color: rgba(0,0,0,.1);
+    background-color: rgba(0, 0, 0, .1);
   }
 
   &.tabbed:checked:focus + label:after {
