@@ -1,8 +1,13 @@
 /* Select Field
    ========================================================================== */
 
-select { display: none; }
-select.browser-default { display: block; }
+select {
+  display: none;
+}
+
+select.browser-default {
+  display: block;
+}
 
 select {
   background-color: $select-background;
@@ -56,16 +61,16 @@ select {
 
 // Disabled styles
 select:disabled {
-  color: rgba(0,0,0,.3);
+  color: rgba(0, 0, 0, .3);
 }
 
 .select-wrapper input.select-dropdown:disabled {
-  color: rgba(0,0,0,.3);
+  color: rgba(0, 0, 0, .3);
   cursor: default;
   -webkit-user-select: none; /* webkit (safari, chrome) browsers */
   -moz-user-select: none; /* mozilla browsers */
   -ms-user-select: none; /* IE10+ */
-  border-bottom: 1px solid rgba(0,0,0,.3);
+  border-bottom: 1px solid rgba(0, 0, 0, .3);
 }
 
 .select-wrapper i {
@@ -86,7 +91,9 @@ select:disabled {
   width: calc(100% - 3rem);
 }
 
-.prefix ~ label { margin-left: 3rem; }
+.prefix ~ label {
+  margin-left: 3rem;
+}
 
 // Icons
 .select-dropdown li {

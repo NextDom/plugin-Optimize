@@ -108,7 +108,7 @@ class OptimizeParser
      * Requête d'optimisation du système
      *
      * @param string $systemId Identifiant de l'élément à améliorer
-     * @param string  $type Type d'optimisation
+     * @param string $type Type d'optimisation
      *
      * @return bool True si la requête a été reconnue et exécutée.
      */
@@ -125,8 +125,8 @@ class OptimizeParser
             case 'install':
                 $optimizeSystem->install($systemId);
                 break;
-            case 'compress':
-                $optimizeSystem->compress($systemId);
+            case 'minify':
+                $optimizeSystem->minify($systemId);
                 break;
             default:
                 $result = false;

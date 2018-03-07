@@ -82,7 +82,7 @@ class OptimizePlugins extends BaseOptimize
         }
 
         // Chemin vers le plugin
-        if (!file_exists($this->getJeedomRootDirectory().'/plugins/' . $informations['id'])) {
+        if (!file_exists($this->getJeedomRootDirectory() . '/plugins/' . $informations['id'])) {
             self::$badPoints++;
             $rating['path'] = 'warn';
         }

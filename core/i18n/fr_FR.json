@@ -43,11 +43,11 @@
         "The Python module 'jsmin' is not installed.": "Le module Python 'jsmin' n'est pas installé.",
         "The Python module 'csscompressor' is not installed.": "Le module Python 'csscompressor' n'est pas installé.",
         "Install": "Installer",
-        "Compression: Compress CSS and Javascript to limit bandwidth.": "Compression : Compresser le CSS et le Javascript pour limiter l'usage de la bande passante.",
-        "Compression": "Compression",
-        "Compress CSS": "Compresser le CSS",
-        "Compress Javascript": "Compresser le Javascript",
+        "Minify: Reduce size of CSS and Javascript to limit bandwidth.": "Minification : Réduire la taille des fichiers CSS et le Javascript pour limiter l'usage de la bande passante.",
+        "Minification": "Minification",
+        "Minify CSS": "Minifier le CSS",
+        "Minify Javascript": "Minifier le Javascript",
         "Do you want to install selected Python module ?": "Voulez-vous installer le module Python sélectionné ?",
-        "Do you want to compress all files of selected type ?": "Voulez-vous compresser tous les fichiers du type sélectionné ?"
+        "Do you want to minify all files of selected type ?": "Voulez-vous minifier tous les fichiers du type sélectionné ?"
     }
 }

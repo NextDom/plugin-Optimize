@@ -106,7 +106,7 @@ class OptimizeSystem extends BaseOptimize
     }
 
     /**
-     * Test si le module de compression CSS est installé
+     * Test si le module de csscompressor est installé
      *
      * @return bool true si csscompressor est installé
      */
@@ -116,9 +116,9 @@ class OptimizeSystem extends BaseOptimize
     }
 
     /**
-     * Test si le module de compression CSS est installé
+     * Test si le module de jsmin est installé
      *
-     * @return bool true si csscompressor est installé
+     * @return bool true si jsmin est installé
      */
     public function isJsMinInstalled()
     {
@@ -137,7 +137,7 @@ class OptimizeSystem extends BaseOptimize
         $result = false;
         // Test du lancement du module
         // La commande pip list est trop longue à s'initialiser
-        \exec('python -m '.$name.' --help', $output, $returnCode);
+        \exec('python -m ' . $name . ' --help', $output, $returnCode);
         if ($returnCode == 0) {
             $result = true;
         }
@@ -166,23 +166,23 @@ class OptimizeSystem extends BaseOptimize
     }
 
     /**
-     * Compresse un type de documents
+     * Minifie un type de documents
      *
-     * @param string $item Type de compression
+     * @param string $item Type de minification
      *
-     * @return bool true si la compression a été recoonue et effectuée
+     * @return bool true si la minification a été reconnue et effectuée
      */
-    public function compress($item)
+    public function minify($item)
     {
         $result = true;
         switch ($item) {
             case 'csscompressor':
                 $fileList = $this->findFilesRecursively($this->getJeedomRootDirectory(), 'css');
-                $this->compressCss($fileList);
+                $this->minifyCss($fileList);
                 break;
             case 'jsmin':
                 $fileList = $this->findFilesRecursively($this->getJeedomRootDirectory(), 'js');
-                $this->compressJavascript($fileList);
+                $this->minifyJavascript($fileList);
                 break;
         }
         return $result;
@@ -209,7 +209,7 @@ class OptimizeSystem extends BaseOptimize
      *
      * @param array $fileList Liste des fichiers
      */
-    private function compressCss($fileList)
+    private function minifyCss($fileList)
     {
         foreach ($fileList as $file) {
             \exec('python -m csscompressor ' . $file . ' -o ' . $file);
@@ -221,7 +221,7 @@ class OptimizeSystem extends BaseOptimize
      *
      * @param array $fileList Liste de fichiers
      */
-    private function compressJavascript($fileList)
+    private function minifyJavascript($fileList)
     {
         foreach ($fileList as $file) {
             \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
