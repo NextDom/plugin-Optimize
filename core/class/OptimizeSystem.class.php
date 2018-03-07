@@ -82,7 +82,7 @@ class OptimizeSystem extends BaseOptimize
             }
             $rating = $this->rateSystemLogInformations($systemLogInformations);
             $systemLogInformations['rating'] = $rating;
-            array_push($informations, $systemLogInformations);
+            \array_push($informations, $systemLogInformations);
         }
         return $informations;
     }
@@ -97,7 +97,7 @@ class OptimizeSystem extends BaseOptimize
         $result = false;
         // La commande pip --version met trop de temps à se lancer et ralentie le
         // chargement de la page
-        $cmdReturn = exec('whereis pip');
+        $cmdReturn = \exec('whereis pip');
         // Test si il y a bien un chemin, en cas d'erreur, la commande renvoie pip:
         if (\strlen($cmdReturn) > 5) {
             $result = true;
@@ -135,8 +135,10 @@ class OptimizeSystem extends BaseOptimize
     public function testPipPackage($name)
     {
         $result = false;
-        $cmdReturn = exec('pip list | grep ' . $name);
-        if ($cmdReturn != '' && strpos($cmdReturn, 'DEPRECATED') !== 0) {
+        // Test du lancement du module
+        // La commande pip list est trop longue à s'initialiser
+        \exec('python -m '.$name.' --help', $output, $returnCode);
+        if ($returnCode == 0) {
             $result = true;
         }
         return $result;
@@ -195,7 +197,7 @@ class OptimizeSystem extends BaseOptimize
     private function pipInstall($packageName)
     {
         $result = false;
-        exec(system::getCmdSudo() . ' pip install ' . $packageName, $output, $resultCode);
+        \exec(system::getCmdSudo() . ' pip install ' . $packageName, $output, $resultCode);
         if ($resultCode == 0) {
             $result = true;
         }
@@ -210,7 +212,7 @@ class OptimizeSystem extends BaseOptimize
     private function compressCss($fileList)
     {
         foreach ($fileList as $file) {
-            exec('python -m csscompressor ' . $file . ' -o ' . $file);
+            \exec('python -m csscompressor ' . $file . ' -o ' . $file);
         }
     }
 
@@ -222,8 +224,8 @@ class OptimizeSystem extends BaseOptimize
     private function compressJavascript($fileList)
     {
         foreach ($fileList as $file) {
-            exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
-            exec('cp /tmp/tmp.js ' . $file);
+            \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
+            \exec('cp /tmp/tmp.js ' . $file);
         }
     }
 

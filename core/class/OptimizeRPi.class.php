@@ -279,7 +279,7 @@ class OptimizeRPi extends BaseOptimize
     {
         $result = false;
         if ($this->canSudo()) {
-            exec(system::getCmdSudo() . ' cp ' . self::SYSTEM_CONFIG_FILE_PATH . ' ' . self::SYSTEM_CONFIG_FILE_PATH . '.bak');
+            \exec(system::getCmdSudo() . ' cp ' . self::SYSTEM_CONFIG_FILE_PATH . ' ' . self::SYSTEM_CONFIG_FILE_PATH . '.bak');
             $result = file_exists(self::SYSTEM_CONFIG_FILE_PATH . '.bak');
         }
         return $result;
@@ -292,7 +292,7 @@ class OptimizeRPi extends BaseOptimize
      */
     private function commentParameter($name)
     {
-        exec(system::getCmdSudo() . ' sed -i\'\' \'s/^' . $name . '/#' . $name . '/\' ' . self::SYSTEM_CONFIG_FILE_PATH);
+        \exec(system::getCmdSudo() . ' sed -i\'\' \'s/^' . $name . '/#' . $name . '/\' ' . self::SYSTEM_CONFIG_FILE_PATH);
     }
 
     /**
@@ -303,6 +303,6 @@ class OptimizeRPi extends BaseOptimize
      */
     private function addParameter($name, $value)
     {
-        exec(system::getCmdSudo() . ' sh -c "echo \'' . $name . '=' . $value . '\' >> ' . self::SYSTEM_CONFIG_FILE_PATH . '"');
+        \exec(system::getCmdSudo() . ' sh -c "echo \'' . $name . '=' . $value . '\' >> ' . self::SYSTEM_CONFIG_FILE_PATH . '"');
     }
 }

@@ -102,7 +102,7 @@ class OptimizeScenarios extends BaseOptimize
             $scenarioInformations = $this->extractInformationsFromScenario($scenario);
             $rating = $this->rateScenarioInformations($scenarioInformations);
             $scenarioInformations['rating'] = $rating;
-            array_push($informations, $scenarioInformations);
+            \array_push($informations, $scenarioInformations);
         }
         return $informations;
     }

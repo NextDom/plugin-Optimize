@@ -67,6 +67,11 @@ class BaseOptimize
         return jeedom::isCapable('sudo');
     }
 
+    /**
+     * Obtenir le répertoire racine de Jeedom
+     *
+     * @return bool|string Chemin de la racine de Jeedom
+     */
     public function getJeedomRootDirectory()
     {
         return realpath(dirname(__FILE__) . '/../../../../');

@@ -82,7 +82,7 @@ class OptimizePlugins extends BaseOptimize
         }
 
         // Chemin vers le plugin
-        if (!file_exists(dirname(__FILE__) . '/../../../' . $informations['id'])) {
+        if (!file_exists($this->getJeedomRootDirectory().'/plugins/' . $informations['id'])) {
             self::$badPoints++;
             $rating['path'] = 'warn';
         }
@@ -110,7 +110,7 @@ class OptimizePlugins extends BaseOptimize
             $pluginInformations = $this->getInformationsFromPlugin($plugin);
             $rating = $this->ratePluginInformations($pluginInformations);
             $pluginInformations['rating'] = $rating;
-            array_push($informations, $pluginInformations);
+            \array_push($informations, $pluginInformations);
         }
         return $informations;
     }
@@ -134,7 +134,7 @@ class OptimizePlugins extends BaseOptimize
      */
     private function getPluginsDirectory()
     {
-        return realpath(dirname(__FILE__) . '/../../../');
+        return \realpath(dirname(__FILE__) . '/../../../');
     }
 
     /**
@@ -171,9 +171,9 @@ class OptimizePlugins extends BaseOptimize
                 $infoJsonPath = $plugin->getFilepath();
             }
         }
-        if (strlen($infoJsonPath) > 0) {
+        if (\strlen($infoJsonPath) > 0) {
             $currentPluginDirectory = strstr($infoJsonPath, '/plugin_info/info.json', true);
-            rename($currentPluginDirectory, $this->getPluginsDirectory() . '/' . $pluginId);
+            \rename($currentPluginDirectory, $this->getJeedomRootDirectory() . '/plugins/' . $pluginId);
         }
     }
 
@@ -214,7 +214,7 @@ class OptimizePlugins extends BaseOptimize
                 // Suppression par Jeedom
                 $update->deleteObjet();
             } else {
-                $this->deleteDirectory($this->getPluginsDirectory() . '/' . $pluginId);
+                $this->deleteDirectory($this->get() . '/' . $pluginId);
             }
         }
     }
