@@ -41,7 +41,7 @@ try {
         ajax::success();
     }
 
-    throw new \Exception(__('No method corresponding to : ', __FILE__) . init('category'));
+    throw new \Exception(__('No method corresponding to : ', __FILE__) . $category . ' ' . $type . ' ' . $id);
 
 } catch (\Exception $e) {
     ajax::error(displayExeption($e), $e->getCode());

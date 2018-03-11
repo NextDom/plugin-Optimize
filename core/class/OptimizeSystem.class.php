@@ -63,7 +63,7 @@ class OptimizeSystem extends BaseOptimize
      *
      * @return array Informations sur l'ensemble des scénarios
      */
-    public function getInformations()
+    public function getLogInformations()
     {
         $informations = array();
 

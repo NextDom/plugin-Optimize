@@ -76,16 +76,6 @@ class OptimizeRPi extends BaseOptimize
     }
 
     /**
-     * Test si Jeedom peut exécuter des actions demandant des privilèges.
-     *
-     * @return bool true si c'est possible
-     */
-    public function canSudo()
-    {
-        return jeedom::isCapable('sudo');
-    }
-
-    /**
      * Test si le fichier de configuration système est lisible et lit son contenu
      *
      * @return bool true si la lecture a réussi
@@ -96,6 +86,19 @@ class OptimizeRPi extends BaseOptimize
         if ($this->isSystemConfigFileReadable()) {
             return $this->parseSystemConfigFile();
         }
+        return $result;
+    }
+
+    /**
+     * Obtenir l'ensemble des notes
+     *
+     * @return array Résultats
+     */
+    public function getRating()
+    {
+        $result = array();
+        $result['gpu_mem'] = $this->getGpuMemOptimizationInformation();
+        $result['l2_cache'] = $this->getL2CacheOptimizationInformation();
         return $result;
     }
 

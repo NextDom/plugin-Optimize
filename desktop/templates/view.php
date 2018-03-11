@@ -1,4 +1,5 @@
 <?php
+
 /* This file is part of Jeedom.
  *
  * Jeedom is free software: you can redistribute it and/or modify
@@ -18,7 +19,7 @@
 /**
  * Affiche contenu d'une cellule pouvan nécessiter une action de l'utilisateur
  *
- * @param array $rating Note de l'élément
+ * @param array  $rating Note de l'élément
  * @param string $category Catégorie
  * @param string $type Type de modification
  */
