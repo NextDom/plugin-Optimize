@@ -1,3 +1,5 @@
+[[https://travis-ci.org/Jeedom-Plugins-Extra/plugin-Optimize.svg?branch=master]]
+
 # Plugin Optimize pour Jeedom
 
 <img src="docs/images/Optimize_icon.png" />
