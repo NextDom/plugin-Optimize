@@ -1,4 +1,5 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
 
 require 'core/class/OptimizeSystem.class.php';
@@ -92,6 +93,15 @@ class OptimizeSystemTest extends TestCase
                 '500' => 0,
                 '1000' => 0,
                 'default' => 0
+            ),
+            'log::level::event' => array(
+                '100' => 1,
+                '200' => 0,
+                '300' => 0,
+                '400' => 0,
+                '500' => 0,
+                '1000' => 0,
+                'default' => 0
             )
         );
         config::$byKeyData = $systemLogs;
@@ -112,44 +122,46 @@ class OptimizeSystemTest extends TestCase
         $this->assertEquals($result[6]['rating']['log'], 'warn');
         $this->assertEquals($result[7]['name'], 'Report');
         $this->assertEquals($result[7]['rating']['log'], 'ok');
+        $this->assertEquals($result[8]['name'], 'Event');
+        $this->assertEquals($result[8]['rating']['log'], 'warn');
     }
-/*
-    public function testIsPipInstalled()
-    {
-        global $MOCKED_EXEC_RETURN_VALUE;
-        $optimizeSystem = new OptimizeSystem();
-        $MOCKED_EXEC_RETURN_VALUE = 'Coucou';
-        $optimizeSystem->isPipInstalled();
-    }
-/*
-    public function testIsCssCompressorInstalled()
-    {
+    /*
+        public function testIsPipInstalled()
+        {
+            global $MOCKED_EXEC_RETURN_VALUE;
+            $optimizeSystem = new OptimizeSystem();
+            $MOCKED_EXEC_RETURN_VALUE = 'Coucou';
+            $optimizeSystem->isPipInstalled();
+        }
+    /*
+        public function testIsCssCompressorInstalled()
+        {
 
-    }
+        }
 
-    public function testIsJsMinInstalled()
-    {
+        public function testIsJsMinInstalled()
+        {
 
-    }
+        }
 
-    public function testTestPipPackage()
-    {
+        public function testTestPipPackage()
+        {
 
-    }
+        }
 
-    public function testInstall()
-    {
+        public function testInstall()
+        {
 
-    }
+        }
 
-    public function testMinify()
-    {
+        public function testMinify()
+        {
 
-    }
+        }
 
-    public function testDisableLogs()
-    {
+        public function testDisableLogs()
+        {
 
-    }
-*/
+        }
+    */
 }

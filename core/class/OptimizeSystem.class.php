@@ -31,7 +31,8 @@ class OptimizeSystem extends BaseOptimize
         'connection' => 'Connection',
         'interact'   => 'Interact',
         'tts'        => 'TTS',
-        'report'     => 'Report'
+        'report'     => 'Report',
+        'event'      => 'Event'
     );
 
     /**
