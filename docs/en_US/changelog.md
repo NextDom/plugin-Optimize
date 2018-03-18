@@ -1,5 +1,8 @@
 # Changelog
 
+### Version 1.2.1
+* Suppress logs on events
+
 ### Version 1.2.0
 * Minify CSS files
 * Minify Javascript files
