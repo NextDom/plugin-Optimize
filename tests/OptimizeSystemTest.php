@@ -94,7 +94,7 @@ class OptimizeSystemTest extends TestCase
                 '1000' => 0,
                 'default' => 0
             ),
-            'log::level::report' => array(
+            'log::level::event' => array(
                 '100' => 1,
                 '200' => 0,
                 '300' => 0,
