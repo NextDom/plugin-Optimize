@@ -1,14 +1,22 @@
-language: php
-php:
-  - 5.6
-before_script:
-    - find . -type f -name *.php | xargs -n1 php -l
-script: 
-    - cd ${TRAVIS_BUILD_DIR}/tests
-    - pwd
-after_success:
-    - cd ${TRAVIS_BUILD_DIR}/tests
-    - ls -latr
-after_failure:
-    - cd ${TRAVIS_BUILD_DIR}/tests
-    - ls -latr
+matrix:
+  include:
+    - language:  php
+      php: 5.6
+      before_script:
+          - find . -type f -name *.php | xargs -n1 php -l
+      script:        
+          - cd ${TRAVIS_BUILD_DIR}
+          - phpunit --configuration="tests/phpunit.xml" --include-path="tests/"
+
+    - language: markdown
+      addons:
+        apt:
+          packages:
+            - aspell
+            - aspell-fr
+      script:
+        - gem install mdl
+        - cd ${TRAVIS_BUILD_DIR}
+        - ./tests/tools/setCustomMDWarnings.sh 
+        - mdl -r $MDLWAR *.md docs/fr_FR/*.md
+        - ./tests/tools/spellCheckMD.sh 

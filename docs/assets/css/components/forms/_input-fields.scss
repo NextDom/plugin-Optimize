@@ -11,7 +11,7 @@
   color: $placeholder-text-color;
 }
 
-::-moz-placeholder { /* Firefox 19+ */
+::-moz-placeholder {  /* Firefox 19+ */
   color: $placeholder-text-color;
 }
 
@@ -58,8 +58,8 @@ textarea.materialize-textarea {
   }
 
   // Disabled label style
-  &:disabled + label,
-  &[readonly="readonly"] + label {
+  &:disabled+label,
+  &[readonly="readonly"]+label {
     color: $input-disabled-color;
   }
 
@@ -70,7 +70,7 @@ textarea.materialize-textarea {
   }
 
   // Focused label style
-  &:focus:not([readonly]) + label {
+  &:focus:not([readonly])+label {
     color: $input-focus-color;
   }
 
@@ -148,9 +148,7 @@ textarea.materialize-textarea {
     font-size: 2rem;
     transition: color .2s;
 
-    &.active {
-      color: $input-focus-color;
-    }
+    &.active { color: $input-focus-color; }
   }
 
   .prefix ~ input,
@@ -160,12 +158,8 @@ textarea.materialize-textarea {
     width: calc(100% - 3rem);
   }
 
-  .prefix ~ textarea {
-    padding-top: .8rem;
-  }
-  .prefix ~ label {
-    margin-left: 3rem;
-  }
+  .prefix ~ textarea { padding-top: .8rem; }
+  .prefix ~ label { margin-left: 3rem; }
 
   @media #{$medium-and-down} {
     .prefix ~ input {
@@ -181,6 +175,7 @@ textarea.materialize-textarea {
     }
   }
 }
+
 
 /* Search Field */
 
@@ -218,6 +213,7 @@ textarea.materialize-textarea {
     transition: .3s color;
   }
 }
+
 
 /* Textarea */
 

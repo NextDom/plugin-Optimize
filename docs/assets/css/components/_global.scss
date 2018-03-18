@@ -1,11 +1,10 @@
 //Default styles
 
 html {
-  box-sizing: border-box;
+ box-sizing: border-box;
 }
-
 *, *:before, *:after {
-  box-sizing: inherit;
+ box-sizing: inherit;
 }
 
 body {
@@ -27,12 +26,13 @@ ul {
 }
 
 a {
-  color: $link-color;
-  text-decoration: none;
+	color: $link-color;
+	text-decoration: none;
 
   // Gets rid of tap active state
   -webkit-tap-highlight-color: transparent;
 }
+
 
 // Positioning
 .valign-wrapper {
@@ -43,6 +43,7 @@ a {
     display: block;
   }
 }
+
 
 ul {
   padding: 0;
@@ -56,32 +57,27 @@ ul {
   clear: both;
 }
 
+
 // Z-levels
 .z-depth-0 {
   box-shadow: none !important;
 }
-
-.z-depth-1 {
+.z-depth-1{
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
-
-.z-depth-1-half {
+.z-depth-1-half{
   box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
 }
-
-.z-depth-2 {
+.z-depth-2{
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
-.z-depth-3 {
+.z-depth-3{
   box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
-
-.z-depth-4 {
+.z-depth-4{
   box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
 }
-
-.z-depth-5 {
+.z-depth-5{
   box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
 }
 
@@ -102,6 +98,7 @@ ul {
   overflow: hidden;
   background-color: color("grey", "lighten-2");
 }
+
 
 //  Blockquote
 
@@ -145,6 +142,7 @@ video.responsive-video {
   height: auto;
 }
 
+
 // Pagination
 
 .pagination {
@@ -157,17 +155,11 @@ video.responsive-video {
     border-radius: 2px;
     text-align: center;
 
-    a {
-      color: #444;
-    }
+    a { color: #444; }
 
-    &.active a {
-      color: #fff;
-    }
+    &.active a { color: #fff; }
 
-    &.active {
-      background-color: $primary-color;
-    }
+    &.active { background-color: $primary-color; }
 
     &.disabled a {
       cursor: default;
@@ -180,12 +172,12 @@ video.responsive-video {
     }
   }
 
+
   li.pages ul li {
     display: inline-block;
     float: none;
   }
 }
-
 @media #{$medium-and-down} {
   .pagination {
     width: 100%;
@@ -206,7 +198,7 @@ video.responsive-video {
 // Breadcrumbs
 .breadcrumb {
   font-size: 18px;
-  color: rgba(255, 255, 255, .7);
+  color: rgba(255,255,255, .7);
 
   i,
   [class^="mdi-"], [class*="mdi-"],
@@ -218,7 +210,7 @@ video.responsive-video {
 
   &:before {
     content: '\E5CC';
-    color: rgba(255, 255, 255, .7);
+    color: rgba(255,255,255, .7);
     vertical-align: top;
     display: inline-block;
     font-family: 'Material Icons';
@@ -237,6 +229,7 @@ video.responsive-video {
     color: #fff;
   }
 }
+
 
 // Parallax
 .parallax-container {
@@ -260,8 +253,8 @@ video.responsive-video {
     bottom: 0;
     min-width: 100%;
     min-height: 100%;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
     transform: translateX(-50%);
   }
 }
@@ -270,7 +263,6 @@ video.responsive-video {
 .pin-top, .pin-bottom {
   position: relative;
 }
-
 .pinned {
   position: fixed !important;
 }
@@ -288,6 +280,7 @@ ul.staggered-list li {
   transform-origin: 0 50%;
 }
 
+
 /*********************
   Media Query Classes
 **********************/
@@ -296,60 +289,52 @@ ul.staggered-list li {
     display: none !important;
   }
 }
-
 .hide-on-med-and-down {
   @media #{$medium-and-down} {
     display: none !important;
   }
 }
-
 .hide-on-med-and-up {
   @media #{$medium-and-up} {
     display: none !important;
   }
 }
-
 .hide-on-med-only {
   @media only screen and (min-width: $small-screen) and (max-width: $medium-screen) {
     display: none !important;
   }
 }
-
 .hide-on-large-only {
   @media #{$large-and-up} {
     display: none !important;
   }
 }
-
 .show-on-large {
   @media #{$large-and-up} {
     display: block !important;
   }
 }
-
 .show-on-medium {
   @media only screen and (min-width: $small-screen) and (max-width: $medium-screen) {
     display: block !important;
   }
 }
-
 .show-on-small {
   @media #{$small-and-down} {
     display: block !important;
   }
 }
-
 .show-on-medium-and-up {
   @media #{$medium-and-up} {
     display: block !important;
   }
 }
-
 .show-on-medium-and-down {
   @media #{$medium-and-down} {
     display: block !important;
   }
 }
+
 
 // Center text on mobile
 .center-on-small-only {
@@ -368,19 +353,19 @@ footer.page-footer {
     overflow: hidden;
     height: 50px;
     line-height: 50px;
-    color: rgba(255, 255, 255, .8);
-    background-color: rgba(51, 51, 51, .08);
+    color: rgba(255,255,255,.8);
+    background-color: rgba(51,51,51,.08);
     @extend .light;
   }
 }
 
 // Tables
 table, th, td {
-  border: none;
+   border: none;
 }
 
 table {
-  width: 100%;
+  width:100%;
   display: table;
 
   &.bordered > thead > tr,
@@ -417,7 +402,7 @@ thead {
   border-bottom: 1px solid $table-border-color;
 }
 
-td, th {
+td, th{
   padding: 15px 5px;
   display: table-cell;
   text-align: left;
@@ -445,9 +430,7 @@ td, th {
       vertical-align: top;
     }
 
-    th {
-      text-align: left;
-    }
+    th { text-align: left; }
     thead {
       display: block;
       float: left;
@@ -482,9 +465,7 @@ td, th {
       min-height: 1.25em;
       text-align: left;
     }
-    tr {
-      padding: 0 10px;
-    }
+    tr { padding: 0 10px; }
 
     /* sort out borders */
     thead {
@@ -493,26 +474,16 @@ td, th {
     }
 
     &.bordered {
-      th {
-        border-bottom: 0;
-        border-left: 0;
-      }
-      td {
-        border-left: 0;
-        border-right: 0;
-        border-bottom: 0;
-      }
-      tr {
-        border: 0;
-      }
-      tbody tr {
-        border-right: 1px solid $table-border-color;
-      }
+      th { border-bottom: 0; border-left: 0; }
+      td { border-left: 0; border-right: 0; border-bottom: 0; }
+      tr { border: 0; }
+      tbody tr { border-right: 1px solid $table-border-color; }
     }
 
   }
 
 }
+
 
 // Collections
 .collection {
@@ -552,6 +523,7 @@ td, th {
         text-align: center;
       }
 
+
       .title {
         font-size: 16px;
       }
@@ -568,6 +540,7 @@ td, th {
 
     }
 
+
     &:last-child {
       border-bottom: none;
     }
@@ -581,7 +554,7 @@ td, th {
       }
     }
   }
-  a.collection-item {
+  a.collection-item{
     display: block;
     transition: .25s;
     color: $collection-link-color;
@@ -607,17 +580,17 @@ td, th {
   }
 
 }
-
 // Made less specific to allow easier overriding
 .secondary-content {
   float: right;
   color: $secondary-color;
 }
-
 .collapsible .collection {
   margin: 0;
   border: none;
 }
+
+
 
 // Badges
 span.badge {
@@ -642,7 +615,6 @@ span.badge {
     content: " new";
   }
 }
-
 nav ul a span.badge {
   position: static;
   margin-left: 4px;
@@ -651,30 +623,30 @@ nav ul a span.badge {
 
 // Responsive Videos
 .video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
 
-  iframe, object, embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+    iframe, object, embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
 }
 
 // Progress Bar
 .progress {
-  position: relative;
-  height: 4px;
-  display: block;
-  width: 100%;
-  background-color: lighten($progress-bar-color, 40%);
-  border-radius: 2px;
-  margin: $element-top-margin 0 $element-bottom-margin 0;
-  overflow: hidden;
+    position: relative;
+    height: 4px;
+    display: block;
+    width: 100%;
+    background-color: lighten($progress-bar-color, 40%);
+    border-radius: 2px;
+    margin: $element-top-margin 0 $element-bottom-margin 0;
+    overflow: hidden;
   .determinate {
     position: absolute;
     top: 0;
@@ -690,7 +662,7 @@ nav ul a span.badge {
       position: absolute;
       background-color: inherit;
       top: 0;
-      left: 0;
+      left:0;
       bottom: 0;
       will-change: left, right;
       // Custom bezier
@@ -702,7 +674,7 @@ nav ul a span.badge {
       position: absolute;
       background-color: inherit;
       top: 0;
-      left: 0;
+      left:0;
       bottom: 0;
       will-change: left, right;
       // Custom bezier
@@ -711,36 +683,36 @@ nav ul a span.badge {
     }
   }
 }
-
 @keyframes indeterminate {
-  0% {
-    left: -35%;
-    right: 100%;
-  }
-  60% {
-    left: 100%;
-    right: -90%;
-  }
-  100% {
-    left: 100%;
-    right: -90%;
-  }
+    0% {
+      left: -35%;
+      right:100%;
+    }
+    60% {
+      left: 100%;
+      right: -90%;
+    }
+    100% {
+      left: 100%;
+      right: -90%;
+    }
 }
 
 @keyframes indeterminate-short {
-  0% {
-    left: -200%;
-    right: 100%;
-  }
-  60% {
-    left: 107%;
-    right: -8%;
-  }
-  100% {
-    left: 107%;
-    right: -8%;
-  }
+    0% {
+      left: -200%;
+      right: 100%;
+    }
+    60% {
+      left: 107%;
+      right: -8%;
+    }
+    100% {
+      left: 107%;
+      right: -8%;
+    }
 }
+
 
 /*******************
   Utility Classes
@@ -754,11 +726,9 @@ nav ul a span.badge {
 .left-align {
   text-align: left;
 }
-
 .right-align {
   text-align: right
 }
-
 .center, .center-align {
   text-align: center;
 }
@@ -766,7 +736,6 @@ nav ul a span.badge {
 .left {
   float: left !important;
 }
-
 .right {
   float: right !important;
 }
