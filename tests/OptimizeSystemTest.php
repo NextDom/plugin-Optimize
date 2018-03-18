@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dangin
- * Date: 18/03/2018
- * Time: 17:01
- */
-
 use PHPUnit\Framework\TestCase;
 
 require 'core/class/OptimizeSystem.class.php';
