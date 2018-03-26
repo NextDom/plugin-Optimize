@@ -17,9 +17,7 @@
         stopOnSkipped="false"
 
         strict="false"
-        verbose="false"
->
-
+        verbose="false">
     <testsuites>
         <testsuite name="AllTests">
             <directory>.</directory>
