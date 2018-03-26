@@ -10,9 +10,11 @@ matrix:
       script:        
        - cd ${TRAVIS_BUILD_DIR}
        - phpunit --configuration="tests/phpunit.xml" --include-path="tests/"
-       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml ./tests/
        - ls -alR build
-       - cat build/logs/clover.xml
+       - cat build/logs/*
+       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist desktop ./tests/
+       - ls -alR build
+       - cat build/logs/*
       after_script:
        - php vendor/bin/php-coveralls
     - language: markdown

@@ -28,7 +28,8 @@
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./</directory>
+            <directory suffix=".php">./desktop</directory>
+            <directory suffix=".php">./core</directory>
             <file>/path/to/file</file>
             <exclude>
                 <directory suffix=".php">/vendor</directory>
