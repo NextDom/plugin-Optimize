@@ -3,19 +3,17 @@ matrix:
     - language:  php
       php: 5.6
       install:
-        - travis_retry composer install --no-interaction --no-suggest
-        - wget -c -nc --retry-connrefused --tries=0 https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar -O coveralls.phar
-        - chmod +x coveralls.phar
-        - php coveralls.phar --version
+       - composer install
+       - mkdir -p build/logs
+       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./tests/logs/clover.xml ./tests/
       before_script:
         - find . -type f -name *.php | xargs -n1 php -l
       script:        
        - cd ${TRAVIS_BUILD_DIR}
        - phpunit --configuration="tests/phpunit.xml" --include-path="tests/"
-       - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+       - phpunit --coverage-clover build/logs/clover.xml
       after_script:
-       - travis_retry php coveralls.phar -v
-       - bash <(curl -s https://codecov.io/bash)
+       - php vendor/bin/php-coveralls
     - language: markdown
       addons:
         apt:
