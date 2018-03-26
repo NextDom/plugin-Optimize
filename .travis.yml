@@ -11,6 +11,7 @@ matrix:
       script:        
        - cd ${TRAVIS_BUILD_DIR}
        - phpunit --configuration="tests/phpunit.xml" --include-path="tests/"
+       - cat build/logs/clover.xml
       after_script:
        - php vendor/bin/php-coveralls
     - language: markdown
