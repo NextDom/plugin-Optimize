@@ -24,11 +24,11 @@
         </testsuite>
     </testsuites>
     <logging>
-        <log type="coverage-clover" target="./build/logs/clover.xml"/>
+        <log type="coverage-clover" target="../build/logs/clover.xml"/>
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./core</directory>
+            <directory suffix=".php">../core</directory>
         </whitelist>
     </filter>
 </phpunit>

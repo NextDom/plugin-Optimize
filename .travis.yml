@@ -8,14 +8,14 @@ matrix:
       before_script:
         - find . -type f -name *.php -not -path "./vendor/*" | xargs -n1 php -l
       script:        
-       - cd ${TRAVIS_BUILD_DIR}
-       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist core ./tests/
-       - ls -alR build
-       - cat build/logs/*
-       - phpunit --configuration="tests/phpunit.xml" --include-path="tests/"
-       - ls -alR build
-       - cat build/logs/*
+#       - cd ${TRAVIS_BUILD_DIR}
+#       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist core ./tests/
+#       - ls -alR build
+#       - cat build/logs/*
        - phpunit --configuration="tests/phpunit.xml"
+       - ls -alR build
+       - cat build/logs/*
+       - phpunit --configuration="tests/phpunit2.xml"
        - ls -alR build
        - cat build/logs/*
       after_script:
