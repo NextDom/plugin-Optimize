@@ -26,8 +26,6 @@ matrix:
        - ./vendor/phpunit/phpunit/phpunit --configuration="tests/phpunit3.xml"
        - ls -al build/logs && rm build/logs/*
        - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "." --exclude "vendor" ./tests/
-       - ls -al build/logs && rm build/logs/*
-       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "core desktop" ./tests/
       after_script:
        - php vendor/bin/php-coveralls
     - language: markdown
