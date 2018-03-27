@@ -9,7 +9,15 @@ matrix:
         - find . -type f -name *.php -not -path "./vendor/*" | xargs -n1 php -l
       script:        
        - cd ${TRAVIS_BUILD_DIR}
+       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "core desktop" ./tests/
        - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist core --whitelist desktop ./tests/
+       - phpunit --configuration="tests/phpunit.xml"
+       - phpunit --configuration="tests/phpunit2.xml"
+       - phpunit --configuration="tests/phpunit3.xml"
+       - ./vendor/phpunit/phpunit/phpunit --configuration="tests/phpunit.xml"
+       - ./vendor/phpunit/phpunit/phpunit --configuration="tests/phpunit2.xml"
+       - ./vendor/phpunit/phpunit/phpunit --configuration="tests/phpunit3.xml"
+       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "." --blacklist "vendor" ./tests/
       after_script:
        - php vendor/bin/php-coveralls
     - language: markdown
