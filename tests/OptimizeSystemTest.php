@@ -2,18 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
-require 'core/class/OptimizeSystem.class.php';
-
-// Mocked config
-class config
-{
-    public static $byKeyData;
-
-    public static function byKey($key)
-    {
-        return config::$byKeyData[$key];
-    }
-}
+require_once('core/class/OptimizeSystem.class.php');
+require_once('JeedomMock.php');
 
 class OptimizeSystemTest extends TestCase
 {
