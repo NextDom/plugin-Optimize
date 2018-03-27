@@ -1,4 +1,4 @@
-![Travis Build status](https://travis-ci.org/Jeedom-Plugins-Extra/plugin-Optimize.svg?branch=master)
+[![Build Status](https://travis-ci.org/Jeedom-Plugins-Extra/plugin-Optimize.svg?branch=master)](https://travis-ci.org/Jeedom-Plugins-Extra/plugin-Optimize)
 
 # Plugin Optimize pour Jeedom
 
