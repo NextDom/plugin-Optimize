@@ -10,14 +10,24 @@ matrix:
       script:        
        - cd ${TRAVIS_BUILD_DIR}
        - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "core desktop" ./tests/
+       - ls -al build/logs && rm build/logs/*
        - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist core --whitelist desktop ./tests/
+       - ls -al build/logs && rm build/logs/*
        - phpunit --configuration="tests/phpunit.xml"
+       - ls -al build/logs && rm build/logs/*
        - phpunit --configuration="tests/phpunit2.xml"
+       - ls -al build/logs && rm build/logs/*
        - phpunit --configuration="tests/phpunit3.xml"
+       - ls -al build/logs && rm build/logs/*
        - ./vendor/phpunit/phpunit/phpunit --configuration="tests/phpunit.xml"
+       - ls -al build/logs && rm build/logs/*
        - ./vendor/phpunit/phpunit/phpunit --configuration="tests/phpunit2.xml"
+       - ls -al build/logs && rm build/logs/*
        - ./vendor/phpunit/phpunit/phpunit --configuration="tests/phpunit3.xml"
-       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "." --blacklist "vendor" ./tests/
+       - ls -al build/logs && rm build/logs/*
+       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "." --exclude "vendor" ./tests/
+       - ls -al build/logs && rm build/logs/*
+       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "core desktop" ./tests/
       after_script:
        - php vendor/bin/php-coveralls
     - language: markdown
