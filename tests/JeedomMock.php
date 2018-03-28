@@ -129,6 +129,24 @@ class config
             '500' => 0,
             '1000' => 0,
             'default' => 0
+        ),
+        'log::level::template' => array(
+            '100' => 1,
+            '200' => 0,
+            '300' => 0,
+            '400' => 0,
+            '500' => 0,
+            '1000' => 0,
+            'default' => 0
+        ),
+        'log::level::Optimize' => array(
+            '100' => 0,
+            '200' => 1,
+            '300' => 0,
+            '400' => 0,
+            '500' => 0,
+            '1000' => 0,
+            'default' => 0
         )
     );
 
@@ -137,8 +155,47 @@ class config
         return config::$byKeyData[$key];
     }
 
-    public static function save($key, $data) {
+    public static function save($key, $data)
+    {
         MockedActions::add(array('action' => 'save', 'key' => $key, 'data' => $data));
+    }
+}
+
+/**
+ * Mock de la classe config
+ */
+class plugin
+{
+    public static function listPlugin() {
+        $result = array();
+        array_push($result, new pluginItem('template'));
+        array_push($result, new pluginItem('Optimize'));
+        return $result;
+    }
+
+    public static function byId($id)
+    {
+        // Renvoie toujours un plugin valide
+        return new pluginItem($id);
+    }
+}
+
+class pluginItem {
+    public $id;
+
+    public static $base_plugin_path = 'plugins';
+
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getFilePath() {
+        return static::$base_plugin_path.'/'.$this->id.'/plugin_info/info.json';
     }
 }
 
@@ -186,10 +243,12 @@ class scenarioItem
     }
 }
 
-class system {
+class system
+{
     public static $cmdSudo = 'exit && ';
 
-    public static function getCmdSudo() {
+    public static function getCmdSudo()
+    {
         MockedActions::add(array('action' => 'get_cmd_sudo'));
         return self::$cmdSudo;
     }

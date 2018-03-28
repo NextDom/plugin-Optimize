@@ -7,6 +7,8 @@ require_once('JeedomMock.php');
 
 class OptimizeParserTest extends TestCase
 {
+    public $vfsStreamPlugin = null;
+
     protected function setUp()
     {
         $this->parser = new OptimizeParser();
@@ -57,6 +59,17 @@ class OptimizeParserTest extends TestCase
         $this->assertEquals('remove', $actions[0]['action']);
     }
 
+    public function testParserPluginLog() {
+        $this->parser->parse('plugin', 'template', 'log');
+        $this->parser->parse('plugin', 'Optimize', 'log');
+        $actions = MockedActions::get();
+        $this->assertEquals(2, count($actions));
+        $this->assertEquals('save', $actions[0]['action']);
+        $this->assertEquals('log::level::template', $actions[0]['key']);
+        $this->assertEquals('save', $actions[1]['action']);
+        $this->assertEquals('log::level::Optimize', $actions[1]['key']);
+    }
+
     public function testParserSystemLog()
     {
         $this->parser->parse('system', 'scenario', 'log');
@@ -69,9 +82,13 @@ class OptimizeParserTest extends TestCase
         $this->assertEquals('log::level::plugin', $actions[1]['key']);
     }
 
+    /**
+     * Test seulement que certains appels sont passés sur des fonctions
+     *
+     * Nécessité de détecter la commande exec pour approfondir
+     */
     public function testParserSystemInstall()
     {
-        // La commande sudo est appelée pour ce test, on peut pas vérifier plus sans mock de la function exec
         $result = $this->parser->parse('system', 'csscompressor', 'install');
         $this->assertTrue($result);
         $result = $this->parser->parse('system', 'jsmin', 'install');

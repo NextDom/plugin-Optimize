@@ -227,8 +227,10 @@ class OptimizeSystem extends BaseOptimize
     private function minifyJavascript($fileList)
     {
         foreach ($fileList as $file) {
-            \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
-            \exec('cp /tmp/tmp.js ' . $file);
+            if (!strstr($file, 'node_modules')) {
+                \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
+                \exec('cp /tmp/tmp.js ' . $file);
+            }
         }
     }
 
