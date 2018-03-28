@@ -166,7 +166,8 @@ class config
  */
 class plugin
 {
-    public static function listPlugin() {
+    public static function listPlugin()
+    {
         $result = array();
         array_push($result, new pluginItem('template'));
         array_push($result, new pluginItem('Optimize'));
@@ -180,7 +181,8 @@ class plugin
     }
 }
 
-class pluginItem {
+class pluginItem
+{
     public $id;
 
     public static $base_plugin_path = 'plugins';
@@ -190,12 +192,14 @@ class pluginItem {
         $this->id = $id;
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getFilePath() {
-        return static::$base_plugin_path.'/'.$this->id.'/plugin_info/info.json';
+    public function getFilePath()
+    {
+        return static::$base_plugin_path . '/' . $this->id . '/plugin_info/info.json';
     }
 }
 
@@ -204,12 +208,22 @@ class pluginItem {
  */
 class scenario
 {
-    public static $activatedScenarios = true;
+    public static $scenariosList;
+
+    public static function all()
+    {
+        static::$scenariosList = array(
+            new scenarioItem(1, 'First scenario', 'none', 1, true),
+            new scenarioItem(2, 'Second scenario', 'realtime', 1, true),
+            new scenarioItem(3, 'First scenario', 'none', 0, true),
+            new scenarioItem(4, 'First scenario', 'none', 1, false)
+        );
+        return static::$scenariosList;
+    }
 
     public static function byId($scenarioId)
     {
-        $scenarioItem = new scenarioItem();
-        return $scenarioItem;
+        return static::$scenariosList[$scenarioId - 1];
     }
 }
 
@@ -218,6 +232,61 @@ class scenario
  */
 class scenarioItem
 {
+    public $id;
+    public $name;
+    public $logmode;
+    public $syncmode;
+    public $enabled;
+    public static $enabledScenario = null;
+
+
+    public function __construct($id = null, $name = null, $logmode = null, $syncmode = null, $enabled = null)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->logmode = $logmode;
+        $this->syncmode = $syncmode;
+        $this->enabled = $enabled;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getConfiguration($item)
+    {
+        switch ($item) {
+            case 'logmode':
+                return $this->logmode;
+                break;
+            case 'syncmode':
+                return $this->syncmode;
+                break;
+        }
+    }
+
+    public function getIsActive()
+    {
+        $result = 0;
+        if (scenarioItem::$enabledScenario != null) {
+            if (scenarioItem::$enabledScenario) {
+                $result = 1;
+            }
+        }
+        else {
+            if ($this->enabled) {
+                $result = 1;
+            }
+        }
+        return $result;
+    }
+
     public function setConfiguration($type, $value)
     {
         MockedActions::add(array('action' => 'set_configuration', 'type' => $type, 'value' => $value));
@@ -226,15 +295,6 @@ class scenarioItem
     public function save()
     {
         MockedActions::add(array('action' => 'save'));
-    }
-
-    public function getIsActive()
-    {
-        $result = 0;
-        if (scenario::$activatedScenarios) {
-            $result = 1;
-        }
-        return $result;
     }
 
     public function remove()

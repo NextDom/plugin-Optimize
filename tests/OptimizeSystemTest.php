@@ -7,7 +7,6 @@ require_once('JeedomMock.php');
 
 class OptimizeSystemTest extends TestCase
 {
-
     public function testGetLogInformations()
     {
         $optimizeSystem = new OptimizeSystem();
@@ -31,43 +30,4 @@ class OptimizeSystemTest extends TestCase
         $this->assertEquals($result[8]['name'], 'Event');
         $this->assertEquals($result[8]['rating']['log'], 'warn');
     }
-    /*
-        public function testIsPipInstalled()
-        {
-            global $MOCKED_EXEC_RETURN_VALUE;
-            $optimizeSystem = new OptimizeSystem();
-            $MOCKED_EXEC_RETURN_VALUE = 'Coucou';
-            $optimizeSystem->isPipInstalled();
-        }
-    /*
-        public function testIsCssCompressorInstalled()
-        {
-
-        }
-
-        public function testIsJsMinInstalled()
-        {
-
-        }
-
-        public function testTestPipPackage()
-        {
-
-        }
-
-        public function testInstall()
-        {
-
-        }
-
-        public function testMinify()
-        {
-
-        }
-
-        public function testDisableLogs()
-        {
-
-        }
-    */
 }

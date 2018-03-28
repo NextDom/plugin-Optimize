@@ -7,8 +7,6 @@ require_once('JeedomMock.php');
 
 class OptimizeParserTest extends TestCase
 {
-    public $vfsStreamPlugin = null;
-
     protected function setUp()
     {
         $this->parser = new OptimizeParser();
@@ -17,12 +15,13 @@ class OptimizeParserTest extends TestCase
     protected function tearDown()
     {
         unset($this->parser);
-        scenario::$activatedScenarios = true;
+        scenarioItem::$enabledScenario = null;
         MockedActions::clear();
     }
 
     public function testParserScenarioLog()
     {
+        scenario::all();
         $this->parser->parse('scenario', 1, 'log');
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
@@ -34,7 +33,7 @@ class OptimizeParserTest extends TestCase
 
     public function testParserScenarioSyncMode()
     {
-        $this->parser->parse('scenario', 1, 'syncmode');
+        $this->parser->parse('scenario', 2, 'syncmode');
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
         $this->assertEquals('set_configuration', $actions[0]['action']);
@@ -45,15 +44,16 @@ class OptimizeParserTest extends TestCase
 
     public function testParserScenarioEnabledWithActivatedScenario()
     {
-        $this->parser->parse('scenario', 1, 'enabled');
+        scenarioItem::$enabledScenario = true;
+        $this->parser->parse('scenario', 3, 'enabled');
         $actions = MockedActions::get();
         $this->assertEquals(0, count($actions));
     }
 
     public function testParserScenarioEnabledWithDisabledScenario()
     {
-        scenario::$activatedScenarios = false;
-        $this->parser->parse('scenario', 1, 'enabled');
+        scenarioItem::$enabledScenario = false;
+        $this->parser->parse('scenario', 4, 'enabled');
         $actions = MockedActions::get();
         $this->assertEquals(1, count($actions));
         $this->assertEquals('remove', $actions[0]['action']);
