@@ -15,41 +15,72 @@ class OptimizeParserTest extends TestCase
     protected function tearDown()
     {
         unset($this->parser);
-        scenario::clearMockedActions();
         scenario::$activatedScenarios = true;
+        MockedActions::clear();
     }
 
-    public function testParseScenarioLog()
+    public function testParserScenarioLog()
     {
         $this->parser->parse('scenario', 1, 'log');
-        $this->assertEquals(2, count(scenario::$mockedActions));
-        $this->assertEquals('configuration', scenario::$mockedActions[0]['action']);
-        $this->assertEquals('logmode', scenario::$mockedActions[0]['type']);
-        $this->assertEquals('none', scenario::$mockedActions[0]['value']);
-        $this->assertEquals('save', scenario::$mockedActions[1]['action']);
+        $actions = MockedActions::get();
+        $this->assertEquals(2, count($actions));
+        $this->assertEquals('set_configuration', $actions[0]['action']);
+        $this->assertEquals('logmode', $actions[0]['type']);
+        $this->assertEquals('none', $actions[0]['value']);
+        $this->assertEquals('save', $actions[1]['action']);
     }
 
-    public function testParseScenarioSyncMode()
+    public function testParserScenarioSyncMode()
     {
         $this->parser->parse('scenario', 1, 'syncmode');
-        $this->assertEquals(2, count(scenario::$mockedActions));
-        $this->assertEquals('configuration', scenario::$mockedActions[0]['action']);
-        $this->assertEquals('syncmode', scenario::$mockedActions[0]['type']);
-        $this->assertEquals(1, scenario::$mockedActions[0]['value']);
-        $this->assertEquals('save', scenario::$mockedActions[1]['action']);
+        $actions = MockedActions::get();
+        $this->assertEquals(2, count($actions));
+        $this->assertEquals('set_configuration', $actions[0]['action']);
+        $this->assertEquals('syncmode', $actions[0]['type']);
+        $this->assertEquals(1, $actions[0]['value']);
+        $this->assertEquals('save', $actions[1]['action']);
     }
 
-    public function testParseScenarioEnabledWithActivatedScenario()
+    public function testParserScenarioEnabledWithActivatedScenario()
     {
         $this->parser->parse('scenario', 1, 'enabled');
-        $this->assertEquals(0, count(scenario::$mockedActions));
+        $actions = MockedActions::get();
+        $this->assertEquals(0, count($actions));
     }
 
-    public function testParseScenarioEnabledWithDisabledScenario()
+    public function testParserScenarioEnabledWithDisabledScenario()
     {
         scenario::$activatedScenarios = false;
         $this->parser->parse('scenario', 1, 'enabled');
-        $this->assertEquals(1, count(scenario::$mockedActions));
-        $this->assertEquals('remove', scenario::$mockedActions[0]['action']);
+        $actions = MockedActions::get();
+        $this->assertEquals(1, count($actions));
+        $this->assertEquals('remove', $actions[0]['action']);
+    }
+
+    public function testParserSystemLog()
+    {
+        $this->parser->parse('system', 'scenario', 'log');
+        $this->parser->parse('system', 'plugin', 'log');
+        $actions = MockedActions::get();
+        $this->assertEquals(2, count($actions));
+        $this->assertEquals('save', $actions[0]['action']);
+        $this->assertEquals('log::level::scenario', $actions[0]['key']);
+        $this->assertEquals('save', $actions[1]['action']);
+        $this->assertEquals('log::level::plugin', $actions[1]['key']);
+    }
+
+    public function testParserSystemInstall()
+    {
+        // La commande sudo est appelée pour ce test, on peut pas vérifier plus sans mock de la function exec
+        $result = $this->parser->parse('system', 'csscompressor', 'install');
+        $this->assertTrue($result);
+        $result = $this->parser->parse('system', 'jsmin', 'install');
+        $this->assertTrue($result);
+        $result = $this->parser->parse('system', 'bad_item', 'install');
+        $this->assertFalse($result);
+        $actions = MockedActions::get();
+        $this->assertEquals(2, count($actions));
+        $this->assertEquals('get_cmd_sudo', $actions[0]['action']);
+        $this->assertEquals('get_cmd_sudo', $actions[1]['action']);
     }
 }
