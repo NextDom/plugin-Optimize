@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Jeedom-Plugins-Extra/plugin-Optimize.svg?branch=master)](https://travis-ci.org/Jeedom-Plugins-Extra/plugin-Optimize)
+[![Build Status](https://travis-ci.org/Jeedom-Plugins-Extra/plugin-Optimize.svg?branch=master)](https://travis-ci.org/Jeedom-Plugins-Extra/plugin-Optimize) [![Coverage Status](https://coveralls.io/repos/github/Jeedom-Plugins-Extra/plugin-Optimize/badge.svg?branch=master)](https://coveralls.io/github/Jeedom-Plugins-Extra/plugin-Optimize?branch=master)
 
 # Plugin Optimize pour Jeedom
 
