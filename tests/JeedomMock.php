@@ -147,6 +147,15 @@ class config
             '500' => 0,
             '1000' => 0,
             'default' => 0
+        ),
+        'log::level::supa_plugin' => array(
+            '100' => 0,
+            '200' => 0,
+            '300' => 0,
+            '400' => 0,
+            '500' => 0,
+            '1000' => 1,
+            'default' => 0
         )
     );
 
@@ -169,8 +178,9 @@ class plugin
     public static function listPlugin()
     {
         $result = array();
-        array_push($result, new pluginItem('template'));
-        array_push($result, new pluginItem('Optimize'));
+        array_push($result, new pluginItem('template', 'Template', true));
+        array_push($result, new pluginItem('Optimize', 'Optimize', false));
+        array_push($result, new pluginItem('supa_plugin', 'A superb plugin', true));
         return $result;
     }
 
@@ -184,17 +194,35 @@ class plugin
 class pluginItem
 {
     public $id;
+    public $name;
+    public $enabled;
 
     public static $base_plugin_path = 'plugins';
 
-    public function __construct($id)
+    public function __construct($id = null, $name = null, $enabled = null)
     {
         $this->id = $id;
+        $this->name = $name;
+        $this->enabled = $enabled;
     }
 
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function isActive()
+    {
+        $result = 0;
+        // TODO $enabledScenario à supprimer
+        if ($this->enabled) {
+            $result = 1;
+        }
+        return $result;
     }
 
     public function getFilePath()
