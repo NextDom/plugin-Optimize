@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.2.2
+* Exclusion des fichiers Javascript pour NodeJS
+* Tests unitaires
+
 ### Version 1.2.1
 * Suppression des logs sur les évènements
 
