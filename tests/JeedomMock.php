@@ -130,7 +130,7 @@ class config
             '1000' => 0,
             'default' => 0
         ),
-        'log::level::template' => array(
+        'log::level::thetemplate' => array(
             '100' => 1,
             '200' => 0,
             '300' => 0,
@@ -139,7 +139,7 @@ class config
             '1000' => 0,
             'default' => 0
         ),
-        'log::level::Optimize' => array(
+        'log::level::IOptimize' => array(
             '100' => 0,
             '200' => 1,
             '300' => 0,
@@ -178,8 +178,8 @@ class plugin
     public static function listPlugin()
     {
         $result = array();
-        array_push($result, new pluginItem('template', 'Template', true));
-        array_push($result, new pluginItem('Optimize', 'Optimize', false));
+        array_push($result, new pluginItem('thetemplate', 'TheTemplate', true));
+        array_push($result, new pluginItem('IOptimize', 'IOptimize', false));
         array_push($result, new pluginItem('supa_plugin', 'A superb plugin', true));
         return $result;
     }

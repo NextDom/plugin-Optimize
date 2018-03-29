@@ -60,14 +60,14 @@ class OptimizeParserTest extends TestCase
     }
 
     public function testParserPluginLog() {
-        $this->parser->parse('plugin', 'template', 'log');
-        $this->parser->parse('plugin', 'Optimize', 'log');
+        $this->parser->parse('plugin', 'thetemplate', 'log');
+        $this->parser->parse('plugin', 'IOptimize', 'log');
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
         $this->assertEquals('save', $actions[0]['action']);
-        $this->assertEquals('log::level::template', $actions[0]['key']);
+        $this->assertEquals('log::level::thetemplate', $actions[0]['key']);
         $this->assertEquals('save', $actions[1]['action']);
-        $this->assertEquals('log::level::Optimize', $actions[1]['key']);
+        $this->assertEquals('log::level::IOptimize', $actions[1]['key']);
     }
 
     public function testParserSystemLog()
