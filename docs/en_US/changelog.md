@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.2.2
+* Exclude NodeJS javascript files
+* Unit tests
+
 ### Version 1.2.1
 * Suppress logs on events
 
