@@ -59,7 +59,8 @@ class OptimizeParserTest extends TestCase
         $this->assertEquals('remove', $actions[0]['action']);
     }
 
-    public function testParserPluginLog() {
+    public function testParserPluginLog()
+    {
         $this->parser->parse('plugin', 'thetemplate', 'log');
         $this->parser->parse('plugin', 'IOptimize', 'log');
         $actions = MockedActions::get();

@@ -21,9 +21,9 @@ class OptimizeParser
     /**
      * Analyse une requête Ajax
      *
-     * @param string  $category Catégorie de l'optimisation à apporter
+     * @param string $category Catégorie de l'optimisation à apporter
      * @param integer $id Identifiant de l'objet à optimiser
-     * @param string  $type Type d'optimisation
+     * @param string $type Type d'optimisation
      *
      * @return bool True si la requête a été reconnue et exécutée.
      */
@@ -46,7 +46,7 @@ class OptimizeParser
      * Requête d'optimisation d'un scénario
      *
      * @param integer $scenarioId Identifiant du scénario
-     * @param string  $type Type d'optimisation
+     * @param string $type Type d'optimisation
      *
      * @return bool True si la requête a été reconnue et exécutée.
      */
@@ -77,7 +77,7 @@ class OptimizeParser
      * Requête d'optimisation d'un plugin
      *
      * @param integer $pluginId Identifiant du plugin
-     * @param string  $type Type d'optimisation
+     * @param string $type Type d'optimisation
      *
      * @return bool True si la requête a été reconnue et exécutée.
      */

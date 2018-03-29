@@ -5,12 +5,15 @@ use PHPUnit\Framework\TestCase;
 require_once('core/class/BaseOptimize.class.php');
 require_once('JeedomMock.php');
 
-class BaseOptimizeMocked extends BaseOptimize {
-    public function setBadPoints($points) {
+class BaseOptimizeMocked extends BaseOptimize
+{
+    public function setBadPoints($points)
+    {
         self::$badPoints = $points;
     }
 
-    public function setBestScore($bestScore) {
+    public function setBestScore($bestScore)
+    {
         self::$bestScore = $bestScore;
     }
 }
@@ -32,12 +35,14 @@ class BaseOptimizeTest extends TestCase
         $this->assertEquals(25, $testBaseOptimize->getBestScore());
     }
 
-    public function testCanSudoTrue() {
+    public function testCanSudoTrue()
+    {
         jeedom::$sudoAnswer = true;
         $this->assertTrue(jeedom::$sudoAnswer);
     }
 
-    public function testCanSudoFalse() {
+    public function testCanSudoFalse()
+    {
         jeedom::$sudoAnswer = false;
         $this->assertFalse(jeedom::$sudoAnswer);
     }
@@ -45,6 +50,6 @@ class BaseOptimizeTest extends TestCase
     public function testGetJeedomRootDirectory()
     {
         $baseOptimize = new BaseOptimize();
-        $this->assertEquals($baseOptimize->getJeedomRootDirectory(), realpath(dirname(__FILE__).'/../../../'));
+        $this->assertEquals($baseOptimize->getJeedomRootDirectory(), realpath(dirname(__FILE__) . '/../../../'));
     }
 }

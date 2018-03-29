@@ -211,7 +211,8 @@ class pluginItem
         return $this->id;
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -306,8 +307,7 @@ class scenarioItem
             if (scenarioItem::$enabledScenario) {
                 $result = 1;
             }
-        }
-        else {
+        } else {
             if ($this->enabled) {
                 $result = 1;
             }
