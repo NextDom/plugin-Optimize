@@ -2,21 +2,44 @@
 
 use PHPUnit\Framework\TestCase;
 
-require 'core/class/BaseOptimize.class.php';
+require_once('core/class/BaseOptimize.class.php');
+require_once('JeedomMock.php');
+
+class BaseOptimizeMocked extends BaseOptimize {
+    public function setBadPoints($points) {
+        self::$badPoints = $points;
+    }
+
+    public function setBestScore($bestScore) {
+        self::$bestScore = $bestScore;
+    }
+}
 
 class BaseOptimizeTest extends TestCase
 {
     public function testGetCurrentScore()
     {
-        $baseOptimize = new BaseOptimize();
-        $reflectionClass = new ReflectionClass(BaseOptimize::class);
-        $reflectionPropertyBadPoints = $reflectionClass->getProperty('badPoints');
-        $reflectionPropertyBadPoints->setAccessible(true);
-        $reflectionPropertyBadPoints->setValue($baseOptimize, 5);
-        $reflectionPropertyBestScore = $reflectionClass->getProperty('bestScore');
-        $reflectionPropertyBestScore->setAccessible(true);
-        $reflectionPropertyBestScore->setValue($baseOptimize, 20);
-        $this->assertEquals(15, $baseOptimize->getCurrentScore());
+        $testBaseOptimize = new BaseOptimizeMocked();
+        $testBaseOptimize->setBadPoints(5);
+        $testBaseOptimize->setBestScore(20);
+        $this->assertEquals(15, $testBaseOptimize->getCurrentScore());
+    }
+
+    public function testGetBestScore()
+    {
+        $testBaseOptimize = new BaseOptimizeMocked();
+        $testBaseOptimize->setBestScore(25);
+        $this->assertEquals(25, $testBaseOptimize->getBestScore());
+    }
+
+    public function testCanSudoTrue() {
+        jeedom::$sudoAnswer = true;
+        $this->assertTrue(jeedom::$sudoAnswer);
+    }
+
+    public function testCanSudoFalse() {
+        jeedom::$sudoAnswer = false;
+        $this->assertFalse(jeedom::$sudoAnswer);
     }
 
     public function testGetJeedomRootDirectory()

@@ -123,7 +123,7 @@ class OptimizeParser
                 $optimizeSystem->disableLogs($systemId);
                 break;
             case 'install':
-                $optimizeSystem->install($systemId);
+                $result = $optimizeSystem->install($systemId);
                 break;
             case 'minify':
                 $optimizeSystem->minify($systemId);

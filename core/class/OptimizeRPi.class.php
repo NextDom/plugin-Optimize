@@ -18,6 +18,8 @@
 
 require_once('BaseOptimize.class.php');
 
+define('SYSTEM_CONFIG_FILE_PATH', '/boot/config.txt');
+
 class OptimizeRPi extends BaseOptimize
 {
     /**
@@ -28,10 +30,6 @@ class OptimizeRPi extends BaseOptimize
      * Chaîne de caractère pouvant se trouver dans l'intitulé du hardware dans le cas d'un Raspberry Pi
      */
     const RASPBERRY_STRING_TEST_2 = 'raspberry';
-    /**
-     * Chemin vers le répertoire config.txt
-     */
-    const SYSTEM_CONFIG_FILE_PATH = '/boot/config.txt';
     /**
      * Code du paramètre de la mémoire GPU
      */
@@ -107,7 +105,7 @@ class OptimizeRPi extends BaseOptimize
      *
      * @return bool true si l'optimisation est déjà appliquée.
      */
-    public function getGpuMemOptimizationInformation()
+    private function getGpuMemOptimizationInformation()
     {
         return $this->getOptimizationInformation(self::GPU_MEM_NAME, self::GPU_MEM_BEST_VALUE);
     }
@@ -117,7 +115,7 @@ class OptimizeRPi extends BaseOptimize
      *
      * @return bool true si l'optimisation est déjà appliquée.
      */
-    public function getL2CacheOptimizationInformation()
+    private function getL2CacheOptimizationInformation()
     {
         return $this->getOptimizationInformation(self::L2_CACHE_NAME, self::L2_CACHE_BEST_VALUE);
     }
@@ -153,8 +151,8 @@ class OptimizeRPi extends BaseOptimize
     private function isSystemConfigFileReadable()
     {
         $result = false;
-        if (\file_exists(self::SYSTEM_CONFIG_FILE_PATH)) {
-            if (\is_readable(self::SYSTEM_CONFIG_FILE_PATH)) {
+        if (\file_exists(SYSTEM_CONFIG_FILE_PATH)) {
+            if (\is_readable(SYSTEM_CONFIG_FILE_PATH)) {
                 $result = true;
             }
         }
@@ -169,7 +167,7 @@ class OptimizeRPi extends BaseOptimize
         $result = false;
         $this->systemConfig = array();
 
-        $fileHandle = \fopen(self::SYSTEM_CONFIG_FILE_PATH, "r");
+        $fileHandle = \fopen(SYSTEM_CONFIG_FILE_PATH, "r");
         if ($fileHandle !== false) {
             while (!\feof($fileHandle)) {
                 $line = \fgets($fileHandle);
@@ -279,8 +277,8 @@ class OptimizeRPi extends BaseOptimize
     {
         $result = false;
         if ($this->canSudo()) {
-            \exec(system::getCmdSudo() . ' cp ' . self::SYSTEM_CONFIG_FILE_PATH . ' ' . self::SYSTEM_CONFIG_FILE_PATH . '.bak');
-            $result = file_exists(self::SYSTEM_CONFIG_FILE_PATH . '.bak');
+            \exec(system::getCmdSudo() . ' cp ' . SYSTEM_CONFIG_FILE_PATH . ' ' . SYSTEM_CONFIG_FILE_PATH . '.bak');
+            $result = file_exists(SYSTEM_CONFIG_FILE_PATH . '.bak');
         }
         return $result;
     }
@@ -292,7 +290,7 @@ class OptimizeRPi extends BaseOptimize
      */
     private function commentParameter($name)
     {
-        \exec(system::getCmdSudo() . ' sed -i\'\' \'s/^' . $name . '/#' . $name . '/\' ' . self::SYSTEM_CONFIG_FILE_PATH);
+        \exec(system::getCmdSudo() . ' sed -i\'\' \'s/^' . $name . '/#' . $name . '/\' ' . SYSTEM_CONFIG_FILE_PATH);
     }
 
     /**
@@ -303,6 +301,6 @@ class OptimizeRPi extends BaseOptimize
      */
     private function addParameter($name, $value)
     {
-        \exec(system::getCmdSudo() . ' sh -c "echo \'' . $name . '=' . $value . '\' >> ' . self::SYSTEM_CONFIG_FILE_PATH . '"');
+        \exec(system::getCmdSudo() . ' sh -c "echo \'' . $name . '=' . $value . '\' >> ' . SYSTEM_CONFIG_FILE_PATH . '"');
     }
 }
