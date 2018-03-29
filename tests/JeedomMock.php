@@ -197,7 +197,7 @@ class pluginItem
     public $name;
     public $enabled;
 
-    public static $base_plugin_path = 'plugins';
+    public static $base_plugin_path = 'MockedPlugins';
 
     public function __construct($id = null, $name = null, $enabled = null)
     {

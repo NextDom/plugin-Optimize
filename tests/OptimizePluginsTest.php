@@ -29,7 +29,7 @@ class OptimizePluginsTest extends TestCase
         $this->assertEquals(false, $result[2]['log']);
         $this->assertEquals(1, $result[0]['enabled']);
         $this->assertEquals(0, $result[1]['enabled']);
-        $this->assertEquals('plugins/Optimize/plugin_info/info.json', $result[1]['filepath']);
+        $this->assertEquals('MockedPlugins/Optimize/plugin_info/info.json', $result[1]['filepath']);
         $this->assertEquals(array('log' => 'warn', 'path' => 'ok', 'enabled' => 'ok'), $result[0]['rating']);
         $this->assertEquals(array('log' => 'warn', 'path' => 'ok', 'enabled' => 'warn'), $result[1]['rating']);
         $this->assertEquals(array('log' => 'ok', 'path' => 'warn', 'enabled' => 'ok'), $result[2]['rating']);
