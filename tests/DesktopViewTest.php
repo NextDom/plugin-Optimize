@@ -2,9 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+//require_once ('./desktop/class/DesktopOptimize.class.php');
 //require_once('JeedomMock.php');
-
-DesktopOptimize::$viewData = array();
 
 class DesktopOptimize
 {
@@ -12,10 +11,12 @@ class DesktopOptimize
 
     public static $showedCells = array();
 
-    public static function showActionCell($rating, $category, $type) {
+    public static function showActionCell($rating, $category, $type)
+    {
         array_push(static::$showedCells, array($rating, $category, $type));
     }
 }
+
 
 class DesktopViewTest extends TestCase
 {
@@ -49,7 +50,8 @@ class DesktopViewTest extends TestCase
         return ob_get_clean();
     }
 
-    public function testShowActionCell() {
+    public function testShowActionCell()
+    {
         DesktopOptimize::$viewData['scenarios'] = array(
             array('id' => '1', 'name' => 'First scenario', 'rating' => array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'ok')),
             array('id' => '2', 'name' => 'Second scenario', 'rating' => array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok')),
@@ -69,20 +71,23 @@ class DesktopViewTest extends TestCase
         $this->assertEquals('enabled', $cells[11][2]);
     }
 
-    public function testViewRenderEmpty() {
+    public function testViewRenderEmpty()
+    {
         $result = $this->requireView();
         $this->assertTrue(strstr($result, 'optimize-plugin') !== 0);
         $this->assertEquals(9, substr_count($result, 'table'));
     }
 
-    public function testViewRenderRPi() {
+    public function testViewRenderRPi()
+    {
         DesktopOptimize::$viewData['rpi'] = true;
         $result = $this->requireView();
         $this->assertContains('#raspberry', $result);
         $this->assertEquals(9, substr_count($result, 'table'));
     }
 
-    public function testViewRenderRPiCanOptimizeCantSudo() {
+    public function testViewRenderRPiCanOptimizeCantSudo()
+    {
         DesktopOptimize::$viewData['rpi'] = true;
         DesktopOptimize::$viewData['rpi_can_optimize'] = true;
         DesktopOptimize::$viewData['rpi_sudo'] = false;
@@ -91,7 +96,8 @@ class DesktopViewTest extends TestCase
         $this->assertContains('Jeedom doesn\'t have sudo rights.', $result);
     }
 
-    public function testViewRenderRPiCanSudo() {
+    public function testViewRenderRPiCanSudo()
+    {
         DesktopOptimize::$viewData['rpi'] = true;
         DesktopOptimize::$viewData['rpi_can_optimize'] = true;
         DesktopOptimize::$viewData['rpi_sudo'] = true;
@@ -101,40 +107,46 @@ class DesktopViewTest extends TestCase
         $this->assertContains('L2 Cache', $result);
     }
 
-    public function testSystemCantPip() {
+    public function testSystemCantPip()
+    {
         DesktopOptimize::$viewData['system_pip'] = false;
         $result = $this->requireView();
         $this->assertContains('Python pip is not installed', $result);
     }
 
-    public function testSystemCanPip() {
+    public function testSystemCanPip()
+    {
         DesktopOptimize::$viewData['system_pip'] = true;
         $result = $this->requireView();
         $this->assertContains('Minification', $result);
     }
 
-    public function testSystemNeedCssCompressorInstall() {
+    public function testSystemNeedCssCompressorInstall()
+    {
         DesktopOptimize::$viewData['system_pip'] = true;
         DesktopOptimize::$viewData['system_csscompressor'] = false;
         $result = $this->requireView();
         $this->assertContains('The Python module \'csscompressor\' is not installed.', $result);
     }
 
-    public function testSystemCssCompressorInstalled() {
+    public function testSystemCssCompressorInstalled()
+    {
         DesktopOptimize::$viewData['system_pip'] = true;
         DesktopOptimize::$viewData['system_csscompressor'] = true;
         $result = $this->requireView();
         $this->assertContains('Minify CSS', $result);
     }
 
-    public function testSystemNeedJsMinInstall() {
+    public function testSystemNeedJsMinInstall()
+    {
         DesktopOptimize::$viewData['system_pip'] = true;
         DesktopOptimize::$viewData['system_jsmin'] = false;
         $result = $this->requireView();
         $this->assertContains('The Python module \'jsmin\' is not installed.', $result);
     }
 
-    public function testSystemJsMinInstalled() {
+    public function testSystemJsMinInstalled()
+    {
         DesktopOptimize::$viewData['system_pip'] = true;
         DesktopOptimize::$viewData['system_jsmin'] = true;
         $result = $this->requireView();

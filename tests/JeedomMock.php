@@ -298,6 +298,7 @@ class scenarioItem
                 return $this->syncmode;
                 break;
         }
+        return false;
     }
 
     public function getIsActive()

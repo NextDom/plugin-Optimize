@@ -20,6 +20,26 @@ class BaseOptimizeMocked extends BaseOptimize
 
 class BaseOptimizeTest extends TestCase
 {
+    public function testInit()
+    {
+        $this->assertEquals(0, BaseOptimize::getBestScore());
+        $this->assertEquals(0, BaseOptimize::getCurrentScore());
+    }
+
+    public function testCanSudoOk()
+    {
+        $testBaseOptimize = new BaseOptimizeMocked();
+        jeedom::$sudoAnswer = true;
+        $this->assertTrue($testBaseOptimize->canSudo());
+    }
+
+    public function testCanSudoBad()
+    {
+        $testBaseOptimize = new BaseOptimizeMocked();
+        jeedom::$sudoAnswer = false;
+        $this->assertFalse($testBaseOptimize->canSudo());
+    }
+
     public function testGetCurrentScore()
     {
         $testBaseOptimize = new BaseOptimizeMocked();

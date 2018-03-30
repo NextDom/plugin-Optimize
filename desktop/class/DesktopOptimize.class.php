@@ -53,7 +53,7 @@ class DesktopOptimize
     /**
      * Affiche contenu d'une cellule pouvan nécessiter une action de l'utilisateur
      *
-     * @param array  $rating Note de l'élément
+     * @param array $rating Note de l'élément
      * @param string $category Catégorie
      * @param string $type Type de modification
      */
@@ -68,7 +68,8 @@ class DesktopOptimize
         echo '</td>';
     }
 
-    public function show() {
+    public function show()
+    {
         $this->init();
         include_file('desktop', 'Optimize', 'css', 'Optimize');
         include_file('desktop', 'Optimize', 'js', 'Optimize');

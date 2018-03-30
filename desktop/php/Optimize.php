@@ -16,7 +16,7 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once(dirname(__FILE__) . '/../class/DesktopOptimize.php');
+require_once(dirname(__FILE__) . '/../class/DesktopOptimize.class.php');
 
 include_file('core', 'authentification', 'php');
 

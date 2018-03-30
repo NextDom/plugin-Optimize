@@ -82,7 +82,7 @@ class OptimizeRPi extends BaseOptimize
     {
         $result = false;
         if ($this->isSystemConfigFileReadable()) {
-            return $this->parseSystemConfigFile();
+            $result = $this->parseSystemConfigFile();
         }
         return $result;
     }
@@ -263,7 +263,6 @@ class OptimizeRPi extends BaseOptimize
                 $this->addParameter($name, $bestValue);
                 $result = true;
             }
-            return $result;
         }
         return $result;
     }
