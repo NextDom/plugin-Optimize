@@ -31,6 +31,8 @@ class DesktopViewTest extends TestCase
         DesktopOptimize::$viewData['scenarios'] = array();
         DesktopOptimize::$viewData['plugins'] = array();
         DesktopOptimize::$viewData['system_logs'] = array();
+        DesktopOptimize::$viewData['currentScore'] = 0;
+        DesktopOptimize::$viewData['bestScore'] = 0;
         DesktopOptimize::$showedCells = array();
     }
 
