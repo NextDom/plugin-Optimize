@@ -9,9 +9,9 @@ matrix:
         - find . -type f -name *.php -not -path "./vendor/*" | xargs -n1 php -l
       script:        
        - cd ${TRAVIS_BUILD_DIR}
-       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "." --exclude "vendor" ./tests/
+       - ./vendor/phpunit/phpunit/phpunit --coverage-clover ./build/logs/clover.xml --whitelist "." --exclude "vendor" ./tests/ --stderr
       after_script:
-       - php vendor/bin/php-coveralls
+       - php vendor/bin/php-coveralls --stderr
     - language: markdown
       addons:
         apt:

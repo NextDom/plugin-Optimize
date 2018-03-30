@@ -23,6 +23,11 @@ class DesktopViewTest extends TestCase
     {
         DesktopOptimize::$viewData = array();
         DesktopOptimize::$viewData['rpi'] = false;
+        DesktopOptimize::$viewData['rpi_can_optimize'] = false;
+        DesktopOptimize::$viewData['rpi_sudo'] = false;
+        DesktopOptimize::$viewData['system_pip'] = false;
+        DesktopOptimize::$viewData['system_jsmin'] = false;
+        DesktopOptimize::$viewData['system_csscompressor'] = false;
         DesktopOptimize::$viewData['scenarios'] = array();
         DesktopOptimize::$viewData['plugins'] = array();
         DesktopOptimize::$viewData['system_logs'] = array();
