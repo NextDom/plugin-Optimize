@@ -16,50 +16,14 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once(dirname(__FILE__) . '/../../core/class/BaseOptimize.class.php');
-require_once(dirname(__FILE__) . '/../../core/class/OptimizePlugins.class.php');
-require_once(dirname(__FILE__) . '/../../core/class/OptimizeScenarios.class.php');
-require_once(dirname(__FILE__) . '/../../core/class/OptimizeSystem.class.php');
-require_once(dirname(__FILE__) . '/../../core/class/OptimizeRPi.class.php');
+require_once(dirname(__FILE__) . '/../class/DesktopOptimize.php');
 
-include_file('desktop', 'Optimize', 'css', 'Optimize');
-include_file('desktop', 'Optimize', 'js', 'Optimize');
 include_file('core', 'authentification', 'php');
 
 if (!isConnect('admin')) {
     throw new Exception(__('401 - Refused access', __FILE__));
 }
 
-$tplData = array();
-BaseOptimize::initScore();
+$desktop = new DesktopOptimize();
+$desktop->show();
 
-$optimizeScenarios = new OptimizeScenarios();
-$tplData['scenarios'] = $optimizeScenarios->getInformations();
-
-$optimizePlugins = new OptimizePlugins();
-$tplData['plugins'] = $optimizePlugins->getInformations();
-
-$optimizeSystem = new OptimizeSystem();
-$tplData['system_logs'] = $optimizeSystem->getLogInformations();
-$tplData['system_pip'] = $optimizeSystem->isPipInstalled();
-if ($tplData['system_pip'] === true) {
-    $tplData['system_csscompressor'] = $optimizeSystem->isCssCompressorInstalled();
-    $tplData['system_jsmin'] = $optimizeSystem->isJsMinInstalled();
-}
-
-$tplData['rpi'] = false;
-$optimizeRPi = new OptimizeRPi();
-if ($optimizeRPi->isRaspberryPi()) {
-    $tplData['rpi'] = true;
-    $tplData['rpi_can_optimize'] = $optimizeRPi->canParseSystemConfigFile();
-    if ($tplData['rpi_can_optimize'] === true) {
-        $tplData['rpi_sudo'] = $optimizeRPi->canSudo();
-        $tplData['rating'] = $optimizeRPi->getRating();
-    }
-}
-
-$tplData['currentScore'] = BaseOptimize::getCurrentScore();
-$tplData['bestScore'] = BaseOptimize::getBestScore();
-
-// Affichage
-include(dirname(__FILE__) . '/../templates/view.php');
