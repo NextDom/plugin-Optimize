@@ -13,8 +13,8 @@ cp -fr core $MOCKED_ENV/plugins/Optimize
 cp -fr desktop $MOCKED_ENV/plugins/Optimize
 cp -fr plugin_info $MOCKED_ENV/plugins/Optimize
 cp -fr tests/testsuite $MOCKED_ENV/plugins/Optimize/tests
-cp -fr tests/phpunit.xml $MOCKED_ENV/plugins/Optimize/phpunit.xml
+cp -fr tests/phpunit_local.xml $MOCKED_ENV/plugins/Optimize/phpunit_local.xml
 cp -fr vendor $MOCKED_ENV/plugins/Optimize
 
 cd $MOCKED_ENV/plugins/Optimize
-$PHP_FOR_TESTS ./vendor/phpunit/phpunit/phpunit --configuration phpunit.xml
+$PHP_FOR_TESTS ./vendor/phpunit/phpunit/phpunit --configuration phpunit_local.xml
