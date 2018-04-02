@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+        backupStaticAttributes="false"
+        cacheTokens="false"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        forceCoversAnnotation="false"
+        mapTestClassNameToCoveredClassName="false"
+        processIsolation="false"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        stopOnRisky="false"
+        -->
+<phpunit
+        strict="true"
+        verbose="true">
+    <testsuites>
+        <testsuite name="AllTests">
+            <directory>.</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">.</directory>
+            <exclude>
+                <directory>vendor</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-clover" target="../../../../../clover.xml" />
+    </logging>
+</phpunit>
+        <!--
+        <phpunit
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.3/phpunit.xsd"
+                 backupGlobals="true"
+                 backupStaticAttributes="false"
+                 cacheTokens="false"
+                 colors="false"
+                 convertErrorsToExceptions="true"
+                 convertNoticesToExceptions="true"
+                 convertWarningsToExceptions="true"
+                 forceCoversAnnotation="false"
+                 mapTestClassNameToCoveredClassName="false"
+                 printerClass="PHPUnit_TextUI_ResultPrinter"
+                 processIsolation="false"
+                 stopOnError="false"
+                 stopOnFailure="false"
+                 stopOnIncomplete="false"
+                 stopOnSkipped="false"
+                 stopOnRisky="false"
+                 testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+                 timeoutForSmallTests="1"
+                 timeoutForMediumTests="10"
+                 timeoutForLargeTests="60"
+                 verbose="false">
+            <testsuites>
+                <testsuite name="Test suite">
+                    <directory>tests/*.php</directory>
+                </testsuite>
+            </testsuites>
+        </phpunit>
+        -->

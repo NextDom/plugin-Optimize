@@ -2,8 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once ('../../core/class/system.class.php');
 require_once('core/class/OptimizeParser.class.php');
-require_once('JeedomMock.php');
 
 class OptimizeParserTest extends TestCase
 {

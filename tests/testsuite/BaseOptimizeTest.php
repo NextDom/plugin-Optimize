@@ -2,8 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once ('../../core/class/jeedom.class.php');
 require_once('core/class/BaseOptimize.class.php');
-require_once('JeedomMock.php');
 
 class BaseOptimizeMocked extends BaseOptimize
 {
@@ -70,6 +70,6 @@ class BaseOptimizeTest extends TestCase
     public function testGetJeedomRootDirectory()
     {
         $baseOptimize = new BaseOptimize();
-        $this->assertEquals($baseOptimize->getJeedomRootDirectory(), realpath(dirname(__FILE__) . '/../../../'));
+        $this->assertEquals(realpath(dirname(__FILE__) . '/../../../../'), $baseOptimize->getJeedomRootDirectory());
     }
 }

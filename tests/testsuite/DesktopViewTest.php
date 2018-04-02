@@ -2,9 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 
-//require_once ('./desktop/class/DesktopOptimize.class.php');
-//require_once('JeedomMock.php');
-
 class DesktopOptimize
 {
     public static $viewData = array();
