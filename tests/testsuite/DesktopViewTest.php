@@ -2,16 +2,19 @@
 
 use PHPUnit\Framework\TestCase;
 
-class DesktopOptimize
-{
-    public static $viewData = array();
-
-    public static $showedCells = array();
-
-    public static function showActionCell($rating, $category, $type)
+if (!class_exists('DesktopOptimize')) {
+    class DesktopOptimize
     {
-        array_push(static::$showedCells, array($rating, $category, $type));
+        public static $viewData = array();
+
+        public static $showedCells = array();
+
+        public static function showActionCell($rating, $category, $type)
+        {
+            array_push(static::$showedCells, array($rating, $category, $type));
+        }
     }
+
 }
 
 

@@ -3,11 +3,8 @@
 use PHPUnit\Framework\TestCase;
 use org\bovigo\vfs\vfsStream;
 
-define('SYSTEM_CONFIG_FILE_PATH', 'vfs://boot/config.txt');
-
 require_once('core/class/OptimizeRPi.class.php');
 require_once('vendor/autoload.php');
-require_once('JeedomMock.php');
 
 class OptimizeRPiTest extends TestCase
 {
@@ -21,6 +18,10 @@ class OptimizeRPiTest extends TestCase
         vfsStream::setup('boot');
         $this->configFileUrl = vfsStream::url('boot/config.txt');
         file_put_contents($this->configFileUrl, "a_param=a_value\n");
+
+        config::$byKeyPluginData = array(
+            'Optimize' => array('raspberry-config-file' => $this->configFileUrl)
+        );
     }
 
     protected function tearDown()

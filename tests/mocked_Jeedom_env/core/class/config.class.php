@@ -117,10 +117,16 @@ class config
             'default' => 0
         )
     );
+    public static $byKeyPluginData = array();
 
-    public static function byKey($key)
+    public static function byKey($key, $plugin = 'core')
     {
-        return config::$byKeyData[$key];
+        if ($plugin == 'core') {
+            return config::$byKeyData[$key];
+        }
+        else {
+            return config::$byKeyPluginData[$plugin][$key];
+        }
     }
 
     public static function save($key, $data)

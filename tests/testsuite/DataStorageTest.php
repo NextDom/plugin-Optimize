@@ -1,5 +1,5 @@
 <?php
-/*
+
 use PHPUnit\Framework\TestCase;
 
 require_once('core/class/DataStorage.class.php');
@@ -37,4 +37,3 @@ class DataStorageTest extends TestCase
 
     }
 }
-*/

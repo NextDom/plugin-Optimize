@@ -16,35 +16,24 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once dirname(__FILE__) . '/../../../core/php/core.inc.php'; // @codeCoverageIgnore
+require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-/**
- * Fonction appelée à l'installation du plugin
- *
- * @codeCoverageIgnore
- */
-function Optimize_install()
-{
-    config::save('raspberry-config-file', '/boot/config.txt', 'Optimize');
+include_file('core', 'authentification', 'php');
+
+if (!isConnect()) {
+    include_file('desktop', '404', 'php');
+    die();
 }
 
-/**
- * Fonction appelée à la mise à jour du plugin
- *
- * @codeCoverageIgnore
- */
-function Optimize_update()
-{
-
-}
-
-/**
- * Fonction appelée à la suppression du plugin
- *
- * @codeCoverageIgnore
- */
-function Optimize_remove()
-{
-    config::remove('raspberry-config-file', 'Optimize');
-}
+?>
+<form class="form-horizontal">
+    <fieldset>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">{{Fichier de configuration du Raspberry}}</label>
+            <div class="col-lg-2">
+                <input type="text" class="configKey form-control" data-l1key="raspberry-config-file" placeholder="/boot/config.txt"/>
+            </div>
+        </div>
+  </fieldset>
+</form>
 
