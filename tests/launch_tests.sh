@@ -16,10 +16,8 @@ cp -fr tests/testsuite $MOCKED_ENV/plugins/Optimize/tests
 cp -fr tests/phpunit.xml $MOCKED_ENV/plugins/Optimize/phpunit.xml
 cp -fr vendor $MOCKED_ENV/plugins/Optimize
 pwd
-ls -alR .
 
 cd $MOCKED_ENV/plugins/Optimize
 pwd
-ls -alR .
 $PHP_FOR_TESTS ./vendor/phpunit/phpunit/phpunit ./tests/
 $PHP_FOR_TESTS ./vendor/phpunit/phpunit/phpunit --configuration phpunit.xml --stderr
