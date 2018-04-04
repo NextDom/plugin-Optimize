@@ -1,10 +1,13 @@
 #!/bin/sh
 
+MOCKED_ENV=tests/mocked_Jeedom_env
+
 if [ -z "$PHP_FOR_TESTS" ]; then
     PHP_FOR_TESTS=php
 fi
 
-MOCKED_ENV=tests/mocked_Jeedom_env
+echo "Version de PHP"
+$PHP_FOR_TESTS --version
 
 rm -fr $MOCKED_ENV/plugins/Optimize
 mkdir $MOCKED_ENV/plugins/Optimize

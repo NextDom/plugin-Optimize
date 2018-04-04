@@ -3,6 +3,7 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
+         stderr="true"
          strict="false"
          verbose="false"
          backupGlobals="false"
