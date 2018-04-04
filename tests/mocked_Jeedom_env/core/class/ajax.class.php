@@ -2,8 +2,7 @@
 
 class ajax
 {
-
 	public static function init($item = null) {
-		return true;
+		return null;
 	}
 }
