@@ -27,3 +27,12 @@ function include_file($folder, $name, $type, $plugin = null)
 {
     MockedActions::add(array('action' => 'include_file', 'folder' => $folder, 'name' => $name, 'type' => $type, 'plugin' => $plugin));
 }
+
+function isConnect($user)
+{
+	return true;
+}
+
+function init() {
+	return true;
+}
