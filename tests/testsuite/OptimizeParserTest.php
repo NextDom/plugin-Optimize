@@ -10,6 +10,7 @@ class OptimizeParserTest extends TestCase
     protected function setUp()
     {
         $this->parser = new OptimizeParser();
+        scenario::init();
     }
 
     protected function tearDown()
@@ -21,7 +22,6 @@ class OptimizeParserTest extends TestCase
 
     public function testParserScenarioLog()
     {
-        scenario::all();
         $this->parser->parse('scenario', 1, 'log');
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));

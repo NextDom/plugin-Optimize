@@ -9,14 +9,16 @@ class scenario
 {
     public static $scenariosList;
 
-    public static function all()
-    {
+    public static function init() {
         static::$scenariosList = array(
             new scenarioItem(1, 'First scenario', 'none', 1, true),
             new scenarioItem(2, 'Second scenario', 'realtime', 1, true),
             new scenarioItem(3, 'First scenario', 'none', 0, true),
             new scenarioItem(4, 'First scenario', 'none', 1, false)
         );
+    }
+    public static function all()
+    {
         return static::$scenariosList;
     }
 
