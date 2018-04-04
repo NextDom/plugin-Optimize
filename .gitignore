@@ -1,4 +1,9 @@
 
 \.idea/
+<<<<<<< HEAD
 vendor/
 .composer.lock
+=======
+
+vendor/
+>>>>>>> develop

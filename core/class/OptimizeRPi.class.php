@@ -18,8 +18,6 @@
 
 require_once('BaseOptimize.class.php');
 
-define('SYSTEM_CONFIG_FILE_PATH', '/boot/config.txt');
-
 class OptimizeRPi extends BaseOptimize
 {
     /**
@@ -82,7 +80,7 @@ class OptimizeRPi extends BaseOptimize
     {
         $result = false;
         if ($this->isSystemConfigFileReadable()) {
-            return $this->parseSystemConfigFile();
+            $result = $this->parseSystemConfigFile();
         }
         return $result;
     }
@@ -143,6 +141,10 @@ class OptimizeRPi extends BaseOptimize
         return $result;
     }
 
+    private function getRaspberryConfigFile() {
+      return config::byKey('raspberry-config-file', 'Optimize');
+    }
+
     /**
      * Test si le fichier de configuration système est lisible
      *
@@ -151,8 +153,9 @@ class OptimizeRPi extends BaseOptimize
     private function isSystemConfigFileReadable()
     {
         $result = false;
-        if (\file_exists(SYSTEM_CONFIG_FILE_PATH)) {
-            if (\is_readable(SYSTEM_CONFIG_FILE_PATH)) {
+        $configFile = $this->getRaspberryConfigFile();
+        if (\file_exists($configFile)) {
+            if (\is_readable($configFile)) {
                 $result = true;
             }
         }
@@ -167,7 +170,7 @@ class OptimizeRPi extends BaseOptimize
         $result = false;
         $this->systemConfig = array();
 
-        $fileHandle = \fopen(SYSTEM_CONFIG_FILE_PATH, "r");
+        $fileHandle = \fopen($this->getRaspberryConfigFile(), "r");
         if ($fileHandle !== false) {
             while (!\feof($fileHandle)) {
                 $line = \fgets($fileHandle);
@@ -263,7 +266,6 @@ class OptimizeRPi extends BaseOptimize
                 $this->addParameter($name, $bestValue);
                 $result = true;
             }
-            return $result;
         }
         return $result;
     }
@@ -276,9 +278,10 @@ class OptimizeRPi extends BaseOptimize
     private function createBackupSystemConfigFile()
     {
         $result = false;
+        $configFile = $this->getRaspberryConfigFile();
         if ($this->canSudo()) {
-            \exec(system::getCmdSudo() . ' cp ' . SYSTEM_CONFIG_FILE_PATH . ' ' . SYSTEM_CONFIG_FILE_PATH . '.bak');
-            $result = file_exists(SYSTEM_CONFIG_FILE_PATH . '.bak');
+            \exec(system::getCmdSudo() . ' cp ' . $configFile . ' ' . $configFile . '.bak');
+            $result = file_exists($configFile . '.bak');
         }
         return $result;
     }
@@ -290,7 +293,7 @@ class OptimizeRPi extends BaseOptimize
      */
     private function commentParameter($name)
     {
-        \exec(system::getCmdSudo() . ' sed -i\'\' \'s/^' . $name . '/#' . $name . '/\' ' . SYSTEM_CONFIG_FILE_PATH);
+        \exec(system::getCmdSudo() . ' sed -i\'\' \'s/^' . $name . '/#' . $name . '/\' ' . $this->getRaspberryConfigFile());
     }
 
     /**
@@ -301,6 +304,6 @@ class OptimizeRPi extends BaseOptimize
      */
     private function addParameter($name, $value)
     {
-        \exec(system::getCmdSudo() . ' sh -c "echo \'' . $name . '=' . $value . '\' >> ' . SYSTEM_CONFIG_FILE_PATH . '"');
+        \exec(system::getCmdSudo() . ' sh -c "echo \'' . $name . '=' . $value . '\' >> ' . $this->getRaspberryConfigFile() . '"');
     }
 }

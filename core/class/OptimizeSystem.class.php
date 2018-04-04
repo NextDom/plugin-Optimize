@@ -24,15 +24,15 @@ class OptimizeSystem extends BaseOptimize
      * @var array Tableau des différents logs système
      */
     private $systemLogs = array(
-        'scenario'   => 'Scenario',
-        'plugin'     => 'Plugin',
-        'market'     => 'Market',
-        'api'        => 'Api',
+        'scenario' => 'Scenario',
+        'plugin' => 'Plugin',
+        'market' => 'Market',
+        'api' => 'Api',
         'connection' => 'Connection',
-        'interact'   => 'Interact',
-        'tts'        => 'TTS',
-        'report'     => 'Report',
-        'event'      => 'Event'
+        'interact' => 'Interact',
+        'tts' => 'TTS',
+        'report' => 'Report',
+        'event' => 'Event'
     );
 
     /**

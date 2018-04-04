@@ -2,14 +2,15 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once ('../../core/class/system.class.php');
 require_once('core/class/OptimizeParser.class.php');
-require_once('JeedomMock.php');
 
 class OptimizeParserTest extends TestCase
 {
     protected function setUp()
     {
         $this->parser = new OptimizeParser();
+        scenario::init();
     }
 
     protected function tearDown()
@@ -21,7 +22,6 @@ class OptimizeParserTest extends TestCase
 
     public function testParserScenarioLog()
     {
-        scenario::all();
         $this->parser->parse('scenario', 1, 'log');
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
@@ -59,7 +59,8 @@ class OptimizeParserTest extends TestCase
         $this->assertEquals('remove', $actions[0]['action']);
     }
 
-    public function testParserPluginLog() {
+    public function testParserPluginLog()
+    {
         $this->parser->parse('plugin', 'thetemplate', 'log');
         $this->parser->parse('plugin', 'IOptimize', 'log');
         $actions = MockedActions::get();

@@ -1,0 +1,5 @@
+main:     PhpCoveralls
+title:    php-coveralls
+internal: yes
+todo:     yes
+wipeout:  yes
