@@ -70,6 +70,6 @@ class BaseOptimizeTest extends TestCase
     public function testGetJeedomRootDirectory()
     {
         $baseOptimize = new BaseOptimize();
-        $this->assertEquals(realpath(dirname(__FILE__) . '/../../../../'), $baseOptimize->getJeedomRootDirectory());
+        $this->assertEquals(realpath(dirname(__FILE__) . '/../../../'), $baseOptimize->getJeedomRootDirectory());
     }
 }

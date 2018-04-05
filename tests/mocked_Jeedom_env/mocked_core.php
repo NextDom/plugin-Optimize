@@ -23,6 +23,10 @@ class MockedActions
     }
 }
 
+class JeedomVars {
+  public static $jeedomIsConnected = true;
+}
+
 function include_file($folder, $name, $type, $plugin = null)
 {
     MockedActions::add(array('action' => 'include_file', 'folder' => $folder, 'name' => $name, 'type' => $type, 'plugin' => $plugin));
@@ -30,9 +34,21 @@ function include_file($folder, $name, $type, $plugin = null)
 
 function isConnect($user)
 {
-	return true;
+	return JeedomVars::$jeedomIsConnected;
 }
 
 function init() {
 	return true;
+}
+
+function __($msg) {
+  return $msg;
+}
+
+function displayExeption($exceptionMsg) {
+  displayException($exceptionMsg);
+}
+
+function displayException($exceptionMsg) {
+  
 }
