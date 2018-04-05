@@ -20,8 +20,6 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php'; // @codeCove
 
 /**
  * Fonction appelée à l'installation du plugin
- *
- * @codeCoverageIgnore
  */
 function Optimize_install()
 {
@@ -30,8 +28,6 @@ function Optimize_install()
 
 /**
  * Fonction appelée à la mise à jour du plugin
- *
- * @codeCoverageIgnore
  */
 function Optimize_update()
 {
@@ -40,11 +36,8 @@ function Optimize_update()
 
 /**
  * Fonction appelée à la suppression du plugin
- *
- * @codeCoverageIgnore
  */
 function Optimize_remove()
 {
     config::remove('raspberry-config-file', 'Optimize');
 }
-

@@ -133,4 +133,8 @@ class config
     {
         MockedActions::add(array('action' => 'save', 'key' => $key, 'data' => $data));
     }
+
+    public static function remove($key) {
+      MockedActions::add(array('action' => 'remove', 'key' => $key));
+    }
 }
