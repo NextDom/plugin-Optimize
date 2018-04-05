@@ -25,6 +25,8 @@ class MockedActions
 
 class JeedomVars {
   public static $jeedomIsConnected = true;
+
+  public static $initAnswers = array();
 }
 
 function include_file($folder, $name, $type, $plugin = null)
@@ -37,8 +39,8 @@ function isConnect($user)
 	return JeedomVars::$jeedomIsConnected;
 }
 
-function init() {
-	return true;
+function init($key) {
+  return JeedomVars::$initAnswers[$key];
 }
 
 function __($msg) {
@@ -50,5 +52,5 @@ function displayExeption($exceptionMsg) {
 }
 
 function displayException($exceptionMsg) {
-  
+
 }
