@@ -16,14 +16,12 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * @codeCoverageIgnore
- */
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 include_file('core', 'authentification', 'php');
 
 if (!isConnect()) {
+    // @codeCoverageIgnore
     include_file('desktop', '404', 'php');
     die();
 }

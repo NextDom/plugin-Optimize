@@ -1,6 +1,6 @@
 <?php
 
-require_once ('../../mocked_core.php');
+require_once('../../mocked_core.php');
 
 /**
  * Mock de la classe config
@@ -123,8 +123,7 @@ class config
     {
         if ($plugin == 'core') {
             return config::$byKeyData[$key];
-        }
-        else {
+        } else {
             return config::$byKeyPluginData[$plugin][$key];
         }
     }
@@ -134,7 +133,8 @@ class config
         MockedActions::add(array('action' => 'save', 'key' => $key, 'data' => $data));
     }
 
-    public static function remove($key) {
-      MockedActions::add(array('action' => 'remove', 'key' => $key));
+    public static function remove($key)
+    {
+        MockedActions::add(array('action' => 'remove', 'key' => $key));
     }
 }

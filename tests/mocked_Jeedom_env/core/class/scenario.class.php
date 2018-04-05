@@ -1,6 +1,6 @@
 <?php
 
-require_once ('../../mocked_core.php');
+require_once('../../mocked_core.php');
 
 /**
  * Mock de la classe scenario
@@ -9,7 +9,8 @@ class scenario
 {
     public static $scenariosList;
 
-    public static function init() {
+    public static function init()
+    {
         static::$scenariosList = array(
             new scenarioItem(1, 'First scenario', 'none', 1, true),
             new scenarioItem(2, 'Second scenario', 'realtime', 1, true),
@@ -17,6 +18,7 @@ class scenario
             new scenarioItem(4, 'First scenario', 'none', 1, false)
         );
     }
+
     public static function all()
     {
         return static::$scenariosList;

@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once ('../../core/php/core.inc.php');
+require_once('../../core/php/core.inc.php');
 require_once('core/class/BaseOptimize.class.php');
 
 class BaseOptimizeMocked extends BaseOptimize
@@ -20,8 +20,9 @@ class BaseOptimizeMocked extends BaseOptimize
 
 class BaseOptimizeTest extends TestCase
 {
-    public function testInit()
+    public function testInitEffects()
     {
+        BaseOptimize::initScore();
         $this->assertEquals(0, BaseOptimize::getBestScore());
         $this->assertEquals(0, BaseOptimize::getCurrentScore());
     }

@@ -1,6 +1,6 @@
 <?php
 
-require_once ('../../mocked_core.php');
+require_once('../../mocked_core.php');
 
 class system
 {
