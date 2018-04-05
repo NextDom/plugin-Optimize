@@ -22,4 +22,5 @@ cp -fr vendor $MOCKED_ENV/plugins/Optimize
 cd $MOCKED_ENV/plugins/Optimize
 
 $PHP_FOR_TESTS ./vendor/phpunit/phpunit/phpunit --configuration phpunit.xml
+cd ../../../..
 sed -i'' 's/tests\/mocked_Jeedom_env\/plugins\/Optimize\///g' clover.xml
