@@ -268,7 +268,7 @@ class OptimizeSystem extends BaseOptimize
      *
      * @return bool True si le fichier n'a pas été minifié.
      */
-    private function isFileNotBeMinify($filePath, $fileHash)
+    protected function isFileNotBeMinify($filePath, $fileHash)
     {
         $result = false;
         $dbValue = $this->dataStorage->getRawData($filePath);
@@ -283,7 +283,7 @@ class OptimizeSystem extends BaseOptimize
      *
      * @param string $filePath Chemin du fichier
      */
-    private function storeFileHash($filePath)
+    protected function storeFileHash($filePath)
     {
         $fileHash = $this->getHashFile($filePath);
         $this->dataStorage->storeRawData($filePath, $fileHash);
@@ -295,7 +295,7 @@ class OptimizeSystem extends BaseOptimize
      * @param string $filePath Chemin du fichier
      * @return string   Hash du fichier
      */
-    private function getHashFile($filePath)
+    protected function getHashFile($filePath)
     {
         return md5_file($filePath);
     }
@@ -308,7 +308,7 @@ class OptimizeSystem extends BaseOptimize
      *
      * @return array Liste des fichiers
      */
-    private function findFilesRecursively($path, $extension)
+    protected function findFilesRecursively($path, $extension)
     {
         $files = array();
         $itemDirectoryIterator = new \RecursiveDirectoryIterator($path);
