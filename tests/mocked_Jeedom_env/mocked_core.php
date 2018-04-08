@@ -11,7 +11,10 @@ class MockedActions
     public static $actionsList = array();
 
     /**
-     * @param array $toAdd Ajoute une action à la liste
+     * Ajoute une action à la liste
+     *
+     * @param string $action Nom de l'action
+     * @param array $content Données de l'action
      */
     public static function add($action, $content = null)
     {
@@ -56,10 +59,10 @@ class JeedomVars
 /**
  * Mock de la fonction d'inclusion d'un fichier
  *
- * @param $folder Répertoire du fichier
- * @param $name Nom du fichier
- * @param $type Type de fichier
- * @param null $plugin Plugin si ce n'est pas un fichier du core
+ * @param string $folder Répertoire du fichier
+ * @param string $name Nom du fichier
+ * @param string $type Type de fichier
+ * @param string $plugin Plugin si ce n'est pas un fichier du core
  */
 function include_file($folder, $name, $type, $plugin = null)
 {
@@ -70,7 +73,7 @@ function include_file($folder, $name, $type, $plugin = null)
  * Mock de la fonction de test de connection de l'utilisateur
  * Renvoie la valeur stockée dans JeedomVars::$jeedomIsConnected
  *
- * @param null $user Utilisateur connecté (facultatif)
+ * @param string $user Utilisateur connecté (facultatif)
  *
  * @return bool Valeur de JeedomVars::$jeedomIsConnected
  */
@@ -83,7 +86,7 @@ function isConnect($user = null)
  * Mock de la fonction d'initialisation d'une valeur
  * Renvoie la valeur correspondant à la clé du tableau JeedomVars::$initAnswers
  *
- * @param $key Clé du tableau
+ * @param string $key Clé du tableau
  *
  * @return mixed Valeur de la clé du tableau JeedomVars::$initAnswers
  */
@@ -96,32 +99,38 @@ function init($key)
  * Mock de la fonction de traduction
  * Renvoie le message en paramètre
  *
- * @param $msg Chaine à traduire
- * @return mixed Chaine passée en paramètre
+ * @param string $msg Chaine à traduire
+ * @param string $file Fichier contenant la chaine à traduire
+ *
+ * @return string Chaine passée en paramètre
  */
-function __($msg)
+function __($msg, $file = null)
 {
     return $msg;
 }
 
 /**
  * Mock de la fonction d'affichage d'une exception
- * Ne fait rien
+ * Renvoie le message en paramètre
  *
- * @param $exceptionMsg Message à afficher
+ * @param string $exceptionMsg Message à afficher
+ *
+ * @return string Message de l'exception
  */
 function displayExeption($exceptionMsg)
 {
-    displayException($exceptionMsg);
+    return displayException($exceptionMsg);
 }
 
 /**
  * Mock de la fonction d'affichage d'une exception
- * Ne fait rien
+ * Renvoie le message en paramètre
  *
- * @param $exceptionMsg Message à afficher
+ * @param string $exceptionMsg Message à afficher
+ *
+ * @return string Message de l'exception
  */
 function displayException($exceptionMsg)
 {
-
+    return $exceptionMsg;
 }

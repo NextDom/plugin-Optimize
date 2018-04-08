@@ -32,8 +32,9 @@ if (!isConnect()) {
         <div class="form-group">
             <label class="col-lg-4 control-label">{{Fichier de configuration du Raspberry}}</label>
             <div class="col-lg-2">
-                <input type="text" class="configKey form-control" data-l1key="raspberry-config-file" placeholder="/boot/config.txt"/>
+                <input type="text" class="configKey form-control" data-l1key="raspberry-config-file"
+                       placeholder="/boot/config.txt"/>
             </div>
         </div>
-  </fieldset>
+    </fieldset>
 </form>

@@ -27,7 +27,7 @@ class DataStorage
      * Constructeur.
      * Initialise le nom de la table des données
      *
-     * @param $dataTableName Nom de la table des données.
+     * @param string $dataTableName Nom de la table des données.
      */
     public function __construct($dataTableName)
     {
@@ -37,9 +37,7 @@ class DataStorage
     /**
      * Test si une table existe dans la base de données
      *
-     * @param $tableName Nom de la table
-     *
-     * @return True si la table exists
+     * @return bool True si la table exists
      */
     public function isDataTableExists()
     {
@@ -75,7 +73,7 @@ class DataStorage
     /**
      * Supprime une donnée de la base de données
      *
-     * @param $code Code de la donnée
+     * @param string $code Code de la donnée
      */
     public function deleteData($code)
     {
@@ -86,9 +84,9 @@ class DataStorage
     /**
      * Test si une donnée existe
      *
-     * @param $code Code de la donnée
+     * @param string $code Code de la donnée
      *
-     * @return True si la données existe
+     * @return bool True si la données existe
      */
     public function isDataExists($code)
     {
@@ -102,8 +100,8 @@ class DataStorage
     /**
      * Ajoute des données brutes
      *
-     * @param $code Codes des données
-     * @param $data Données brutes
+     * @param string $code Codes des données
+     * @param string $data Données brutes
      */
     public function addRawData($code, $data)
     {
@@ -114,7 +112,9 @@ class DataStorage
     /**
      * Obtenir une données stockée brute
      *
-     * @param $code Codes des données
+     * @param string $code Codes des données
+     *
+     * @return mixed Données correspondant au code.
      */
     public function getRawData($code)
     {
@@ -131,8 +131,8 @@ class DataStorage
     /**
      * Met à jour une donnée brutes stockées
      *
-     * @param $code Codes des données
-     * @param $data Données brutes
+     * @param string $code Codes des données
+     * @param mixed $data Données brutes
      */
     public function updateRawData($code, $data)
     {
@@ -146,8 +146,8 @@ class DataStorage
      * Stocke des données brutes.
      * Les données sont mises à jour si elles avaient été stockées précédemment.
      *
-     * @param $code Code des données.
-     * @param $data Données brutes
+     * @param string $code Code des données.
+     * @param mixed $data Données brutes
      */
     public function storeRawData($code, $data)
     {
@@ -161,20 +161,20 @@ class DataStorage
     /**
      * Stocke des données au format JSON.
      *
-     * @param $code Code des données
-     * @param $jsonData Données au format JSON
+     * @param string $code Code des données
+     * @param array $jsonData Données au format JSON
      */
     public function storeJsonData($code, $jsonData)
     {
-        return $this->storeRawData($code, json_encode($jsonData));
+        $this->storeRawData($code, json_encode($jsonData));
     }
 
     /**
      * Obtenir des données JSON
      *
-     * @param $code Code des données
+     * @param string $code Code des données
      *
-     * @return Tablau de données.
+     * @return array Tableau de données.
      */
     public function getJsonData($code)
     {

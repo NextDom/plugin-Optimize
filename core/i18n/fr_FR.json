@@ -1,7 +1,7 @@
 {
   "plugins\/Optimize\/core\/ajax\/Optimize.ajax.php": {
     "401 - Refused access": "401 - Accès refusé",
-    "No method corresponding to : ": "Aucune méthode correspondate à : "
+    "No method corresponding to : ": "Aucune méthode correspondant à : "
   },
   "plugins\/Optimize\/desktop\/php\/Optimize.php": {
     "401 - Refused access": "401 - Accès refusé",

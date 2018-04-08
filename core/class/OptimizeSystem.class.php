@@ -199,7 +199,7 @@ class OptimizeSystem extends BaseOptimize
     }
 
     /**
-     * Installe un module pyhton avec pip
+     * Installe un module python avec pip
      *
      * @param string $packageName Nom du module
      *
@@ -216,9 +216,11 @@ class OptimizeSystem extends BaseOptimize
     }
 
     /**
-     * Compresse une liste de fichiers CSS
+     * Minifie une liste de fichiers CSS
      *
      * @param array $fileList Liste des fichiers
+     *
+     * @return int Nombre de fichiers minifiés
      */
     private function minifyCss($fileList)
     {
@@ -227,7 +229,7 @@ class OptimizeSystem extends BaseOptimize
             $fileHash = $this->getHashFile($file);
             if ($this->isFileNotBeMinify($file, $fileHash)) {
                 \exec('python -m csscompressor ' . $file . ' -o ' . $file);
-                $this->storeCompressedFileHash($file);
+                $this->storeFileHash($file);
                 ++$mininfiedFiles;
             }
         }
@@ -235,44 +237,62 @@ class OptimizeSystem extends BaseOptimize
     }
 
     /**
-     * Compresse une liste de fichiers Javascript
+     * Minifie une liste de fichiers Javascript
      *
      * @param array $fileList Liste de fichiers
+     *
+     * @return int Nombre de fichiers minifiés
      */
     private function minifyJavascript($fileList)
     {
+        $mininfiedFiles = 0;
         foreach ($fileList as $file) {
             if (!strstr($file, 'node_modules')) {
                 $fileHash = $this->getHashFile($file);
                 if ($this->isFileNotBeMinify($file, $fileHash)) {
                     \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
                     \exec('cp /tmp/tmp.js ' . $file);
-                    $this->storeCompressedFileHash($file);
+                    $this->storeFileHash($file);
+                    ++$mininfiedFiles;
                 }
             }
         }
+        return $mininfiedFiles;
     }
 
+    /**
+     * Vérifie si le fichier n'a pas déjà été minifié
+     *
+     * @param string $filePath Chemin du fichier
+     * @param string $fileHash Hash actuel
+     *
+     * @return bool True si le fichier n'a pas été minifié.
+     */
     private function isFileNotBeMinify($filePath, $fileHash)
     {
         $result = false;
         $dbValue = $this->dataStorage->getRawData($filePath);
-        if ($dbValue != $fileHash) {
+        if ($dbValue !== $fileHash) {
             $result = true;
         }
         return $result;
     }
 
-    private function storeCompressedFileHash($file)
+    /**
+     * Stocke le hash d'un fichier
+     *
+     * @param string $filePath Chemin du fichier
+     */
+    private function storeFileHash($filePath)
     {
-        $fileHash = $this->getHashFile($file);
-        $this->dataStorage->storeRawData($file, $fileHash);
+        $fileHash = $this->getHashFile($filePath);
+        $this->dataStorage->storeRawData($filePath, $fileHash);
     }
 
     /**
      * Obtenir le hash d'un fichier
      *
-     * @param $filePath Chemin du fichier
+     * @param string $filePath Chemin du fichier
      * @return string   Hash du fichier
      */
     private function getHashFile($filePath)

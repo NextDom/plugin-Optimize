@@ -20,7 +20,7 @@ class ConfigurationTest extends TestCase
         JeedomVars::$isConnected = false;
         ob_start();
         include(dirname(__FILE__) . '/../plugin_info/configuration.php');
-        $content = ob_get_clean();
+        ob_get_clean();
         // Le fichier exécute die(), cette partie ne doit normalement pas être exécutée
         $this->assertTrue(false);
 

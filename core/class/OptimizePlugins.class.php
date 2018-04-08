@@ -202,6 +202,8 @@ class OptimizePlugins extends BaseOptimize
      * Supprime un plugin désactivé.
      *
      * @param integer $pluginId Identifiant du plugin
+     *
+     * @return True si le plugin a été supprimé
      */
     public function removeIfDisabled($pluginId)
     {

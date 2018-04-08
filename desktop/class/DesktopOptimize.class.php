@@ -61,7 +61,7 @@ class DesktopOptimize
     }
 
     /**
-     * Affiche contenu d'une cellule pouvan nécessiter une action de l'utilisateur
+     * Affiche contenu d'une cellule pouvant nécessiter une action de l'utilisateur
      *
      * @param array $rating Note de l'élément
      * @param string $category Catégorie

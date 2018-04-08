@@ -16,6 +16,13 @@ class MockedStatement
         MockedActions::add('query_execute', array('query' => $this->query, 'data' => $this->data));
     }
 
+    /**
+     * Obtenir les résultats d'une requête
+     *
+     * @param integer $fetchMethod Méthode de récupération (inutilisé)
+     *
+     * @return mixed Données définies par DB::setAnswer au format PDO
+     */
     public function fetchAll($fetchMethod)
     {
         return DB::$answer;
@@ -51,8 +58,7 @@ class DB
     {
         if ($answer !== null) {
             static::$answer = array($answer);
-        }
-        else {
+        } else {
             static::$answer = array();
         }
     }

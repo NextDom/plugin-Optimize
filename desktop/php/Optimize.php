@@ -24,6 +24,7 @@ if (!isConnect('admin')) {
     throw new Exception(__('401 - Refused access', __FILE__));
 }
 
+
 $desktop = new DesktopOptimize();
 $desktop->show();
 

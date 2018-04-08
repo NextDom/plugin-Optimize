@@ -30,14 +30,14 @@ class BaseOptimizeTest extends TestCase
     public function testCanSudoOk()
     {
         $testBaseOptimize = new BaseOptimizeMocked();
-        jeedom::$sudoAnswer = true;
+        jeedom::$isCapableAnswer = true;
         $this->assertTrue($testBaseOptimize->canSudo());
     }
 
     public function testCanSudoBad()
     {
         $testBaseOptimize = new BaseOptimizeMocked();
-        jeedom::$sudoAnswer = false;
+        jeedom::$isCapableAnswer = false;
         $this->assertFalse($testBaseOptimize->canSudo());
     }
 
@@ -58,14 +58,14 @@ class BaseOptimizeTest extends TestCase
 
     public function testCanSudoTrue()
     {
-        jeedom::$sudoAnswer = true;
-        $this->assertTrue(jeedom::$sudoAnswer);
+        jeedom::$isCapableAnswer = true;
+        $this->assertTrue(jeedom::$isCapableAnswer);
     }
 
     public function testCanSudoFalse()
     {
-        jeedom::$sudoAnswer = false;
-        $this->assertFalse(jeedom::$sudoAnswer);
+        jeedom::$isCapableAnswer = false;
+        $this->assertFalse(jeedom::$isCapableAnswer);
     }
 
     public function testGetJeedomRootDirectory()

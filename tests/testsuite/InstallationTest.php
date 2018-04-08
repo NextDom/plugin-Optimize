@@ -43,7 +43,8 @@ class InstallationTest extends TestCase
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
         $this->assertEquals('remove', $actions[0]['action']);
-        $this->assertEquals('raspberry-config-file', $actions[0]['content']);
+        $this->assertEquals('raspberry-config-file', $actions[0]['content']['key']);
+        $this->assertEquals('Optimize', $actions[0]['content']['plugin']);
         $this->assertEquals('query_execute', $actions[1]['action']);
     }
 }

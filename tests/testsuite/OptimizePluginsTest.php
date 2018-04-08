@@ -36,7 +36,8 @@ class OptimizePluginsTest extends TestCase
         $this->assertEquals(array('log' => 'ok', 'path' => 'warn', 'enabled' => 'ok'), $result[2]['rating']);
     }
 
-    public function testRemoveIfDisabledWithoutUninstall() {
+    public function testRemoveIfDisabledWithoutUninstall()
+    {
         update::$byIdResult = 'IOptimize';
         update::$byLogicalIdResult = 'IOptimize';
         mkdir('../IOptimize');
@@ -45,7 +46,8 @@ class OptimizePluginsTest extends TestCase
         $this->assertDirectoryNotExists('../IOptimize');
     }
 
-    public function testRemoveIfDisabledWithUninstall() {
+    public function testRemoveIfDisabledWithUninstall()
+    {
         $installationContent = "<?php
         function IOptimize_remove() {
         MockedActions::add('remove_plugin');

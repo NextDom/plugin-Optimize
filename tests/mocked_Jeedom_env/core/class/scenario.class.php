@@ -7,8 +7,14 @@ require_once('../../mocked_core.php');
  */
 class scenario
 {
+    /**
+     * @var array Liste des scénarios de Jeedom
+     */
     public static $scenariosList;
 
+    /**
+     * Initialise les scénarios de Jeedom
+     */
     public static function init()
     {
         static::$scenariosList = array(
@@ -19,11 +25,23 @@ class scenario
         );
     }
 
+    /**
+     * Obtenir la liste des scénarios
+     *
+     * @return array Liste des scénarios
+     */
     public static function all()
     {
         return static::$scenariosList;
     }
 
+    /**
+     * Obtenir un scénario à partir de son identifiant
+     *
+     * @param mixed $scenarioId Identifiant du scénario
+     *
+     * @return scenarioItem Objet du scénario
+     */
     public static function byId($scenarioId)
     {
         return static::$scenariosList[$scenarioId - 1];
@@ -35,7 +53,13 @@ class scenario
  */
 class scenarioItem
 {
+    /**
+     * @var integer Identifiant du scénario
+     */
     public $id;
+    /**
+     * @var string Nom du scénario
+     */
     public $name;
     public $logmode;
     public $syncmode;

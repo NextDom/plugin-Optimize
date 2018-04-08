@@ -128,13 +128,13 @@ class config
         }
     }
 
-    public static function save($key, $data)
+    public static function save($key, $data, $plugin = null)
     {
-        MockedActions::add('save', array('key' => $key, 'data' => $data));
+        MockedActions::add('save', array('key' => $key, 'data' => $data, 'plugin' => $plugin));
     }
 
-    public static function remove($key)
+    public static function remove($key, $plugin = null)
     {
-        MockedActions::add('remove', $key);
+        MockedActions::add('remove', array('key' => $key, 'plugin' => $plugin));
     }
 }
