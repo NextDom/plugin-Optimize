@@ -2,8 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once('../../core/class/scenario.class.php');
 require_once('core/class/OptimizeScenarios.class.php');
-require_once('JeedomMock.php');
 
 class OptimizeScenariosTest extends TestCase
 {
@@ -12,6 +12,7 @@ class OptimizeScenariosTest extends TestCase
     protected function setUp()
     {
         $this->optimize = new OptimizeScenarios();
+        scenario::init();
     }
 
     protected function tearDown()
@@ -39,30 +40,27 @@ class OptimizeScenariosTest extends TestCase
 
     public function testScenarioDisableLogs()
     {
-        scenario::all();
         $this->optimize->disableLogs(2);
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
         $this->assertEquals('set_configuration', $actions[0]['action']);
-        $this->assertEquals('logmode', $actions[0]['type']);
-        $this->assertEquals('none', $actions[0]['value']);
+        $this->assertEquals('logmode', $actions[0]['content']['type']);
+        $this->assertEquals('none', $actions[0]['content']['value']);
     }
 
     public function testScenarioSetSyncMode()
     {
-        scenario::all();
         $this->optimize->setSyncMode(2);
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
         $this->assertEquals('set_configuration', $actions[0]['action']);
-        $this->assertEquals('syncmode', $actions[0]['type']);
-        $this->assertEquals(1, $actions[0]['value']);
+        $this->assertEquals('syncmode', $actions[0]['content']['type']);
+        $this->assertEquals(1, $actions[0]['content']['value']);
         $this->assertEquals('save', $actions[1]['action']);
     }
 
     public function testScenarioDisableWithEnabledScenario()
     {
-        scenario::all();
         $this->optimize->removeIfDisabled(1);
         $actions = MockedActions::get();
         $this->assertEquals(0, count($actions));
@@ -70,7 +68,6 @@ class OptimizeScenariosTest extends TestCase
 
     public function testScenarioDisableWithDisabledScenario()
     {
-        scenario::all();
         $this->optimize->removeIfDisabled(4);
         $actions = MockedActions::get();
         $this->assertEquals(1, count($actions));

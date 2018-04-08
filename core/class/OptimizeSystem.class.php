@@ -17,6 +17,7 @@
  */
 
 require_once('BaseOptimize.class.php');
+require_once('DataStorage.class.php');
 
 class OptimizeSystem extends BaseOptimize
 {
@@ -24,16 +25,23 @@ class OptimizeSystem extends BaseOptimize
      * @var array Tableau des différents logs système
      */
     private $systemLogs = array(
-        'scenario'   => 'Scenario',
-        'plugin'     => 'Plugin',
-        'market'     => 'Market',
-        'api'        => 'Api',
+        'scenario' => 'Scenario',
+        'plugin' => 'Plugin',
+        'market' => 'Market',
+        'api' => 'Api',
         'connection' => 'Connection',
-        'interact'   => 'Interact',
-        'tts'        => 'TTS',
-        'report'     => 'Report',
-        'event'      => 'Event'
+        'interact' => 'Interact',
+        'tts' => 'TTS',
+        'report' => 'Report',
+        'event' => 'Event'
     );
+
+    private $dataStorage;
+
+    public function __construct()
+    {
+        $this->dataStorage = new DataStorage('optimize');
+    }
 
     /**
      * Evalue les informations d'un log système.
@@ -191,7 +199,7 @@ class OptimizeSystem extends BaseOptimize
     }
 
     /**
-     * Installe un module pyhton avec pip
+     * Installe un module python avec pip
      *
      * @param string $packageName Nom du module
      *
@@ -208,30 +216,88 @@ class OptimizeSystem extends BaseOptimize
     }
 
     /**
-     * Compresse une liste de fichiers CSS
+     * Minifie une liste de fichiers CSS
      *
      * @param array $fileList Liste des fichiers
+     *
+     * @return int Nombre de fichiers minifiés
      */
     private function minifyCss($fileList)
     {
+        $mininfiedFiles = 0;
         foreach ($fileList as $file) {
-            \exec('python -m csscompressor ' . $file . ' -o ' . $file);
+            $fileHash = $this->getHashFile($file);
+            if ($this->isFileNotBeMinify($file, $fileHash)) {
+                \exec('python -m csscompressor ' . $file . ' -o ' . $file);
+                $this->storeFileHash($file);
+                ++$mininfiedFiles;
+            }
         }
+        return $mininfiedFiles;
     }
 
     /**
-     * Compresse une liste de fichiers Javascript
+     * Minifie une liste de fichiers Javascript
      *
      * @param array $fileList Liste de fichiers
+     *
+     * @return int Nombre de fichiers minifiés
      */
     private function minifyJavascript($fileList)
     {
+        $mininfiedFiles = 0;
         foreach ($fileList as $file) {
             if (!strstr($file, 'node_modules')) {
-                \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
-                \exec('cp /tmp/tmp.js ' . $file);
+                $fileHash = $this->getHashFile($file);
+                if ($this->isFileNotBeMinify($file, $fileHash)) {
+                    \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
+                    \exec('cp /tmp/tmp.js ' . $file);
+                    $this->storeFileHash($file);
+                    ++$mininfiedFiles;
+                }
             }
         }
+        return $mininfiedFiles;
+    }
+
+    /**
+     * Vérifie si le fichier n'a pas déjà été minifié
+     *
+     * @param string $filePath Chemin du fichier
+     * @param string $fileHash Hash actuel
+     *
+     * @return bool True si le fichier n'a pas été minifié.
+     */
+    private function isFileNotBeMinify($filePath, $fileHash)
+    {
+        $result = false;
+        $dbValue = $this->dataStorage->getRawData($filePath);
+        if ($dbValue !== $fileHash) {
+            $result = true;
+        }
+        return $result;
+    }
+
+    /**
+     * Stocke le hash d'un fichier
+     *
+     * @param string $filePath Chemin du fichier
+     */
+    private function storeFileHash($filePath)
+    {
+        $fileHash = $this->getHashFile($filePath);
+        $this->dataStorage->storeRawData($filePath, $fileHash);
+    }
+
+    /**
+     * Obtenir le hash d'un fichier
+     *
+     * @param string $filePath Chemin du fichier
+     * @return string   Hash du fichier
+     */
+    private function getHashFile($filePath)
+    {
+        return md5_file($filePath);
     }
 
     /**

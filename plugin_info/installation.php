@@ -16,20 +16,33 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
+require_once(dirname(__FILE__) . '/../../../core/php/core.inc.php');
+require_once(dirname(__FILE__) . '/../core/class/DataStorage.class.php');
 
+/**
+ * Fonction appelée à l'installation du plugin
+ */
 function Optimize_install()
 {
-
+    config::save('raspberry-config-file', '/boot/config.txt', 'Optimize');
+    $dataStorage = new DataStorage('optimize');
+    $dataStorage->createDataTable();
 }
 
+/**
+ * Fonction appelée à la mise à jour du plugin
+ */
 function Optimize_update()
 {
 
 }
 
+/**
+ * Fonction appelée à la suppression du plugin
+ */
 function Optimize_remove()
 {
-
+    config::remove('raspberry-config-file', 'Optimize');
+    $dataStorage = new DataStorage('optimize');
+    $dataStorage->dropDataTable();
 }
-

@@ -16,15 +16,25 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once(dirname(__FILE__) . '/../class/DesktopOptimize.class.php');
+require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 include_file('core', 'authentification', 'php');
 
-if (!isConnect('admin')) {
-    throw new Exception(__('401 - Refused access', __FILE__));
+if (!isConnect()) {
+    // @codeCoverageIgnore
+    include_file('desktop', '404', 'php');
+    die();
 }
 
-
-$desktop = new DesktopOptimize();
-$desktop->show();
-
+?>
+<form class="form-horizontal">
+    <fieldset>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">{{Fichier de configuration du Raspberry}}</label>
+            <div class="col-lg-2">
+                <input type="text" class="configKey form-control" data-l1key="raspberry-config-file"
+                       placeholder="/boot/config.txt"/>
+            </div>
+        </div>
+    </fieldset>
+</form>

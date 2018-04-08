@@ -14,14 +14,11 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-$(document).ready(function ()
-{
-    $('.fa-exclamation-triangle').click(function ()
-    {
+$(document).ready(function () {
+    $('.fa-exclamation-triangle').click(function () {
         askForChange($(this), applyCellChange);
     });
-    $('.action-button').click(function ()
-    {
+    $('.action-button').click(function () {
         askForChange($(this), applyButtonChange);
     });
     updateProgressBar();
@@ -33,8 +30,7 @@ $(document).ready(function ()
  * @param item Elément lié à l'action
  * @param callbackFunction Fonction a appelée après la réception des données de la requête Ajax
  */
-function askForChange(item, callbackFunction)
-{
+function askForChange(item, callbackFunction) {
     var category = item.data('category');
     var id = null;
     if (item.parent().is('td')) {
@@ -49,8 +45,7 @@ function askForChange(item, callbackFunction)
     $('#optimize-modal-content').html(msg[category + '_' + type]);
     $('#optimize-modal').modal();
     $('#optimize-modal-valid').unbind();
-    $('#optimize-modal-valid').click(function ()
-    {
+    $('#optimize-modal-valid').click(function () {
         ajaxPostRequest(item, category, id, type, callbackFunction);
         $('#optimize-modal').modal('hide');
     });
@@ -65,8 +60,7 @@ function askForChange(item, callbackFunction)
  * @param type Type de modification
  * @param callbackFunction Fonction a appelée après la réception des données de la requête Ajax
  */
-function ajaxPostRequest(item, category, id, type, callbackFunction)
-{
+function ajaxPostRequest(item, category, id, type, callbackFunction) {
     $.post({
         url: 'plugins/Optimize/core/ajax/Optimize.ajax.php',
         data: {
@@ -75,8 +69,7 @@ function ajaxPostRequest(item, category, id, type, callbackFunction)
             type: type
         },
         dataType: 'json',
-        success: function (data, status)
-        {
+        success: function (data, status) {
             // Test si l'appel a réussi
             if (data.state !== 'ok' || status !== 'success') {
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
@@ -85,8 +78,7 @@ function ajaxPostRequest(item, category, id, type, callbackFunction)
                 callbackFunction(item, category, type);
             }
         },
-        error: function (request, status, error)
-        {
+        error: function (request, status, error) {
             handleAjaxError(request, status, error);
         }
     });
@@ -99,8 +91,7 @@ function ajaxPostRequest(item, category, id, type, callbackFunction)
  * @param category Catégorie de la modification
  * @param type Type de modification
  */
-function applyCellChange(item, category, type)
-{
+function applyCellChange(item, category, type) {
     var row = item.closest('tr');
     if (type === 'enabled') {
         row.remove();
@@ -128,8 +119,7 @@ function applyCellChange(item, category, type)
  * @param category Catégorie de la modification
  * @param type Type de modification
  */
-function applyButtonChange(item, category, type)
-{
+function applyButtonChange(item, category, type) {
     if (type === 'install') {
         location.reload();
     }
@@ -138,8 +128,7 @@ function applyButtonChange(item, category, type)
 /**
  * Met à jour l abarre de progression
  */
-function updateProgressBar()
-{
+function updateProgressBar() {
     var percentage = parseInt(currentScore * 100 / bestScore);
     var scoreBar = $('#score');
     scoreBar.attr('aria-valuenow', percentage);

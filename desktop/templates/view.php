@@ -16,30 +16,13 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Affiche contenu d'une cellule pouvan nécessiter une action de l'utilisateur
- *
- * @param array  $rating Note de l'élément
- * @param string $category Catégorie
- * @param string $type Type de modification
- */
-function showActionCell($rating, $category, $type)
-{
-    echo '<td class="action-cell">';
-    if ($rating[$type] == 'ok') {
-        echo '<i class="fa fa-check-circle fa-2x"></i>';
-    } else {
-        echo '<i class="fa fa-exclamation-triangle fa-2x" data-category="' . $category . '" data-type="' . $type . '"></i>';
-    }
-    echo '</td>';
-}
-
 ?>
 <div id="optimize-plugin" class="container-fluid">
     <div class="row">
         <div class="col-sm-12">
             <div class="progress">
-                <div id="score" class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">
+                <div id="score" class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0"
+                     aria-valuemax="100">
                 </div>
             </div>
         </div>
@@ -48,7 +31,7 @@ function showActionCell($rating, $category, $type)
         <li role="presentation" class="active"><a data-toggle="tab" href="#scenarios">{{Scenarios}}</a></li>
         <li role="presentation"><a data-toggle="tab" href="#plugins">{{Plugins}}</a></li>
         <li role="presentation"><a data-toggle="tab" href="#system">{{System}}</a></li>
-        <?php if ($tplData['rpi'] === true): ?>
+        <?php if (DesktopOptimize::$viewData['rpi'] === true): ?>
             <li role="presentation"><a data-toggle="tab" href="#raspberry">{{Raspberry Pi}}</a></li>
         <?php endif; ?>
     </ul>
@@ -70,12 +53,10 @@ function showActionCell($rating, $category, $type)
                                 {{Logs enabled: Log writing slows down execution. They must be disabled if they are not used,}}
                             </li>
                             <li>
-                                {{Synchronous mode: Scenarios executed in synchronous mode do not wait for a return of commands.
-                                Attention, this option can cause malfunctions,}}
+                                {{Synchronous mode: Scenarios executed in synchronous mode do not wait for a return of commands. Attention, this option can cause malfunctions,}}
                             </li>
                             <li>
-                                {{Disabled: A disabled scenario is stored in the database. It is best to delete it to speed up
-                                queries in the database.}}
+                                {{Disabled: A disabled scenario is stored in the database. It is best to delete it to speed up queries in the database.}}
                             </li>
                         </ul>
                     </div>
@@ -93,15 +74,15 @@ function showActionCell($rating, $category, $type)
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($tplData['scenarios'] as $scenario) : ?>
+                        <?php foreach (DesktopOptimize::$viewData['scenarios'] as $scenario) : ?>
                             <tr data-id="<?php echo $scenario['id']; ?>">
                                 <td>
                                     <a href="/index.php?v=d&p=scenario&id=<?php echo $scenario['id']; ?>"><?php echo $scenario['name']; ?></a>
                                 </td>
                                 <?php
-                                showActionCell($scenario['rating'], 'scenario', 'log');
-                                showActionCell($scenario['rating'], 'scenario', 'syncmode');
-                                showActionCell($scenario['rating'], 'scenario', 'enabled');
+                                DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'log');
+                                DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'syncmode');
+                                DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'enabled');
                                 ?>
                             </tr>
                         <?php endforeach ?>
@@ -113,7 +94,8 @@ function showActionCell($rating, $category, $type)
         <div id="plugins" class="tab-pane">
             <div class="row">
                 <div class="col-sm-12">
-                    <button class="btn btn-info" data-toggle="collapse" data-target="#plugins-informations">{{Informations}}
+                    <button class="btn btn-info" data-toggle="collapse" data-target="#plugins-informations">
+                        {{Informations}}
                     </button>
                 </div>
             </div>
@@ -129,8 +111,7 @@ function showActionCell($rating, $category, $type)
                                 {{Bad path: The plugin is not in the right directory,}}
                             </li>
                             <li>
-                                {{Disabled: Information from all plugins are read even if they are disabled. Removing a plugin that
-                                is not used will also save disk space.}}
+                                {{Disabled: Information from all plugins are read even if they are disabled. Removing a plugin that is not used will also save disk space.}}
                             </li>
                         </ul>
                     </div>
@@ -148,15 +129,15 @@ function showActionCell($rating, $category, $type)
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($tplData['plugins'] as $plugin) : ?>
+                        <?php foreach (DesktopOptimize::$viewData['plugins'] as $plugin) : ?>
                             <tr data-id="<?php echo $plugin['id']; ?>">
                                 <td>
                                     <a href="/index.php?v=d&m=<?php echo $plugin['id']; ?>&p=<?php echo $plugin['id']; ?>"><?php echo $plugin['name']; ?></a>
                                 </td>
                                 <?php
-                                showActionCell($plugin['rating'], 'plugin', 'log');
-                                showActionCell($plugin['rating'], 'plugin', 'path');
-                                showActionCell($plugin['rating'], 'plugin', 'enabled');
+                                DesktopOptimize::showActionCell($plugin['rating'], 'plugin', 'log');
+                                DesktopOptimize::showActionCell($plugin['rating'], 'plugin', 'path');
+                                DesktopOptimize::showActionCell($plugin['rating'], 'plugin', 'enabled');
                                 ?>
                             </tr>
                         <?php endforeach ?>
@@ -168,7 +149,8 @@ function showActionCell($rating, $category, $type)
         <div id="system" class="tab-pane">
             <div class="row">
                 <div class="col-sm-12">
-                    <button class="btn btn-info" data-toggle="collapse" data-target="#system-informations">{{Informations}}
+                    <button class="btn btn-info" data-toggle="collapse" data-target="#system-informations">
+                        {{Informations}}
                     </button>
                 </div>
             </div>
@@ -197,13 +179,13 @@ function showActionCell($rating, $category, $type)
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($tplData['system_logs'] as $systemLog) : ?>
+                        <?php foreach (DesktopOptimize::$viewData['system_logs'] as $systemLog) : ?>
                             <tr data-id="<?php echo $systemLog['id']; ?>">
                                 <td>
                                     <?php echo $systemLog['name']; ?>
                                 </td>
                                 <?php
-                                showActionCell($systemLog['rating'], 'system', 'log');
+                                DesktopOptimize::showActionCell($systemLog['rating'], 'system', 'log');
                                 ?>
                             </tr>
                         <?php endforeach ?>
@@ -211,7 +193,7 @@ function showActionCell($rating, $category, $type)
                     </table>
                 </div>
             </div>
-            <?php if ($tplData['system_pip'] === true) : ?>
+            <?php if (DesktopOptimize::$viewData['system_pip'] === true) : ?>
                 <div class="row">
                     <div class="col-sm-12">
                         <h3>{{Minification}}</h3>
@@ -219,21 +201,29 @@ function showActionCell($rating, $category, $type)
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <?php if ($tplData['system_csscompressor'] === true) : ?>
-                            <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system" data-type="minify"><i class="fa fa-compress"></i> {{Minify CSS}}</button>
+                        <?php if (DesktopOptimize::$viewData['system_csscompressor'] === true) : ?>
+                            <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system"
+                                    data-type="minify"><i class="fa fa-compress"></i> {{Minify CSS}}
+                            </button>
                         <?php else: ?>
                             {{The Python module 'csscompressor' is not installed.}}
-                            <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system" data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}</button>
+                            <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system"
+                                    data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}
+                            </button>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <?php if ($tplData['system_jsmin'] === true) : ?>
-                            <button class="action-button btn btn-primary" data-id="jsmin" data-category="system" data-type="minify"><i class="fa fa-compress"></i> {{Minify Javascript}}</button>
+                        <?php if (DesktopOptimize::$viewData['system_jsmin'] === true) : ?>
+                            <button class="action-button btn btn-primary" data-id="jsmin" data-category="system"
+                                    data-type="minify"><i class="fa fa-compress"></i> {{Minify Javascript}}
+                            </button>
                         <?php else: ?>
                             {{The Python module 'jsmin' is not installed.}}
-                            <button class="action-button btn btn-primary" data-id="jsmin" data-category="system" data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}</button>
+                            <button class="action-button btn btn-primary" data-id="jsmin" data-category="system"
+                                    data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}
+                            </button>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -246,10 +236,10 @@ function showActionCell($rating, $category, $type)
             <?php endif; ?>
         </div>
         <div id="raspberry" class="tab-pane">
-            <?php if ($tplData['rpi'] === true): ?>
+            <?php if (DesktopOptimize::$viewData['rpi'] === true): ?>
                 <div class="col-sm-12">
-                    <?php if ($tplData['rpi_can_optimize'] === true): ?>
-                        <?php if ($tplData['rpi_sudo'] === false): ?>
+                    <?php if (DesktopOptimize::$viewData['rpi_can_optimize'] === true): ?>
+                        <?php if (DesktopOptimize::$viewData['rpi_sudo'] === false): ?>
                             <div class="alert alert-warning">{{Jeedom doesn't have sudo rights.}}</div>
                         <?php endif; ?>
                         <table class="table">
@@ -263,13 +253,15 @@ function showActionCell($rating, $category, $type)
                             <tbody>
                             <tr>
                                 <td>{{GPU memory}}</td>
-                                <td>{{If you don't use display of your Raspberry Pi, you can limit the GPU memory to the minimum. This parameter is called gpu_mem and is stored in the file /boot/config.txt. The default value is 64 but you can limit it to 16.}}</td>
-                                <?php showActionCell($tplData['rating'], 'raspberry', 'gpu_mem'); ?>
+                                <td>{{If you don't use display of your Raspberry Pi, you can limit the GPU memory to the minimum. This parameter is called gpu_mem and is stored in the file /boot/config.txt. The default value is 64 but you can limit it to 16.}}
+                                </td>
+                                <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['rating'], 'raspberry', 'gpu_mem'); ?>
                             </tr>
                             <tr>
                                 <td>{{L2 Cache}}</td>
-                                <td>{{If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.}}</td>
-                                <?php showActionCell($tplData['rating'], 'raspberry', 'l2_cache'); ?>
+                                <td>{{If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.}}
+                                </td>
+                                <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['rating'], 'raspberry', 'l2_cache'); ?>
                             </tr>
                             </tbody>
                         </table>
@@ -315,6 +307,6 @@ function showActionCell($rating, $category, $type)
     msg['system_install'] = '{{Do you want to install selected Python module ?}}';
     msg['system_minify'] = '{{Do you want to minify all files of selected type ?}}';
 
-    var currentScore = <?php echo $tplData['currentScore']; ?>;
-    var bestScore = <?php echo $tplData['bestScore']; ?>;
+    var currentScore = <?php echo DesktopOptimize::$viewData['currentScore']; ?>;
+    var bestScore = <?php echo DesktopOptimize::$viewData['bestScore']; ?>;
 </script>
