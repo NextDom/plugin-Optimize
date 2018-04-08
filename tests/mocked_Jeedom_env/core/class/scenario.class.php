@@ -92,16 +92,16 @@ class scenarioItem
 
     public function setConfiguration($type, $value)
     {
-        MockedActions::add(array('action' => 'set_configuration', 'type' => $type, 'value' => $value));
+        MockedActions::add('set_configuration', array('type' => $type, 'value' => $value));
     }
 
     public function save()
     {
-        MockedActions::add(array('action' => 'save'));
+        MockedActions::add('save');
     }
 
     public function remove()
     {
-        MockedActions::add(array('action' => 'remove'));
+        MockedActions::add('remove');
     }
 }

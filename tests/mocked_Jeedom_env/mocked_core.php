@@ -13,9 +13,9 @@ class MockedActions
     /**
      * @param array $toAdd Ajoute une action à la liste
      */
-    public static function add($toAdd)
+    public static function add($action, $content = null)
     {
-        array_push(self::$actionsList, $toAdd);
+        array_push(self::$actionsList, array('action' => $action, 'content' => $content));
     }
 
     /**
@@ -45,7 +45,7 @@ class JeedomVars
     /**
      * @var bool Valeur renvoyée par la fonction isConnect()
      */
-    public static $jeedomIsConnected = true;
+    public static $isConnected = true;
 
     /**
      * @var array Tableau des réponses de la fonction init()
@@ -63,7 +63,7 @@ class JeedomVars
  */
 function include_file($folder, $name, $type, $plugin = null)
 {
-    MockedActions::add(array('action' => 'include_file', 'folder' => $folder, 'name' => $name, 'type' => $type, 'plugin' => $plugin));
+    MockedActions::add('include_file', array('folder' => $folder, 'name' => $name, 'type' => $type, 'plugin' => $plugin));
 }
 
 /**
@@ -76,7 +76,7 @@ function include_file($folder, $name, $type, $plugin = null)
  */
 function isConnect($user = null)
 {
-    return JeedomVars::$jeedomIsConnected;
+    return JeedomVars::$isConnected;
 }
 
 /**

@@ -141,8 +141,9 @@ class OptimizeRPi extends BaseOptimize
         return $result;
     }
 
-    private function getRaspberryConfigFile() {
-      return config::byKey('raspberry-config-file', 'Optimize');
+    private function getRaspberryConfigFile()
+    {
+        return config::byKey('raspberry-config-file', 'Optimize');
     }
 
     /**

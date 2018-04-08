@@ -205,6 +205,7 @@ class OptimizePlugins extends BaseOptimize
      */
     public function removeIfDisabled($pluginId)
     {
+        $result = false;
         if ($this->getPluginById($pluginId)->isActive() == 0) {
             $update = update::byId($pluginId);
             if (!\is_object($update)) {
@@ -213,9 +214,21 @@ class OptimizePlugins extends BaseOptimize
             if (\is_object($update)) {
                 // Suppression par Jeedom
                 $update->deleteObjet();
+                $result = true;
             } else {
+                // Appele du script de désinstallation
+                $installationFile = $this->getPluginsDirectory() . '/' . $pluginId . '/plugin_info/installation.php';
+                if (file_exists($installationFile)) {
+                    require_once($installationFile);
+                    $functionName = $pluginId . '_remove';
+                    if (function_exists($functionName)) {
+                        $functionName();
+                    }
+                }
                 $this->deleteDirectory($this->getPluginsDirectory() . '/' . $pluginId);
+                $result = true;
             }
         }
+        return $result;
     }
 }

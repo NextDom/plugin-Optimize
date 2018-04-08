@@ -16,8 +16,8 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-//require_once(dirname(__FILE__) . '/../../../../core/config/common.config.php');
-//require_once(dirname(__FILE__) . '/../../../../core/class/DB.class.php');
+require_once(dirname(__FILE__) . '/../../../../core/config/common.config.php');
+require_once(dirname(__FILE__) . '/../../../../core/class/DB.class.php');
 
 class DataStorage
 {
@@ -31,7 +31,7 @@ class DataStorage
      */
     public function __construct($dataTableName)
     {
-        $this->dataTableName = $dataTableName;
+        $this->dataTableName = 'data_' . $dataTableName;
     }
 
     /**
@@ -59,7 +59,7 @@ class DataStorage
     public function createDataTable()
     {
         if (!$this->isDataTableExists()) {
-            $statement = DB::getConnection()->prepare("CREATE TABLE `" . $this->dataTableName . "` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `code` VARCHAR(64) NOT NULL, `data` TEXT NULL)");
+            $statement = DB::getConnection()->prepare("CREATE TABLE `" . $this->dataTableName . "` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `code` VARCHAR(256) NOT NULL, `data` TEXT NULL)");
             $statement->execute();
         }
     }
@@ -92,11 +92,11 @@ class DataStorage
      */
     public function isDataExists($code)
     {
-        $returnValue = false;
-        if ($this->getRawData($code) !== false) {
-            $returnValue = true;
+        $result = false;
+        if ($this->getRawData($code) !== null) {
+            $result = true;
         }
-        return $returnValue;
+        return $result;
     }
 
     /**
@@ -118,7 +118,7 @@ class DataStorage
      */
     public function getRawData($code)
     {
-        $returnValue = false;
+        $returnValue = null;
         $statement = DB::getConnection()->prepare("SELECT `data` FROM `" . $this->dataTableName . "` WHERE `code` = ?");
         $statement->execute(array($code));
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -136,6 +136,7 @@ class DataStorage
      */
     public function updateRawData($code, $data)
     {
+        echo "UPDATE `" . $this->dataTableName . "` SET `data` = ? WHERE `code` = ?";
         $statement = DB::getConnection()->prepare("UPDATE `" . $this->dataTableName . "` SET `data` = ? WHERE `code` = ?");
         $statement->execute(array($data, $code));
 
@@ -180,26 +181,3 @@ class DataStorage
         return json_decode($this->getRawData($code));
     }
 }
-
-/*
-var_dump($CONFIG);
-$dataStorage = new DataStorage('zzzzzzz');
-var_dump($dataStorage->dropDataTable());
-echo "\n\n";
-var_dump($dataStorage->isDataTableExists());
-echo "a\n";
-var_dump($dataStorage->createDataTable());
-echo "a\n";
-$dataStorage->storeRawData('testa', 'coucou');
-$dataStorage->addRawData('testb', 'coucou');
-$dataStorage->storeJsonData('testc', array('a' => '23', 'p' => array('b' => 'ezaieazoei', 'c' => 'zpaokd')));
-echo "a\n";
-echo "a\n";
-echo "a\n";
-echo "a\n";
-var_dump($dataStorage->getRawData('testa'));
-var_dump($dataStorage->getRawData('testb'));
-var_dump($dataStorage->getRawData('testc'));
-var_dump($dataStorage->getJsonData('testc'));
-
-*/

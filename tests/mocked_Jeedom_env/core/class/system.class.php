@@ -8,7 +8,7 @@ class system
 
     public static function getCmdSudo()
     {
-        MockedActions::add(array('action' => 'get_cmd_sudo'));
+        MockedActions::add('get_cmd_sudo');
         return self::$cmdSudo;
     }
 }

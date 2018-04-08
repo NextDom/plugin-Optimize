@@ -21,7 +21,8 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="progress">
-                <div id="score" class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100">
+                <div id="score" class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0"
+                     aria-valuemax="100">
                 </div>
             </div>
         </div>
@@ -52,12 +53,10 @@
                                 {{Logs enabled: Log writing slows down execution. They must be disabled if they are not used,}}
                             </li>
                             <li>
-                                {{Synchronous mode: Scenarios executed in synchronous mode do not wait for a return of commands.
-                                Attention, this option can cause malfunctions,}}
+                                {{Synchronous mode: Scenarios executed in synchronous mode do not wait for a return of commands. Attention, this option can cause malfunctions,}}
                             </li>
                             <li>
-                                {{Disabled: A disabled scenario is stored in the database. It is best to delete it to speed up
-                                queries in the database.}}
+                                {{Disabled: A disabled scenario is stored in the database. It is best to delete it to speed up queries in the database.}}
                             </li>
                         </ul>
                     </div>
@@ -95,7 +94,8 @@
         <div id="plugins" class="tab-pane">
             <div class="row">
                 <div class="col-sm-12">
-                    <button class="btn btn-info" data-toggle="collapse" data-target="#plugins-informations">{{Informations}}
+                    <button class="btn btn-info" data-toggle="collapse" data-target="#plugins-informations">
+                        {{Informations}}
                     </button>
                 </div>
             </div>
@@ -111,8 +111,7 @@
                                 {{Bad path: The plugin is not in the right directory,}}
                             </li>
                             <li>
-                                {{Disabled: Information from all plugins are read even if they are disabled. Removing a plugin that
-                                is not used will also save disk space.}}
+                                {{Disabled: Information from all plugins are read even if they are disabled. Removing a plugin that is not used will also save disk space.}}
                             </li>
                         </ul>
                     </div>
@@ -150,7 +149,8 @@
         <div id="system" class="tab-pane">
             <div class="row">
                 <div class="col-sm-12">
-                    <button class="btn btn-info" data-toggle="collapse" data-target="#system-informations">{{Informations}}
+                    <button class="btn btn-info" data-toggle="collapse" data-target="#system-informations">
+                        {{Informations}}
                     </button>
                 </div>
             </div>
@@ -202,20 +202,28 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <?php if (DesktopOptimize::$viewData['system_csscompressor'] === true) : ?>
-                            <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system" data-type="minify"><i class="fa fa-compress"></i> {{Minify CSS}}</button>
+                            <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system"
+                                    data-type="minify"><i class="fa fa-compress"></i> {{Minify CSS}}
+                            </button>
                         <?php else: ?>
                             {{The Python module 'csscompressor' is not installed.}}
-                            <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system" data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}</button>
+                            <button class="action-button btn btn-primary" data-id="csscompressor" data-category="system"
+                                    data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}
+                            </button>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <?php if (DesktopOptimize::$viewData['system_jsmin'] === true) : ?>
-                            <button class="action-button btn btn-primary" data-id="jsmin" data-category="system" data-type="minify"><i class="fa fa-compress"></i> {{Minify Javascript}}</button>
+                            <button class="action-button btn btn-primary" data-id="jsmin" data-category="system"
+                                    data-type="minify"><i class="fa fa-compress"></i> {{Minify Javascript}}
+                            </button>
                         <?php else: ?>
                             {{The Python module 'jsmin' is not installed.}}
-                            <button class="action-button btn btn-primary" data-id="jsmin" data-category="system" data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}</button>
+                            <button class="action-button btn btn-primary" data-id="jsmin" data-category="system"
+                                    data-type="install"><i class="fa fa-puzzle-piece"></i> {{Install}}
+                            </button>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -245,12 +253,14 @@
                             <tbody>
                             <tr>
                                 <td>{{GPU memory}}</td>
-                                <td>{{If you don't use display of your Raspberry Pi, you can limit the GPU memory to the minimum. This parameter is called gpu_mem and is stored in the file /boot/config.txt. The default value is 64 but you can limit it to 16.}}</td>
+                                <td>{{If you don't use display of your Raspberry Pi, you can limit the GPU memory to the minimum. This parameter is called gpu_mem and is stored in the file /boot/config.txt. The default value is 64 but you can limit it to 16.}}
+                                </td>
                                 <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['rating'], 'raspberry', 'gpu_mem'); ?>
                             </tr>
                             <tr>
                                 <td>{{L2 Cache}}</td>
-                                <td>{{If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.}}</td>
+                                <td>{{If you don't use display of your Raspberry Pi, you can limit the access to the L2 Cache to the CPU.}}
+                                </td>
                                 <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['rating'], 'raspberry', 'l2_cache'); ?>
                             </tr>
                             </tbody>

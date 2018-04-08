@@ -130,11 +130,11 @@ class config
 
     public static function save($key, $data)
     {
-        MockedActions::add(array('action' => 'save', 'key' => $key, 'data' => $data));
+        MockedActions::add('save', array('key' => $key, 'data' => $data));
     }
 
     public static function remove($key)
     {
-        MockedActions::add(array('action' => 'remove', 'key' => $key));
+        MockedActions::add('remove', $key);
     }
 }

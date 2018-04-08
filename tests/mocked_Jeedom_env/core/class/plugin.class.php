@@ -49,7 +49,6 @@ class pluginItem
     public function isActive()
     {
         $result = 0;
-        // TODO $enabledScenario à supprimer
         if ($this->enabled) {
             $result = 1;
         }

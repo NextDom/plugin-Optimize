@@ -8,7 +8,7 @@ class ConfigurationTest extends TestCase
 
     protected function setUp()
     {
-        JeedomVars::$jeedomIsConnected = true;
+        JeedomVars::$isConnected = true;
     }
 
     protected function tearDown()
@@ -17,7 +17,7 @@ class ConfigurationTest extends TestCase
 
     public function testNotConnected()
     {
-        JeedomVars::$jeedomIsConnected = false;
+        JeedomVars::$isConnected = false;
         ob_start();
         include(dirname(__FILE__) . '/../plugin_info/configuration.php');
         $content = ob_get_clean();
@@ -34,7 +34,7 @@ class ConfigurationTest extends TestCase
         $actions = MockedActions::get();
         $this->assertEquals(1, count($actions));
         $this->assertEquals('include_file', $actions[0]['action']);
-        $this->assertEquals('authentification', $actions[0]['name']);
+        $this->assertEquals('authentification', $actions[0]['content']['name']);
         $this->assertContains('<form', $content);
         $this->assertContains('raspberry-config-file', $content);
     }

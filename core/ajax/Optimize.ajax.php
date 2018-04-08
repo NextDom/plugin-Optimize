@@ -37,6 +37,7 @@ try {
 
     // Analyse de la requête Ajax
     $ajaxParser = new OptimizeParser();
+
     if ($ajaxParser->parse($category, $id, $type)) {
         ajax::success();
     }

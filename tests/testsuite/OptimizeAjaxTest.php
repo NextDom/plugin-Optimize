@@ -10,7 +10,7 @@ class OptimizeAjaxTest extends TestCase
 
     protected function setUp()
     {
-        JeedomVars::$jeedomIsConnected = true;
+        JeedomVars::$isConnected = true;
     }
 
     protected function tearDown()
@@ -19,12 +19,12 @@ class OptimizeAjaxTest extends TestCase
 
     public function testNotConnected()
     {
-        JeedomVars::$jeedomIsConnected = false;
+        JeedomVars::$isConnected = false;
         include(dirname(__FILE__) . '/../core/ajax/Optimize.ajax.php');
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
         $this->assertEquals('include_file', $actions[0]['action']);
-        $this->assertEquals('authentification', $actions[0]['name']);
+        $this->assertEquals('authentification', $actions[0]['content']['name']);
         $this->assertEquals('ajax_error', $actions[1]['action']);
     }
 
@@ -36,7 +36,7 @@ class OptimizeAjaxTest extends TestCase
         $actions = MockedActions::get();
         $this->assertEquals(6, count($actions));
         $this->assertEquals('include_file', $actions[0]['action']);
-        $this->assertEquals('authentification', $actions[0]['name']);
+        $this->assertEquals('authentification', $actions[0]['content']['name']);
         $this->assertEquals('ajax_init', $actions[1]['action']);
         $this->assertEquals('set_configuration', $actions[2]['action']);
         $this->assertEquals('save', $actions[3]['action']);

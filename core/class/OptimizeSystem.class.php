@@ -17,6 +17,7 @@
  */
 
 require_once('BaseOptimize.class.php');
+require_once('DataStorage.class.php');
 
 class OptimizeSystem extends BaseOptimize
 {
@@ -34,6 +35,13 @@ class OptimizeSystem extends BaseOptimize
         'report' => 'Report',
         'event' => 'Event'
     );
+
+    private $dataStorage;
+
+    public function __construct()
+    {
+        $this->dataStorage = new DataStorage('optimize');
+    }
 
     /**
      * Evalue les informations d'un log système.
@@ -214,9 +222,16 @@ class OptimizeSystem extends BaseOptimize
      */
     private function minifyCss($fileList)
     {
+        $mininfiedFiles = 0;
         foreach ($fileList as $file) {
-            \exec('python -m csscompressor ' . $file . ' -o ' . $file);
+            $fileHash = $this->getHashFile($file);
+            if ($this->isFileNotBeMinify($file, $fileHash)) {
+                \exec('python -m csscompressor ' . $file . ' -o ' . $file);
+                $this->storeCompressedFileHash($file);
+                ++$mininfiedFiles;
+            }
         }
+        return $mininfiedFiles;
     }
 
     /**
@@ -228,10 +243,41 @@ class OptimizeSystem extends BaseOptimize
     {
         foreach ($fileList as $file) {
             if (!strstr($file, 'node_modules')) {
-                \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
-                \exec('cp /tmp/tmp.js ' . $file);
+                $fileHash = $this->getHashFile($file);
+                if ($this->isFileNotBeMinify($file, $fileHash)) {
+                    \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
+                    \exec('cp /tmp/tmp.js ' . $file);
+                    $this->storeCompressedFileHash($file);
+                }
             }
         }
+    }
+
+    private function isFileNotBeMinify($filePath, $fileHash)
+    {
+        $result = false;
+        $dbValue = $this->dataStorage->getRawData($filePath);
+        if ($dbValue != $fileHash) {
+            $result = true;
+        }
+        return $result;
+    }
+
+    private function storeCompressedFileHash($file)
+    {
+        $fileHash = $this->getHashFile($file);
+        $this->dataStorage->storeRawData($file, $fileHash);
+    }
+
+    /**
+     * Obtenir le hash d'un fichier
+     *
+     * @param $filePath Chemin du fichier
+     * @return string   Hash du fichier
+     */
+    private function getHashFile($filePath)
+    {
+        return md5_file($filePath);
     }
 
     /**

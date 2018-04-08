@@ -44,8 +44,8 @@ class OptimizeScenariosTest extends TestCase
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
         $this->assertEquals('set_configuration', $actions[0]['action']);
-        $this->assertEquals('logmode', $actions[0]['type']);
-        $this->assertEquals('none', $actions[0]['value']);
+        $this->assertEquals('logmode', $actions[0]['content']['type']);
+        $this->assertEquals('none', $actions[0]['content']['value']);
     }
 
     public function testScenarioSetSyncMode()
@@ -54,8 +54,8 @@ class OptimizeScenariosTest extends TestCase
         $actions = MockedActions::get();
         $this->assertEquals(2, count($actions));
         $this->assertEquals('set_configuration', $actions[0]['action']);
-        $this->assertEquals('syncmode', $actions[0]['type']);
-        $this->assertEquals(1, $actions[0]['value']);
+        $this->assertEquals('syncmode', $actions[0]['content']['type']);
+        $this->assertEquals(1, $actions[0]['content']['value']);
         $this->assertEquals('save', $actions[1]['action']);
     }
 

@@ -9,7 +9,7 @@ fi
 echo Version de PHP
 php --version
 
-rm -fr $MOCKED_ENV/plugins/Optimize
+rm -fr $MOCKED_ENV/plugins/*
 mkdir $MOCKED_ENV/plugins/Optimize
 mkdir $MOCKED_ENV/plugins/Optimize/tests
 cp -fr core $MOCKED_ENV/plugins/Optimize

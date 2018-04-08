@@ -9,7 +9,7 @@ php --version
 
 MOCKED_ENV=tests/mocked_Jeedom_env
 
-rm -fr $MOCKED_ENV/plugins/Optimize
+rm -fr $MOCKED_ENV/plugins/*
 mkdir $MOCKED_ENV/plugins/Optimize
 mkdir $MOCKED_ENV/plugins/Optimize/tests
 cp -fr core $MOCKED_ENV/plugins/Optimize
