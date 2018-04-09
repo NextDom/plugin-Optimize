@@ -1,9 +1,11 @@
 matrix:
   include:
-    - language:  php
+    - language: php
       php: 7.1
       install:
        - composer install
+       - pip install jsmin
+       - pip install csscompressor
        - mkdir -p build/logs
       before_script:
         - find . -type f -name *.php -not -path "./vendor/*" | xargs -n1 php -l
