@@ -32,7 +32,7 @@ class ConfigurationTest extends TestCase
         include(dirname(__FILE__) . '/../plugin_info/configuration.php');
         $content = ob_get_clean();
         $actions = MockedActions::get();
-        $this->assertEquals(1, count($actions));
+        $this->assertCount(1, $actions);
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
         $this->assertContains('<form', $content);

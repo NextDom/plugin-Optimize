@@ -25,7 +25,7 @@ class OptimizeScenariosTest extends TestCase
     public function testScenariosGetInformations()
     {
         $result = $this->optimize->getInformations();
-        $this->assertEquals(4, count($result));
+        $this->assertCount(4, $result);
         $this->assertEquals(1, $result[0]['id']);
         $this->assertEquals('Second scenario', $result[1]['name']);
         $this->assertEquals('realtime', $result[1]['log']);
@@ -42,7 +42,7 @@ class OptimizeScenariosTest extends TestCase
     {
         $this->optimize->disableLogs(2);
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('set_configuration', $actions[0]['action']);
         $this->assertEquals('logmode', $actions[0]['content']['type']);
         $this->assertEquals('none', $actions[0]['content']['value']);
@@ -52,7 +52,7 @@ class OptimizeScenariosTest extends TestCase
     {
         $this->optimize->setSyncMode(2);
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('set_configuration', $actions[0]['action']);
         $this->assertEquals('syncmode', $actions[0]['content']['type']);
         $this->assertEquals(1, $actions[0]['content']['value']);
@@ -63,14 +63,14 @@ class OptimizeScenariosTest extends TestCase
     {
         $this->optimize->removeIfDisabled(1);
         $actions = MockedActions::get();
-        $this->assertEquals(0, count($actions));
+        $this->assertCount(0, $actions);
     }
 
     public function testScenarioDisableWithDisabledScenario()
     {
         $this->optimize->removeIfDisabled(4);
         $actions = MockedActions::get();
-        $this->assertEquals(1, count($actions));
+        $this->assertCount(1, $actions);
         $this->assertEquals('remove', $actions[0]['action']);
     }
 }

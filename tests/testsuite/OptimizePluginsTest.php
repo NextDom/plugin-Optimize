@@ -23,7 +23,7 @@ class OptimizePluginsTest extends TestCase
     public function testGetInformations()
     {
         $result = $this->optimize->getInformations();
-        $this->assertEquals(3, count($result));
+        $this->assertCount(3, $result);
         $this->assertEquals('TheTemplate', $result[0]['name']);
         $this->assertEquals('IOptimize', $result[1]['id']);
         $this->assertEquals(true, $result[1]['log']);
@@ -62,7 +62,7 @@ class OptimizePluginsTest extends TestCase
         $this->optimize->removeIfDisabled('IOptimize');
         $this->assertDirectoryNotExists('../IOptimize');
         $result = MockedActions::get();
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
         $this->assertEquals('remove_plugin', $result[0]['action']);
     }
 }

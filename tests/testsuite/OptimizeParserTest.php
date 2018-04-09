@@ -24,7 +24,7 @@ class OptimizeParserTest extends TestCase
     {
         $this->parser->parse('scenario', 1, 'log');
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('set_configuration', $actions[0]['action']);
         $this->assertEquals('logmode', $actions[0]['content']['type']);
         $this->assertEquals('none', $actions[0]['content']['value']);
@@ -35,7 +35,7 @@ class OptimizeParserTest extends TestCase
     {
         $this->parser->parse('scenario', 2, 'syncmode');
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('set_configuration', $actions[0]['action']);
         $this->assertEquals('syncmode', $actions[0]['content']['type']);
         $this->assertEquals(1, $actions[0]['content']['value']);
@@ -47,7 +47,7 @@ class OptimizeParserTest extends TestCase
         scenarioItem::$enabledScenario = true;
         $this->parser->parse('scenario', 3, 'enabled');
         $actions = MockedActions::get();
-        $this->assertEquals(0, count($actions));
+        $this->assertCount(0, $actions);
     }
 
     public function testParserScenarioEnabledWithDisabledScenario()
@@ -55,7 +55,7 @@ class OptimizeParserTest extends TestCase
         scenarioItem::$enabledScenario = false;
         $this->parser->parse('scenario', 4, 'enabled');
         $actions = MockedActions::get();
-        $this->assertEquals(1, count($actions));
+        $this->assertCount(1, $actions);
         $this->assertEquals('remove', $actions[0]['action']);
     }
 
@@ -64,7 +64,7 @@ class OptimizeParserTest extends TestCase
         $this->parser->parse('plugin', 'thetemplate', 'log');
         $this->parser->parse('plugin', 'IOptimize', 'log');
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('save', $actions[0]['action']);
         $this->assertEquals('log::level::thetemplate', $actions[0]['content']['key']);
         $this->assertEquals('save', $actions[1]['action']);
@@ -76,7 +76,7 @@ class OptimizeParserTest extends TestCase
         $this->parser->parse('system', 'scenario', 'log');
         $this->parser->parse('system', 'plugin', 'log');
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('save', $actions[0]['action']);
         $this->assertEquals('log::level::scenario', $actions[0]['content']['key']);
         $this->assertEquals('save', $actions[1]['action']);
@@ -97,7 +97,7 @@ class OptimizeParserTest extends TestCase
         $result = $this->parser->parse('system', 'bad_item', 'install');
         $this->assertFalse($result);
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('get_cmd_sudo', $actions[0]['action']);
         $this->assertEquals('get_cmd_sudo', $actions[1]['action']);
     }

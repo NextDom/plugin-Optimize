@@ -82,6 +82,25 @@ class DataStorage
     }
 
     /**
+     * Obtenir une données stockée brute
+     *
+     * @param string $code Codes des données
+     *
+     * @return mixed Données correspondant au code.
+     */
+    public function getRawData($code)
+    {
+        $returnValue = null;
+        $statement = DB::getConnection()->prepare("SELECT `data` FROM `" . $this->dataTableName . "` WHERE `code` = ?");
+        $statement->execute(array($code));
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result) > 0) {
+            $returnValue = $result[0]['data'];
+        }
+        return $returnValue;
+    }
+
+    /**
      * Test si une donnée existe
      *
      * @param string $code Code de la donnée
@@ -110,25 +129,6 @@ class DataStorage
     }
 
     /**
-     * Obtenir une données stockée brute
-     *
-     * @param string $code Codes des données
-     *
-     * @return mixed Données correspondant au code.
-     */
-    public function getRawData($code)
-    {
-        $returnValue = null;
-        $statement = DB::getConnection()->prepare("SELECT `data` FROM `" . $this->dataTableName . "` WHERE `code` = ?");
-        $statement->execute(array($code));
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        if (count($result) > 0) {
-            $returnValue = $result[0]['data'];
-        }
-        return $returnValue;
-    }
-
-    /**
      * Met à jour une donnée brutes stockées
      *
      * @param string $code Codes des données
@@ -136,7 +136,6 @@ class DataStorage
      */
     public function updateRawData($code, $data)
     {
-        echo "UPDATE `" . $this->dataTableName . "` SET `data` = ? WHERE `code` = ?";
         $statement = DB::getConnection()->prepare("UPDATE `" . $this->dataTableName . "` SET `data` = ? WHERE `code` = ?");
         $statement->execute(array($data, $code));
 
@@ -178,6 +177,6 @@ class DataStorage
      */
     public function getJsonData($code)
     {
-        return json_decode($this->getRawData($code));
+        return json_decode($this->getRawData($code), true);
     }
 }

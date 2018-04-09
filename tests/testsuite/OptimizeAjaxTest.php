@@ -22,7 +22,7 @@ class OptimizeAjaxTest extends TestCase
         JeedomVars::$isConnected = false;
         include(dirname(__FILE__) . '/../core/ajax/Optimize.ajax.php');
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
         $this->assertEquals('ajax_error', $actions[1]['action']);
@@ -34,7 +34,7 @@ class OptimizeAjaxTest extends TestCase
         JeedomVars::$initAnswers = array('category' => 'scenario', 'id' => 1, 'type' => 'log');
         include(dirname(__FILE__) . '/../core/ajax/Optimize.ajax.php');
         $actions = MockedActions::get();
-        $this->assertEquals(6, count($actions));
+        $this->assertCount(6, $actions);
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
         $this->assertEquals('ajax_init', $actions[1]['action']);

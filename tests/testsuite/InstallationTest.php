@@ -23,7 +23,7 @@ class InstallationTest extends TestCase
     {
         Optimize_install();
         $actions = MockedActions::get();
-        $this->assertEquals(3, count($actions));
+        $this->assertCount(3, $actions);
         $this->assertEquals('save', $actions[0]['action']);
         $this->assertEquals('raspberry-config-file', $actions[0]['content']['key']);
         $this->assertEquals('query_execute', $actions[1]['action']);
@@ -34,14 +34,14 @@ class InstallationTest extends TestCase
     {
         Optimize_update();
         $actions = MockedActions::get();
-        $this->assertEquals(0, count($actions));
+        $this->assertCount(0, $actions);
     }
 
     public function testRemove()
     {
         Optimize_remove();
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('remove', $actions[0]['action']);
         $this->assertEquals('raspberry-config-file', $actions[0]['content']['key']);
         $this->assertEquals('Optimize', $actions[0]['content']['plugin']);

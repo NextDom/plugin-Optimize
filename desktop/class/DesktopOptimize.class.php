@@ -26,7 +26,7 @@ class DesktopOptimize
 {
     public static $viewData = array();
 
-    protected function init()
+    public function init()
     {
         static::$viewData = array();
         BaseOptimize::initScore();
@@ -80,7 +80,6 @@ class DesktopOptimize
 
     public function show()
     {
-        $this->init();
         include_file('desktop', 'Optimize', 'css', 'Optimize');
         include_file('desktop', 'Optimize', 'js', 'Optimize');
         include(dirname(__FILE__) . '/../templates/view.php');
