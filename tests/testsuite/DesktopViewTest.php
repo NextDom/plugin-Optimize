@@ -57,7 +57,7 @@ class DesktopViewTest extends TestCase
         );
         $this->requireView();
         $cells = DesktopOptimize::$showedCells;
-        $this->assertEquals(12, count($cells));
+        $this->assertCount(12, $cells);
         $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'ok'), $cells[0][0]);
         $this->assertEquals('scenario', $cells[1][1]);
         $this->assertEquals(array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok'), $cells[3][0]);

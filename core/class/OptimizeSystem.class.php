@@ -318,7 +318,7 @@ class OptimizeSystem extends BaseOptimize
                 if ($file->isDir()) {
                     $files = \array_merge($files, $this->findFilesRecursively($file->getPathName(), $extension));
                 }
-                if (\pathinfo($filename)['extension'] == $extension) {
+                if (\pathinfo($filename, PATHINFO_EXTENSION) == $extension) {
                     \array_push($files, $file->getPathName());
                 }
             }

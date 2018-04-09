@@ -12,8 +12,14 @@ class MockedOptimizeSystem extends OptimizeSystem
         return $this->isFileNotBeMinify($filePath, $fileHash);
     }
 
-    public function mock_storeFileHash($filePath) {
+    public function mock_storeFileHash($filePath)
+    {
         return $this->storeFileHash($filePath);
+    }
+
+    public function mock_findFilesRecursively($path, $extension)
+    {
+        return $this->findFilesRecursively($path, $extension);
     }
 }
 
@@ -57,7 +63,7 @@ class OptimizeSystemTest extends TestCase
         $result = $this->optimizeSystem->mock_isFileNotBeMinify(__FILE__, $hash);
         $this->assertFalse($result);
         $actions = MockedActions::get();
-        $this->assertEquals(1, count($actions));
+        $this->assertCount(1, $actions);
         $this->assertEquals('query_execute', $actions[0]['action']);
         $this->assertContains('SELECT', $actions[0]['content']['query']);
     }
@@ -68,29 +74,39 @@ class OptimizeSystemTest extends TestCase
         $result = $this->optimizeSystem->mock_isFileNotBeMinify(__FILE__, $hash);
         $this->assertTrue($result);
         $actions = MockedActions::get();
-        $this->assertEquals(1, count($actions));
+        $this->assertCount(1, $actions);
         $this->assertEquals('query_execute', $actions[0]['action']);
         $this->assertContains('SELECT', $actions[0]['content']['query']);
     }
 
-    public function testStoreFileHashNewFile() {
+    public function testStoreFileHashNewFile()
+    {
         $this->optimizeSystem->mock_storeFileHash(__FILE__);
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('query_execute', $actions[0]['action']);
         $this->assertEquals('query_execute', $actions[1]['action']);
         $this->assertContains('INSERT INTO', $actions[1]['content']['query']);
         $this->assertEquals(array(__FILE__, md5_file(__FILE__)), $actions[1]['content']['data']);
     }
 
-    public function testStoreFileHashOldFile() {
+    public function testStoreFileHashOldFile()
+    {
         DB::setAnswer(array('data' => md5('test_for_hash')));
         $this->optimizeSystem->mock_storeFileHash(__FILE__);
         $actions = MockedActions::get();
-        $this->assertEquals(2, count($actions));
+        $this->assertCount(2, $actions);
         $this->assertEquals('query_execute', $actions[0]['action']);
         $this->assertEquals('query_execute', $actions[1]['action']);
         $this->assertContains('UPDATE', $actions[1]['content']['query']);
         $this->assertEquals(array(md5_file(__FILE__), __FILE__), $actions[1]['content']['data']);
+    }
+
+    public function testFindFilesRecursively()
+    {
+        $result = $this->optimizeSystem->mock_findFilesRecursively(dirname(__FILE__) . '/../../../core', 'php');
+        $this->assertContains(dirname(__FILE__) . '/../../../core/class/config.class.php', $result);
+        $this->assertContains(dirname(__FILE__) . '/../../../core/class/jeedom.class.php', $result);
+        $this->assertCount(10, $result);
     }
 }
