@@ -35,6 +35,8 @@ class Optimize extends eqLogic
 
             $currentPluginsList = static::getCurrentPluginsList();
             $oldPluginsList = static::getOldPluginsList($dataStorage);
+            var_dump($currentPluginsList);
+            var_dump($oldPluginsList);
             if (count(array_diff_assoc($currentPluginsList, $oldPluginsList)) != 0) {
                 $optimizeSystem = new OptimizeSystem();
                 $optimizeSystem->minify('csscompressor');

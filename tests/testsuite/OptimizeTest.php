@@ -58,9 +58,9 @@ class OptimizeTest extends TestCase
         $testCssMd5 = md5_file('test.css');
         DB::setAnswer(array('data' => json_encode(array(array('thetemplate', '1.0'), array('IOptimize', '2.0'), array('supa_plugin', '3.0')))));
         update::$byLogicalIdResult = array(
-            'thetemplate' => new MockUpdateLogicalId("1.0"),
-            'IOptimize' => new MockUpdateLogicalId("2.0"),
-            'supa_plugin' => new MockUpdateLogicalId("3.0"));
+            'thetemplate' => new MockUpdateLogicalId('1.0'),
+            'IOptimize' => new MockUpdateLogicalId('2.0'),
+            'supa_plugin' => new MockUpdateLogicalId('3.0'));
         Optimize::cronDaily();
 
         $newTestJsMd5 = md5_file('test.js');
