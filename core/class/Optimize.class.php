@@ -35,15 +35,32 @@ class Optimize extends eqLogic
 
             $currentPluginsList = static::getCurrentPluginsList();
             $oldPluginsList = static::getOldPluginsList($dataStorage);
-            var_dump($currentPluginsList);
-            var_dump($oldPluginsList);
-            if (count(array_diff_assoc($currentPluginsList, $oldPluginsList)) != 0) {
+            if (static::changesInPlugins($currentPluginsList, $oldPluginsList)) {
                 $optimizeSystem = new OptimizeSystem();
                 $optimizeSystem->minify('csscompressor');
                 $optimizeSystem->minify('jsmin');
                 static::storeCurrentPluginList($dataStorage, $currentPluginsList);
             }
         }
+    }
+
+    function changesInPlugins($currentPluginsList, $oldPluginsList) {
+        $result = false;
+        foreach ($currentPluginsList as $currentPlugin) {
+            $matched = false;
+            foreach ($oldPluginsList as $oldPlugin) {
+                if ($currentPlugin[0] == $oldPlugin[0]) {
+                    $matched = true;
+                    if ($currentPlugin[1] != $oldPlugin[1]) {
+                        $result = true;
+                    }
+                }
+            }
+            if (!$matched) {
+                $result = true;
+            }
+        }
+        return $result;
     }
 
     /**
