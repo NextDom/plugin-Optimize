@@ -44,7 +44,14 @@ class Optimize extends eqLogic
         }
     }
 
-    function changesInPlugins($currentPluginsList, $oldPluginsList) {
+    /**
+     * Recherche la différence entre les plugins
+     *
+     * @param array $currentPluginsList Liste des plugins actuels
+     * @param array $oldPluginsList Ancienne liste des plugins
+     * @return bool True si une modification a été trouvée
+     */
+    private static function changesInPlugins($currentPluginsList, $oldPluginsList) {
         $result = false;
         foreach ($currentPluginsList as $currentPlugin) {
             $matched = false;
