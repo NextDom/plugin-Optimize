@@ -134,3 +134,10 @@ function displayException($exceptionMsg)
 {
     return $exceptionMsg;
 }
+
+/**
+ * Mock de la class eqLogic
+ */
+class eqLogic {
+
+}

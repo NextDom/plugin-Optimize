@@ -29,13 +29,21 @@ if (!isConnect()) {
 
 ?>
 <form class="form-horizontal">
-    <fieldset>
-        <div class="form-group">
-            <label class="col-lg-4 control-label">{{Fichier de configuration du Raspberry}}</label>
-            <div class="col-lg-2">
-                <input type="text" class="configKey form-control" data-l1key="raspberry-config-file"
-                       placeholder="/boot/config.txt"/>
-            </div>
+    <div class="form-group">
+        <label for="raspberry-config-file" class="col-sm-2 control-label">{{Raspberry Pi config file}}</label>
+        <div class="col-sm-10">
+            <input type="text" data-l1key="raspberry-config-file" class="configKey form-control" id="raspberry-config-file" placeholder="/boot/config.txt" />
         </div>
-    </fieldset>
+    </div>
+    <div class="form-group">
+        <label for="minify" class="col-sm-2 control-label">{{Raspberry Pi config file}}</label>
+        <div class="col-sm-10">
+            <input type="checkbox" class="configKey form-control" data-l1key="minify"/>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="alert alert-info">
+            {{A first files minification must be executed manually before.}}
+        </div>
+    </div>
 </form>

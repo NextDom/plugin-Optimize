@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 
 require_once('../../core/php/core.inc.php');
-require_once ('desktop/class/DesktopOptimize.class.php');
+require_once('desktop/class/DesktopOptimize.class.php');
 
 /*
 class MockedDesktopOptimize

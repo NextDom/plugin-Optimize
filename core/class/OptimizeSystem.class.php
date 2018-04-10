@@ -246,16 +246,20 @@ class OptimizeSystem extends BaseOptimize
     private function minifyJavascript($fileList)
     {
         $mininfiedFiles = 0;
+
         foreach ($fileList as $file) {
             if (!strstr($file, 'node_modules')) {
                 $fileHash = $this->getHashFile($file);
                 if ($this->isFileNotBeMinify($file, $fileHash)) {
-                    \exec('python -m jsmin ' . $file . ' > /tmp/tmp.js');
-                    \exec('cp /tmp/tmp.js ' . $file);
+                    \exec('python -m jsmin ' . $file . ' > /tmp/optimize_tmp.js');
+                    \exec('cp /tmp/optimize_tmp.js ' . $file);
                     $this->storeFileHash($file);
                     ++$mininfiedFiles;
                 }
             }
+        }
+        if (file_exists('/tmp/optimize_tmp.js')) {
+            unlink('/tmp/optimize_tmp.js');
         }
         return $mininfiedFiles;
     }

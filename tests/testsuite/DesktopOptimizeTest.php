@@ -23,14 +23,16 @@ class DesktopOptimizeTest extends TestCase
         $this->assertEquals('plugin', DesktopOptimize::$viewData['system_logs'][1]['id']);
     }
 
-    public function testShowActionCellWithOk() {
+    public function testShowActionCellWithOk()
+    {
         ob_start();
         $this->desktopOptimize->showActionCell(array('log' => 'ok'), 'scenario', 'log');
         $result = ob_get_clean();
         $this->assertEquals('<td class="action-cell"><i class="fa fa-check-circle fa-2x"></i></td>', $result);
     }
 
-    public function testShowActionCellWithWarn() {
+    public function testShowActionCellWithWarn()
+    {
         ob_start();
         $this->desktopOptimize->showActionCell(array('log' => 'warn'), 'plugin', 'log');
         $result = ob_get_clean();

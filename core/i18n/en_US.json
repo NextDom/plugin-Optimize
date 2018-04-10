@@ -3,6 +3,11 @@
     "401 - Refused access": "401 - Refused access",
     "No method corresponding to : ": "No method corresponding to : "
   },
+  "plugins\/Optimize\/plugin_info\/configuration.php": {
+    "Raspberry Pi config file": "Raspberry Pi config file",
+    "Automatic minification": "Automatic minification",
+    "A first files minification must be executed manually before.": "A first files minification must be executed manually before."
+  },
   "plugins\/Optimize\/desktop\/php\/Optimize.php": {
     "401 - Refused access": "401 - Refused access",
     "Scenarios": "Scenarios",
