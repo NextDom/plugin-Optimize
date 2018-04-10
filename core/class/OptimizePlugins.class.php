@@ -219,7 +219,7 @@ class OptimizePlugins extends BaseOptimize
                 $result = true;
             } else {
                 // Appele du script de désinstallation
-                $installationFile = $this->getPluginsDirectory() . '/' . $pluginId . '/plugin_info/installation.php';
+                $installationFile = $this->getPluginsDirectory() . '/' . $pluginId . '/plugin_info/install.php';
                 if (file_exists($installationFile)) {
                     require_once($installationFile);
                     $functionName = $pluginId . '_remove';

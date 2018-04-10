@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 
 require_once('../../core/class/DB.class.php');
-require_once('plugin_info/installation.php');
+require_once('plugin_info/install.php');
 
 class InstallationTest extends TestCase
 {

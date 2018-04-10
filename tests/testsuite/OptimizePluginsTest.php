@@ -57,7 +57,7 @@ class OptimizePluginsTest extends TestCase
         update::$byLogicalIdResult = 'IOptimize';
         mkdir('../IOptimize');
         mkdir('../IOptimize/plugin_info');
-        file_put_contents('../IOptimize/plugin_info/installation.php', $installationContent);
+        file_put_contents('../IOptimize/plugin_info/install.php', $installationContent);
         $this->assertDirectoryExists('../IOptimize');
         $this->optimize->removeIfDisabled('IOptimize');
         $this->assertDirectoryNotExists('../IOptimize');
