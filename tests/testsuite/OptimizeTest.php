@@ -24,12 +24,12 @@ class OptimizeTest extends TestCase
     protected function setUp()
     {
         DB::init();
+        MockedActions::clear();
         config::$byKeyPluginData = array('Optimize' => array('minify' => true));
     }
 
     protected function tearDown()
     {
-        MockedActions::clear();
     }
 
     public function testCronDailyWithoutPreviousData()
@@ -71,9 +71,7 @@ class OptimizeTest extends TestCase
 
     public function testCronDailyDesactivated()
     {
-        config::$byKeyPluginData = array('Optimitze' => array('minify' => false));
-        $results = MockedActions::get();
-        var_dump($results);
+        config::$byKeyPluginData = array('Optimize' => array('minify' => false));
         file_put_contents('test.js', "function test()\n{\nalert('test');\n}\n");
         $testJsMd5 = md5_file('test.js');
         Optimize::cronDaily();
