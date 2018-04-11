@@ -15,4 +15,4 @@ Une vue globale vous permet de voir rapidement les différents points d'amélior
 
 ## Documentation
 
-Vous trouverez la documentation [ici](https://github.com/Jeedom-Plugins-Extra/plugin-Optimize/blob/master/docs/fr_FR/index.md)
+Vous trouverez la documentation [ici](https://jeedom-plugins-extra.github.io/plugin-Optimize/fr_FR/)
