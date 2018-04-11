@@ -17,6 +17,7 @@
  */
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
+require_once dirname(__FILE__).'/../core/class/OptimizeRPi.class.php';
 
 include_file('core', 'authentification', 'php');
 
@@ -27,16 +28,19 @@ if (!isConnect()) {
     // @codeCoverageIgnoreEnd
 }
 
+$rpi = new OptimizeRPi();
 ?>
 <form class="form-horizontal">
+<?php if ($rpi->isRaspberryPi()) : ?>
     <div class="form-group">
         <label for="raspberry-config-file" class="col-sm-2 control-label">{{Raspberry Pi config file}}</label>
         <div class="col-sm-10">
             <input type="text" data-l1key="raspberry-config-file" class="configKey form-control" id="raspberry-config-file" placeholder="/boot/config.txt" />
         </div>
     </div>
+<?php endif; ?>
     <div class="form-group">
-        <label for="minify" class="col-sm-2 control-label">{{Raspberry Pi config file}}</label>
+        <label for="minify" class="col-sm-2 control-label">{{Automatic minification}}</label>
         <div class="col-sm-10">
             <input type="checkbox" class="configKey form-control" data-l1key="minify"/>
         </div>
