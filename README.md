@@ -4,13 +4,13 @@
 
 <img src="docs/images/Optimize_icon.png" />
 
-Optimisez en quelques clics certains points de votre installation Jeedom. 
+Optimisez en quelques clics certains points de votre installation Jeedom.
 
 ## Description
 
 Une vue globale vous permet de voir rapidement les différents points d'amélioration et de réaliser les changements en un clic.
+<img src="docs/images/Screenshot.png" alt="Screenshot" />
 
 ## Documentation
 
 Vous trouverez la documentation [ici](https://github.com/Jeedom-Plugins-Extra/plugin-Optimize/blob/master/docs/fr_FR/index.md)
-
