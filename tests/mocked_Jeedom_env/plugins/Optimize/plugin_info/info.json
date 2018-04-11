@@ -3,6 +3,7 @@
   "name": "Optimize",
   "licence": "GPL",
   "require": "3.0",
+  "version": "1.2.3",
   "category": "programming",
   "hasDependency": false,
   "hasOwnDaemon": false,
