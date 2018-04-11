@@ -19,12 +19,14 @@
 require_once(dirname(__FILE__) . '/../../../core/php/core.inc.php');
 require_once(dirname(__FILE__) . '/../core/class/DataStorage.class.php');
 
+
 /**
  * Fonction appelée à l'installation du plugin
  */
 function Optimize_install()
 {
     config::save('raspberry-config-file', '/boot/config.txt', 'Optimize');
+    config::save('minify', false, 'Optimize');
     $dataStorage = new DataStorage('optimize');
     $dataStorage->createDataTable();
 }
@@ -43,6 +45,7 @@ function Optimize_update()
 function Optimize_remove()
 {
     config::remove('raspberry-config-file', 'Optimize');
+    config::remove('minify', 'Optimize');
     $dataStorage = new DataStorage('optimize');
     $dataStorage->dropDataTable();
 }

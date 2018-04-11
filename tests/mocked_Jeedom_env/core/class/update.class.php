@@ -35,7 +35,14 @@ class update
      */
     public static function byLogicalId($id)
     {
-        return static::$byLogicalIdResult;
+        $result = null;
+        if (is_array(static::$byLogicalIdResult)) {
+            $result = static::$byLogicalIdResult[$id];
+        }
+        else {
+            $result = static::$byLogicalIdResult;
+        }
+        return $result;
     }
 }
 
