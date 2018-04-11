@@ -1,5 +1,8 @@
 # Changelog
 
+### Version 1.2.5
+* Documentation
+
 ### Version 1.2.4
 * Task for start minification process every day.
 * Improve code coverage

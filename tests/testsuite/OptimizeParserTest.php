@@ -1,5 +1,21 @@
 <?php
 
+/* This file is part of Jeedom.
+ *
+ * Jeedom is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Jeedom is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 use PHPUnit\Framework\TestCase;
 
 require_once('../../core/class/system.class.php');
@@ -28,7 +44,7 @@ class OptimizeParserTest extends TestCase
         $actions = MockedActions::get();
         $this->assertCount(2, $actions);
         $this->assertEquals('set_configuration', $actions[0]['action']);
-        $this->assertEquals('logmode', $actions[0]['content']['type']);
+        $this->assertEquals('logmode', $actions[0]['content']['config']);
         $this->assertEquals('none', $actions[0]['content']['value']);
         $this->assertEquals('save', $actions[1]['action']);
     }
@@ -39,7 +55,7 @@ class OptimizeParserTest extends TestCase
         $actions = MockedActions::get();
         $this->assertCount(2, $actions);
         $this->assertEquals('set_configuration', $actions[0]['action']);
-        $this->assertEquals('syncmode', $actions[0]['content']['type']);
+        $this->assertEquals('syncmode', $actions[0]['content']['config']);
         $this->assertEquals(1, $actions[0]['content']['value']);
         $this->assertEquals('save', $actions[1]['action']);
     }
