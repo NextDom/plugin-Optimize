@@ -66,7 +66,15 @@ class scenarioItem
     public $enabled;
     public static $enabledScenario = null;
 
-
+    /**
+     * Constructeur d'un scenario
+     *
+     * @param null $id Identifiant
+     * @param null $name Nom
+     * @param null $logmode Mode des logs
+     * @param null $syncmode Logs synchrone
+     * @param null $enabled Etat du scénario
+     */
     public function __construct($id = null, $name = null, $logmode = null, $syncmode = null, $enabled = null)
     {
         $this->id = $id;
@@ -76,19 +84,36 @@ class scenarioItem
         $this->enabled = $enabled;
     }
 
+    /**
+     * Obtenir l'identifiant du scénario
+     *
+     * @return int|null
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Obtenir le nom du plugin
+     *
+     * @return string Nom du plugin
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function getConfiguration($item)
+    /**
+     * Obtenir une information sur la configuration du scénario
+     * Répond à logmode et syncmod
+     *
+     * @param $config Configuration demandée
+     * @return mixed Information sur la configuration
+     */
+    public function getConfiguration($config)
     {
-        switch ($item) {
+        switch ($config) {
             case 'logmode':
                 return $this->logmode;
                 break;
@@ -99,6 +124,12 @@ class scenarioItem
         return false;
     }
 
+    /**
+     * Renvoie l'état d'activation du scénario
+     * scenarioItem::$enabledScenario permet de forcer la réponse pour tous les scénarios
+     *
+     * @return int Etat de l'activation
+     */
     public function getIsActive()
     {
         $result = 0;
@@ -114,16 +145,28 @@ class scenarioItem
         return $result;
     }
 
-    public function setConfiguration($type, $value)
+    /**
+     * Modifie la configuration d'un scénario
+     *
+     * @param $config Configuration à modifier
+     * @param $value Valeur de cette configuration
+     */
+    public function setConfiguration($config, $value)
     {
-        MockedActions::add('set_configuration', array('type' => $type, 'value' => $value));
+        MockedActions::add('set_configuration', array('config' => $config, 'value' => $value));
     }
 
+    /**
+     * Sauvegarde un scénario
+     */
     public function save()
     {
         MockedActions::add('save');
     }
 
+    /**
+     * Supprime un scénario
+     */
     public function remove()
     {
         MockedActions::add('remove');

@@ -7,6 +7,9 @@ require_once('../../mocked_core.php');
  */
 class config
 {
+    /**
+     * @var array Informations des logs systèmes
+     */
     public static $byKeyData = array(
         'log::level::scenario' => array(
             '100' => 1,
@@ -117,8 +120,19 @@ class config
             'default' => 0
         )
     );
+
+    /**
+     * @var array Informations d'un plugin
+     */
     public static $byKeyPluginData = array();
 
+    /**
+     * Obtenir une information à partir de l'identifiant
+     *
+     * @param $key Clé de l'information
+     * @param string $plugin Identifiant du plugin
+     * @return array Information sur le slogs
+     */
     public static function byKey($key, $plugin = 'core')
     {
         if ($plugin == 'core') {
@@ -128,6 +142,13 @@ class config
         }
     }
 
+    /**
+     * 
+     *
+     * @param $key
+     * @param $data
+     * @param null $plugin
+     */
     public static function save($key, $data, $plugin = null)
     {
         MockedActions::add('save', array('key' => $key, 'data' => $data, 'plugin' => $plugin));
