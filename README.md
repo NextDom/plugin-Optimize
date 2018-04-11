@@ -2,7 +2,9 @@
 
 # Plugin Optimize pour Jeedom
 
-<img src="docs/images/Optimize_icon.png" />
+<p align="center">
+  <img src="docs/images/Optimize_icon.png" />
+</p>
 
 Optimisez en quelques clics certains points de votre installation Jeedom.
 
