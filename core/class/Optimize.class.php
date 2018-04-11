@@ -51,7 +51,8 @@ class Optimize extends eqLogic
      * @param array $oldPluginsList Ancienne liste des plugins
      * @return bool True si une modification a été trouvée
      */
-    private static function changesInPlugins($currentPluginsList, $oldPluginsList) {
+    private static function changesInPlugins($currentPluginsList, $oldPluginsList)
+    {
         $result = false;
         foreach ($currentPluginsList as $currentPlugin) {
             $matched = false;
@@ -91,7 +92,7 @@ class Optimize extends eqLogic
     /**
      * Obtenir la liste des plugins installés lors de la dernière passe
      *
-     * @param $dataStorage Base de données
+     * @param DataStorage $dataStorage Base de données
      *
      * @return array Liste des plugins avec leurs versions
      */
@@ -107,8 +108,8 @@ class Optimize extends eqLogic
     /**
      * Stocker la liste des plugins après la procédure
      *
-     * @param $dataStorage Base de données
-     * @param $pluginsList Liste des plugins
+     * @param DataStorage $dataStorage Base de données
+     * @param array $pluginsList Liste des plugins
      */
     private static function storeCurrentPluginList($dataStorage, $pluginsList)
     {

@@ -26,7 +26,7 @@ require_once(dirname(__FILE__) . '/../core/class/DataStorage.class.php');
 function Optimize_install()
 {
     config::save('raspberry-config-file', '/boot/config.txt', 'Optimize');
-    config::save('minify', true, 'Optimize');
+    config::save('minify', false, 'Optimize');
     $dataStorage = new DataStorage('optimize');
     $dataStorage->createDataTable();
 }

@@ -17,6 +17,8 @@ class DesktopOptimizeTest extends TestCase
 
     public function testInit()
     {
+        config::$byKeyPluginData = array('Optimize' => array('raspberry-config-file' => '/tmp/rasp-config.txt'));
+        file_put_contents('/tmp/rasp-config.txt', 'gpu_mem=66');
         $this->desktopOptimize->init();
         $this->assertFalse(DesktopOptimize::$viewData['rpi']);
         $this->assertTrue(DesktopOptimize::$viewData['system_logs'][0]['log']);

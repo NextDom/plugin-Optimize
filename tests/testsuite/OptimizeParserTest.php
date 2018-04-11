@@ -7,6 +7,8 @@ require_once('core/class/OptimizeParser.class.php');
 
 class OptimizeParserTest extends TestCase
 {
+    private $parser = null;
+
     protected function setUp()
     {
         $this->parser = new OptimizeParser();
