@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.2.4
+* Task for start minification process every day.
+* Improve code coverage
+
 ### Version 1.2.3
 * Manage already minified files.
 * More unit tests.
@@ -21,10 +25,6 @@
   * Limit L2 access
 * Global score
 
-### Version 1.0.0 (03/01/2018)
+### Version 1.0.0
 
 Initial version
-
-### TODO
-Rasperry Pi improvements
-System improvements

@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.2.4
+* Ajout d'une tâche pour lancer tous les jours la procédure de minification.
+* Amélioration de la couverture du code.
+
 ### Version 1.2.3
 * Gestion des fichiers déjà minifiés.
 * Plus de tests unitaires.
@@ -23,6 +27,3 @@
 
 ### Version 1.0.0
 Version initiale.
-
-# Todo
-Compression journalière

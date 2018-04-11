@@ -29,6 +29,14 @@ Le plugin est composé principalement d'une page qui permet d'accéder à toutes
 ## Raspberry Pi
 
 Si Jeedom est installé sur un Raspberry Pi, vous pourrez : 
-
 * Limiter la mémoire vidéo,
 * Limiter l'accès au cache L2 pour le processeur.
+
+# Configuration
+
+## Fichier de configuration du Raspberry Pi
+Chemin du fichier de configuration du Raspberry Pi.
+
+## Minification automatique
+Active la tâche cron journalière de minification automatique.
+La première minification doit être lancée manuellement.
