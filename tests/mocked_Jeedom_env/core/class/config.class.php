@@ -143,7 +143,7 @@ class config
     }
 
     /**
-     * 
+     *
      *
      * @param $key
      * @param $data
