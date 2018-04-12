@@ -133,6 +133,12 @@
                             <th>{{Path}}</th>
                             <th>{{Enabled}}</th>
                         </tr>
+                        <tr data-id="optimize-all">
+                            <th></th>
+                            <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['plugins_shortcut'], 'plugin', 'log', 'th'); ?>
+                            <th></th>
+                            <th></th>
+                        </tr>
                         </thead>
                         <tbody>
                         <?php foreach (DesktopOptimize::$viewData['plugins'] as $plugin) : ?>
