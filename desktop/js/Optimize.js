@@ -16,7 +16,12 @@
 
 $(document).ready(function () {
     $('.fa-exclamation-triangle').click(function () {
-        askForChange($(this), applyCellChange);
+        if ($(this).is('td')) {
+            askForChange($(this), applyCellChange);
+        }
+        else {
+            askForChange($(this), applyAllCellsChange);
+        }
     });
     $('.action-button').click(function () {
         askForChange($(this), applyButtonChange);
@@ -33,7 +38,8 @@ $(document).ready(function () {
 function askForChange(item, callbackFunction) {
     var category = item.data('category');
     var id = null;
-    if (item.parent().is('td')) {
+    var itemParent = item.parent();
+    if (itemParent.is('td') || itemParent.is('th')) {
         var row = item.closest('tr');
         id = row.data('id');
     }
@@ -70,7 +76,7 @@ function ajaxPostRequest(item, category, id, type, callbackFunction) {
         },
         dataType: 'json',
         success: function (data, status) {
-            // Test si l'appel a réussi
+            // Test si l'appel a échoué
             if (data.state !== 'ok' || status !== 'success') {
                 $('#div_alert').showAlert({message: data.result, level: 'danger'});
             }
@@ -110,6 +116,24 @@ function applyCellChange(item, category, type) {
         currentScore++;
     }
     updateProgressBar();
+}
+
+/**
+ * Applique les changements sur tout une colonne si la requête réussie
+ *
+ * @param item Elément HTML concerné
+ * @param category Catégorie de la modification
+ * @param type Type de modification
+ */
+function applyAllCellsChange(item, category, type) {
+    var th = item.parent();
+    var position = th.index();
+    var tbody = th.parent().parent().parent().find('tbody');
+    tbody.children().each(function() {
+        applyCellChange($(this).find('i'), category, type);
+    });
+    item.removeClass('fa-exclamation-triangle');
+    item.addClass('fa-check-circle');
 }
 
 /**
