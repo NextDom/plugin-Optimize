@@ -34,9 +34,6 @@
         <?php if (DesktopOptimize::$viewData['rpi'] === true): ?>
             <li role="presentation"><a data-toggle="tab" href="#raspberry">{{Raspberry Pi}}</a></li>
         <?php endif; ?>
-        <li role="presentation">
-            <a data-toggle="tab" class="eqLogicAction cursor" data-action="gotoPluginConf">{{Configuration}}</a>
-        </li>
     </ul>
     <div class="tab-content clearfix">
         <div id="scenarios" class="tab-pane active">

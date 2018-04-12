@@ -92,9 +92,5 @@ class DesktopOptimize
         include_file('desktop', 'Optimize', 'css', 'Optimize');
         include_file('desktop', 'Optimize', 'js', 'Optimize');
         include(dirname(__FILE__) . '/../templates/view.php');
-        // Chargement du javascript
-        $plugin = plugin::byId('Optimize');
-        sendVarToJS('eqType', $plugin->getId());
-        include_file('core', 'plugin.template', 'js');
     }
 }

@@ -18,9 +18,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once('../../core/class/jeedom.class.php');
+require_once('../../core/php/core.inc.php');
 
-class ConfigurationTest extends TestCase
+class OptimizeAjaxTest extends TestCase
 {
     public $dataStorage;
 
@@ -36,41 +36,26 @@ class ConfigurationTest extends TestCase
     public function testNotConnected()
     {
         JeedomVars::$isConnected = false;
-        ob_start();
-        include(dirname(__FILE__) . '/../plugin_info/configuration.php');
-        ob_get_clean();
-        // Le fichier exécute die(), cette partie ne doit normalement pas être exécutée
-        $this->assertTrue(false);
-
-    }
-
-    public function testWithUserConnectedOnDIY()
-    {
-        jeedom::$hardwareName = 'DIY';
-        ob_start();
-        include(dirname(__FILE__) . '/../plugin_info/configuration.php');
-        $content = ob_get_clean();
+        include(dirname(__FILE__) . '/../core/ajax/Optimize.ajax.php');
         $actions = MockedActions::get();
-        $this->assertCount(1, $actions);
+        $this->assertCount(2, $actions);
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
-        $this->assertContains('<form', $content);
-        $this->assertContains('"minify"', $content);
-        $this->assertNotContains('raspberry-config-file', $content);
+        $this->assertEquals('ajax_error', $actions[1]['action']);
     }
 
-    public function testWithUserConnectedOnRaspberry()
+    public function testConnected()
     {
-        jeedom::$hardwareName = 'RPi';
-        ob_start();
-        include(dirname(__FILE__) . '/../plugin_info/configuration.php');
-        $content = ob_get_clean();
+        scenario::init();
+        JeedomVars::$initAnswers = array('category' => 'scenario', 'id' => 1, 'type' => 'log');
+        include(dirname(__FILE__) . '/../core/ajax/Optimize.ajax.php');
         $actions = MockedActions::get();
-        $this->assertCount(1, $actions);
+        $this->assertCount(6, $actions);
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
-        $this->assertContains('<form', $content);
-        $this->assertContains('"minify"', $content);
-        $this->assertContains('raspberry-config-file', $content);
+        $this->assertEquals('ajax_init', $actions[1]['action']);
+        $this->assertEquals('set_configuration', $actions[2]['action']);
+        $this->assertEquals('save', $actions[3]['action']);
+        $this->assertEquals('ajax_success', $actions[4]['action']);
     }
 }
