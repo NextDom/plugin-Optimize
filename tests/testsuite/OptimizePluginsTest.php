@@ -52,6 +52,30 @@ class OptimizePluginsTest extends TestCase
         $this->assertEquals(array('log' => 'ok', 'path' => 'warn', 'enabled' => 'ok'), $result[2]['rating']);
     }
 
+    public function testDisableLogs() {
+        $this->optimize->disableLogs('thetemplate');
+        $actions = MockedActions::get();
+        $this->assertCount(1, $actions);
+        $this->assertEquals('save', $actions[0]['action']);
+        $this->assertEquals('log::level::thetemplate', $actions[0]['content']['key']);
+        $this->assertEquals(1, $actions[0]['content']['data'][1000]);
+    }
+
+    public function testDisableAllLogs() {
+        $this->optimize->disableLogs('optimize-all');
+        $actions = MockedActions::get();
+        $this->assertCount(3, $actions);
+        $this->assertEquals('save', $actions[0]['action']);
+        $this->assertEquals('log::level::thetemplate', $actions[0]['content']['key']);
+        $this->assertEquals(1, $actions[0]['content']['data'][1000]);
+        $this->assertEquals('save', $actions[1]['action']);
+        $this->assertEquals('log::level::IOptimize', $actions[1]['content']['key']);
+        $this->assertEquals(1, $actions[1]['content']['data'][1000]);
+        $this->assertEquals('save', $actions[2]['action']);
+        $this->assertEquals('log::level::supa_plugin', $actions[2]['content']['key']);
+        $this->assertEquals(1, $actions[2]['content']['data'][1000]);
+    }
+
     public function testRemoveIfDisabledWithoutUninstall()
     {
         update::$byIdResult = 'IOptimize';
