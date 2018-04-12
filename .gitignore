@@ -5,3 +5,5 @@ vendor/
 \.DS_Store
 composer\.lock
 tests/mocked_Jeedom_env/plugins/*
+
+tests/mocked_Jeedom_env/plugins/Optimize/

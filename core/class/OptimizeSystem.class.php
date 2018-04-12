@@ -315,15 +315,17 @@ class OptimizeSystem extends BaseOptimize
     protected function findFilesRecursively($path, $extension)
     {
         $files = array();
-        $itemDirectoryIterator = new \RecursiveDirectoryIterator($path);
-        foreach ($itemDirectoryIterator as $file) {
-            $filename = $file->getFilename();
-            if ($filename != '.' && $filename != '..') {
-                if ($file->isDir()) {
-                    $files = \array_merge($files, $this->findFilesRecursively($file->getPathName(), $extension));
-                }
-                if (\pathinfo($filename, PATHINFO_EXTENSION) == $extension) {
-                    \array_push($files, $file->getPathName());
+        if (!file_exists($path.'/.optimize-ignore')) {
+            $itemDirectoryIterator = new \RecursiveDirectoryIterator($path);
+            foreach ($itemDirectoryIterator as $file) {
+                $filename = $file->getFilename();
+                if ($filename != '.' && $filename != '..') {
+                    if ($file->isDir()) {
+                        $files = \array_merge($files, $this->findFilesRecursively($file->getPathName(), $extension));
+                    }
+                    if (\pathinfo($filename, PATHINFO_EXTENSION) == $extension) {
+                        \array_push($files, $file->getPathName());
+                    }
                 }
             }
         }

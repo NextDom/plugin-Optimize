@@ -22,6 +22,4 @@ cp -fr vendor $MOCKED_ENV/plugins/Optimize
 
 cd $MOCKED_ENV/plugins/Optimize
 
-echo "Version ligne de commande"
-
 $PHP_FOR_TESTS ./vendor/phpunit/phpunit/phpunit --configuration phpunit.xml

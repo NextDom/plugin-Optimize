@@ -64,6 +64,14 @@ class DesktopOptimize
             }
         }
 
+        static::$viewData['plugins_shortcut'] = array();
+        static::$viewData['plugins_shortcut']['log'] = 'ok';
+        foreach (static::$viewData['plugins'] as $plugin) {
+            if ($plugin['rating']['log'] == 'warn') {
+                static::$viewData['plugins_shortcut']['log'] = 'warn';
+            }
+        }
+
         static::$viewData['currentScore'] = BaseOptimize::getCurrentScore();
         static::$viewData['bestScore'] = BaseOptimize::getBestScore();
     }

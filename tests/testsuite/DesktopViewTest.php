@@ -54,6 +54,10 @@ class DesktopViewTest extends TestCase
         DesktopOptimize::$viewData['system_logs'] = array();
         DesktopOptimize::$viewData['currentScore'] = 0;
         DesktopOptimize::$viewData['bestScore'] = 0;
+        DesktopOptimize::$viewData['scenarios_shortcut'] = array();
+        DesktopOptimize::$viewData['scenarios_shortcut']['log'] = 'ok';
+        DesktopOptimize::$viewData['plugins_shortcut'] = array();
+        DesktopOptimize::$viewData['plugins_shortcut']['log'] = 'ok';
     }
 
     protected function tearDown()
