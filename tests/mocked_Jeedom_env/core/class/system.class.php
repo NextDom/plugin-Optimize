@@ -1,10 +1,12 @@
 <?php
+
 /*
 require_once('../../mocked_core.php');
 
 /**
  * Mock de la classe system
  */
+
 class system
 {
     /**

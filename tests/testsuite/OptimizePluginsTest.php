@@ -52,7 +52,8 @@ class OptimizePluginsTest extends TestCase
         $this->assertEquals(array('log' => 'ok', 'path' => 'warn', 'enabled' => 'ok'), $result[2]['rating']);
     }
 
-    public function testDisableLogs() {
+    public function testDisableLogs()
+    {
         $this->optimize->disableLogs('thetemplate');
         $actions = MockedActions::get();
         $this->assertCount(1, $actions);
@@ -61,7 +62,8 @@ class OptimizePluginsTest extends TestCase
         $this->assertEquals(1, $actions[0]['content']['data'][1000]);
     }
 
-    public function testDisableAllLogs() {
+    public function testDisableAllLogs()
+    {
         $this->optimize->disableLogs('optimize-all');
         $actions = MockedActions::get();
         $this->assertCount(3, $actions);

@@ -149,8 +149,7 @@ class OptimizePlugins extends BaseOptimize
             foreach ($plugins as $plugin) {
                 $this->disablePluginLog($plugin);
             }
-        }
-        else {
+        } else {
             $this->disablePluginLog($this->getPluginById($pluginId));
         }
     }
@@ -158,14 +157,15 @@ class OptimizePlugins extends BaseOptimize
     /**
      * @param $plugin
      */
-    private function disablePluginLog($plugin) {
+    private function disablePluginLog($plugin)
+    {
         $pluginLogConfig = config::byKey('log::level::' . $plugin->getId());
         foreach ($pluginLogConfig as $key => $value) {
             if ($value != 0) {
-                $pluginLogConfig[$key] = 0;
+                $pluginLogConfig[$key] = "0";
             }
         }
-        $pluginLogConfig[1000] = 1;
+        $pluginLogConfig[1000] = "1";
         config::save('log::level::' . $plugin->getId(), $pluginLogConfig);
     }
 

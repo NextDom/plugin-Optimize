@@ -24,7 +24,7 @@
         timeoutForMediumTests="10"
         timeoutForLargeTests="60"
         verbose="false">
-        <!--printerFile="/path/to/ResultPrinter.php"-->
+    <!--printerFile="/path/to/ResultPrinter.php"-->
     <!--testSuiteLoaderFile="/path/to/StandardTestSuiteLoader.php"-->
     <testsuites>
         <testsuite name="AllTests">

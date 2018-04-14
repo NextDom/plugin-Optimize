@@ -41,8 +41,7 @@ class update
         $result = null;
         if (is_array(static::$byLogicalIdResult)) {
             $result = static::$byLogicalIdResult[$id];
-        }
-        else {
+        } else {
             $result = static::$byLogicalIdResult;
         }
         return $result;

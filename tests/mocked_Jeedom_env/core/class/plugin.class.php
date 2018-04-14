@@ -6,6 +6,7 @@
 class plugin
 {
     private static $pluginsIds = array('thetemplate' => 0, 'IOptimize' => 1, 'supa_plugin' => 2);
+
     /**
      * Renvoie la liste des plugins
      *
@@ -23,7 +24,7 @@ class plugin
     /**
      * Obtenir un plugin à partir de son identifiant
      *
-     * @param $id Identifiant du plugin
+     * @param string $id Identifiant du plugin
      *
      * @return pluginItem Objet du plugin
      */
@@ -32,8 +33,7 @@ class plugin
         $result = null;
         if (array_key_exists($id, static::$pluginsIds)) {
             $result = static::listPlugin()[static::$pluginsIds[$id]];
-        }
-        else {
+        } else {
             // Renvoie toujours un plugin valide
             $result = new pluginItem($id);
         }

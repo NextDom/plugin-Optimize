@@ -85,7 +85,7 @@ class OptimizeSystem extends BaseOptimize
             // Chaque type de log est stocké dans un tableau et identifié par un nombre sauf "default"
             // 1000 représente "Aucun"
             foreach ($systemLogConfig as $logType => $value) {
-                if ($value == 1 && $logType != 1000) {
+                if ($value == "1" && $logType != 1000 || ($logType == 1000 && $value != "1")) {
                     $systemLogInformations['log'] = true;
                 }
             }
@@ -318,7 +318,7 @@ class OptimizeSystem extends BaseOptimize
     protected function findFilesRecursively($path, $extension)
     {
         $files = array();
-        if (!file_exists($path.'/.optimize-ignore')) {
+        if (!file_exists($path . '/.optimize-ignore')) {
             $itemDirectoryIterator = new \RecursiveDirectoryIterator($path);
             foreach ($itemDirectoryIterator as $file) {
                 $filename = $file->getFilename();
@@ -335,20 +335,31 @@ class OptimizeSystem extends BaseOptimize
         return $files;
     }
 
+    public function disableLogs($systemLogId)
+    {
+        if ($systemLogId == 'optimize-all') {
+            foreach ($this->systemLogs as $id => $name) {
+                $this->disableSystemLog($id);
+            }
+        } else {
+            $this->disableSystemLog($systemLogId);
+        }
+    }
+
     /**
      * Désactiver les logs d'un service.
      *
      * @param integer $systemLogId Identifiant du scénario
      */
-    public function disableLogs($systemLogId)
+    public function disableSystemLog($systemLogId)
     {
         $systemLogConfig = config::byKey('log::level::' . $systemLogId);
         foreach ($systemLogConfig as $key => $value) {
             if ($value != 0) {
-                $systemLogConfig[$key] = 0;
+                $systemLogConfig[$key] = "0";
             }
         }
-        $systemLogConfig[1000] = 1;
+        $systemLogConfig[1000] = "1";
         config::save('log::level::' . $systemLogId, $systemLogConfig);
     }
 }

@@ -132,8 +132,7 @@ class OptimizeScenarios extends BaseOptimize
                 $scenario->setConfiguration('logmode', 'none');
                 $scenario->save();
             }
-        }
-        else {
+        } else {
             $scenario = $this->getScenarioById($scenarioId);
             $scenario->setConfiguration('logmode', 'none');
             $scenario->save();
