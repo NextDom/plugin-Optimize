@@ -151,6 +151,10 @@ function displayException($exceptionMsg)
     return $exceptionMsg;
 }
 
+function sendVarToJs($jsVar, $pluginId) {
+
+}
+
 /**
  * Mock de la class eqLogic
  */
