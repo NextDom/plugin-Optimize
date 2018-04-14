@@ -72,6 +72,14 @@ class DesktopOptimize
             }
         }
 
+        static::$viewData['systems_shortcut'] = array();
+        static::$viewData['systems_shortcut']['log'] = 'ok';
+        foreach (static::$viewData['system_logs'] as $system) {
+            if ($system['rating']['log'] == 'warn') {
+                static::$viewData['systems_shortcut']['log'] = 'warn';
+            }
+        }
+
         static::$viewData['currentScore'] = BaseOptimize::getCurrentScore();
         static::$viewData['bestScore'] = BaseOptimize::getBestScore();
     }
@@ -86,13 +94,13 @@ class DesktopOptimize
      */
     public static function showActionCell($rating, $category, $type, $container = 'td')
     {
-        echo '<'.$container.' class="action-cell">';
+        echo '<' . $container . ' class="action-cell">';
         if ($rating[$type] == 'ok') {
             echo '<i class="fa fa-check-circle fa-2x"></i>';
         } else {
             echo '<i class="fa fa-exclamation-triangle fa-2x" data-category="' . $category . '" data-type="' . $type . '"></i>';
         }
-        echo '</'.$container.'>';
+        echo '</' . $container . '>';
     }
 
     public function show()

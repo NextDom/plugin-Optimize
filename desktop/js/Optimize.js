@@ -16,7 +16,7 @@
 
 $(document).ready(function () {
     $('.fa-exclamation-triangle').click(function () {
-        if ($(this).is('td')) {
+        if ($(this).parent().is('td')) {
             askForChange($(this), applyCellChange);
         }
         else {

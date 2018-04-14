@@ -43,3 +43,11 @@
     margin-top: 0;
     margin-bottom: 0;
 }
+
+#optimize-plugin table>thead>tr>th {
+    border: 0;
+}
+
+#optimize-plugin table>thead {
+    border-bottom: 2px solid #CCC;
+}

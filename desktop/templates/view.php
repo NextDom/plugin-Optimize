@@ -192,6 +192,10 @@
                             <th>{{Name}}</th>
                             <th>{{Logs}}</th>
                         </tr>
+                        <tr data-id="optimize-all">
+                            <th></th>
+                            <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['systems_shortcut'], 'system', 'log', 'th'); ?>
+                        </tr>
                         </thead>
                         <tbody>
                         <?php foreach (DesktopOptimize::$viewData['system_logs'] as $systemLog) : ?>
