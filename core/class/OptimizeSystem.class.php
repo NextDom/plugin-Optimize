@@ -225,12 +225,14 @@ class OptimizeSystem extends BaseOptimize
     private function minifyCss($fileList)
     {
         $mininfiedFiles = 0;
-        foreach ($fileList as $file) {
-            $fileHash = $this->getHashFile($file);
-            if ($this->isFileNotBeMinify($file, $fileHash)) {
-                \exec('python -m csscompressor ' . $file . ' -o ' . $file);
-                $this->storeFileHash($file);
-                ++$mininfiedFiles;
+        if ($this->isCssCompressorInstalled()) {
+            foreach ($fileList as $file) {
+                $fileHash = $this->getHashFile($file);
+                if ($this->isFileNotBeMinify($file, $fileHash)) {
+                    \exec('python -m csscompressor ' . $file . ' -o ' . $file);
+                    $this->storeFileHash($file);
+                    ++$mininfiedFiles;
+                }
             }
         }
         return $mininfiedFiles;
@@ -246,20 +248,21 @@ class OptimizeSystem extends BaseOptimize
     private function minifyJavascript($fileList)
     {
         $mininfiedFiles = 0;
-
-        foreach ($fileList as $file) {
-            if (!strstr($file, 'node_modules')) {
-                $fileHash = $this->getHashFile($file);
-                if ($this->isFileNotBeMinify($file, $fileHash)) {
-                    \exec('python -m jsmin ' . $file . ' > /tmp/optimize_tmp.js');
-                    \exec('cp /tmp/optimize_tmp.js ' . $file);
-                    $this->storeFileHash($file);
-                    ++$mininfiedFiles;
+        if ($this->isJsMinInstalled()) {
+            foreach ($fileList as $file) {
+                if (!strstr($file, 'node_modules')) {
+                    $fileHash = $this->getHashFile($file);
+                    if ($this->isFileNotBeMinify($file, $fileHash)) {
+                        \exec('python -m jsmin ' . $file . ' > /tmp/optimize_tmp.js');
+                        \exec('cp /tmp/optimize_tmp.js ' . $file);
+                        $this->storeFileHash($file);
+                        ++$mininfiedFiles;
+                    }
                 }
             }
-        }
-        if (file_exists('/tmp/optimize_tmp.js')) {
-            unlink('/tmp/optimize_tmp.js');
+            if (file_exists('/tmp/optimize_tmp.js')) {
+                unlink('/tmp/optimize_tmp.js');
+            }
         }
         return $mininfiedFiles;
     }

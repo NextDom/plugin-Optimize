@@ -125,4 +125,24 @@ class OptimizeSystemTest extends TestCase
         $this->assertContains(dirname(__FILE__) . '/../../../core/class/jeedom.class.php', $result);
         $this->assertCount(10, $result);
     }
+
+    public function testFindFilesRecursivelyWithIgnore()
+    {
+        mkdir('for_test');
+        mkdir('for_test/plouf');
+        file_put_contents('for_test/test1.js', '');
+        file_put_contents('for_test/test1.css', '');
+        file_put_contents('for_test/plouf/test2.js', '');
+        file_put_contents('for_test/plouf/.optimize-ignore', '');
+        $result = $this->optimizeSystem->mock_findFilesRecursively('for_test', 'js');
+        $this->assertContains('for_test/test1.js', $result);
+        $this->assertNotContains('for_test/plouf/test2.js', $result);
+        $this->assertCount(1, $result);
+        unlink('for_test/test1.js');
+        unlink('for_test/test1.css');
+        unlink('for_test/plouf/test2.js');
+        unlink('for_test/plouf/.optimize-ignore');
+        rmdir('for_test/plouf');
+        rmdir('for_test');
+    }
 }

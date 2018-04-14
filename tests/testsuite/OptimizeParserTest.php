@@ -131,6 +131,30 @@ class OptimizeParserTest extends TestCase
         $this->assertEquals('log::level::plugin', $actions[1]['content']['key']);
     }
 
+    public function testParserScenarioBadAction()
+    {
+        $result = $this->parser->parse('scenario', 'useless', 'an-error');
+        $this->assertFalse($result);
+    }
+
+    public function testParserPluginBadAction()
+    {
+        $result = $this->parser->parse('plugin', 'useless', 'an-error');
+        $this->assertFalse($result);
+    }
+
+    public function testParserSystemBadAction()
+    {
+        $result = $this->parser->parse('system', 'useless', 'an-error');
+        $this->assertFalse($result);
+    }
+
+    public function testParserRaspberryBadAction()
+    {
+        $result = $this->parser->parse('raspberry', 'useless', 'an-error');
+        $this->assertFalse($result);
+    }
+
     /**
      * Test seulement que certains appels sont passés sur des fonctions
      *
