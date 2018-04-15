@@ -15,12 +15,12 @@
  */
 
 $(document).ready(function () {
-    $('.fa-exclamation-triangle').click(function () {
+    $('.action-item').click(function () {
         if ($(this).parent().is('td')) {
             askForChange($(this), applyCellChange);
         }
         else {
-            askForChange($(this), applyAllCellsChange);
+            askForChange($(this), applyGroupChange);
         }
     });
     $('.action-button').click(function () {
@@ -108,6 +108,7 @@ function applyCellChange(item, category, type) {
     }
     else {
         item.removeClass('fa-exclamation-triangle');
+        item.removeClass('fa-exclamation-circle');
         item.addClass('fa-check-circle');
         if (category === 'raspberry') {
             $('#raspberry-change-msg').removeClass('hidden-msg');
@@ -125,7 +126,7 @@ function applyCellChange(item, category, type) {
  * @param category Catégorie de la modification
  * @param type Type de modification
  */
-function applyAllCellsChange(item, category, type) {
+function applyGroupChange(item, category, type) {
     var th = item.parent();
     var position = th.index();
     var tbody = th.parent().parent().parent().find('tbody');
