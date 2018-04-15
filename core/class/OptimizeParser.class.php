@@ -54,7 +54,6 @@ class OptimizeParser
     {
         $result = true;
         require_once(dirname(__FILE__) . '/OptimizeScenarios.class.php');
-
         $optimizeScenarios = new OptimizeScenarios();
         switch ($type) {
             case 'log':
@@ -62,6 +61,9 @@ class OptimizeParser
                 break;
             case 'syncmode':
                 $optimizeScenarios->setSyncMode($scenarioId);
+                break;
+            case 'last_launch':
+                $optimizeScenarios->remove($scenarioId);
                 break;
             case 'enabled':
                 $optimizeScenarios->removeIfDisabled($scenarioId);
@@ -85,7 +87,6 @@ class OptimizeParser
     {
         $result = true;
         require_once(dirname(__FILE__) . '/OptimizePlugins.class.php');
-
         $optimizePlugins = new OptimizePlugins();
         switch ($type) {
             case 'log':

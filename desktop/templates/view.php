@@ -34,6 +34,9 @@
         <?php if (DesktopOptimize::$viewData['rpi'] === true): ?>
             <li role="presentation"><a data-toggle="tab" href="#raspberry">{{Raspberry Pi}}</a></li>
         <?php endif; ?>
+        <li role="presentation">
+            <a data-toggle="tab" class="eqLogicAction cursor" data-action="gotoPluginConf">{{Configuration}}</a>
+        </li>
     </ul>
     <div class="tab-content clearfix">
         <div id="scenarios" class="tab-pane active">
@@ -67,21 +70,37 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>{{Name}}</th>
+                            <th></th>
+                            <th class="name">{{Name}}</th>
                             <th>{{Logs}}</th>
                             <th>{{Mode}}</th>
+                            <th>{{Last launch}}</th>
                             <th>{{Enabled}}</th>
+                        </tr>
+                        <tr data-id="optimize-all">
+                            <th></th>
+                            <th></th>
+                            <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['scenarios_shortcut'], 'scenario', 'log', 'th'); ?>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach (DesktopOptimize::$viewData['scenarios'] as $scenario) : ?>
                             <tr data-id="<?php echo $scenario['id']; ?>">
+                                <td class="running">
+                                    <?php if ($scenario['running_state'] == true) : ?>
+                                        <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+                                    <?php endif; ?>
+                                </td>
                                 <td>
                                     <a href="/index.php?v=d&p=scenario&id=<?php echo $scenario['id']; ?>"><?php echo $scenario['name']; ?></a>
                                 </td>
                                 <?php
                                 DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'log');
                                 DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'syncmode');
+                                DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'last_launch');
                                 DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'enabled');
                                 ?>
                             </tr>
@@ -122,10 +141,16 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>{{Name}}</th>
+                            <th class="name">{{Name}}</th>
                             <th>{{Logs}}</th>
                             <th>{{Path}}</th>
                             <th>{{Enabled}}</th>
+                        </tr>
+                        <tr data-id="optimize-all">
+                            <th></th>
+                            <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['plugins_shortcut'], 'plugin', 'log', 'th'); ?>
+                            <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -174,8 +199,12 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>{{Name}}</th>
+                            <th class="name">{{Name}}</th>
                             <th>{{Logs}}</th>
+                        </tr>
+                        <tr data-id="optimize-all">
+                            <th></th>
+                            <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['systems_shortcut'], 'system', 'log', 'th'); ?>
                         </tr>
                         </thead>
                         <tbody>
@@ -299,6 +328,7 @@
     msg['plugin_enabled'] = '{{Do you want to delete this plugin?}}';
     msg['scenario_log'] = '{{Do you want to disable logs for this scenario?}}';
     msg['scenario_syncmode'] = '{{Do you want to enable synchronous mode for this scenario?}}';
+    msg['scenario_last_launch'] = '{{Do you want to delete this scenario?}}';
     msg['scenario_enabled'] = '{{Do you want to delete this scenario?}}';
     msg['system_log'] = '{{Do you want to disable logs for this item?}}';
     msg['raspberry_config_change'] = '{{A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.}}';

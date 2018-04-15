@@ -13,6 +13,7 @@ matrix:
        - cd ${TRAVIS_BUILD_DIR}
        - ./tests/launch_tests.sh
       after_script:
+       - sed -i'' 's/tests\/mocked_Jeedom_env\/plugins\/Optimize\///g' clover.xml
        - php vendor/bin/php-coveralls
     - language: markdown
       addons:

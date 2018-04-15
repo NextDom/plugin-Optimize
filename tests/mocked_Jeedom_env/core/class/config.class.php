@@ -129,7 +129,7 @@ class config
     /**
      * Obtenir une information à partir de l'identifiant
      *
-     * @param $key Clé de l'information
+     * @param string $key Clé de l'information
      * @param string $plugin Identifiant du plugin
      * @return array Information sur le slogs
      */

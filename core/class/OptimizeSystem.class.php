@@ -85,7 +85,7 @@ class OptimizeSystem extends BaseOptimize
             // Chaque type de log est stocké dans un tableau et identifié par un nombre sauf "default"
             // 1000 représente "Aucun"
             foreach ($systemLogConfig as $logType => $value) {
-                if ($value == 1 && $logType != 1000) {
+                if ($value == "1" && $logType != 1000 || ($logType == 1000 && $value != "1")) {
                     $systemLogInformations['log'] = true;
                 }
             }
@@ -225,12 +225,14 @@ class OptimizeSystem extends BaseOptimize
     private function minifyCss($fileList)
     {
         $mininfiedFiles = 0;
-        foreach ($fileList as $file) {
-            $fileHash = $this->getHashFile($file);
-            if ($this->isFileNotBeMinify($file, $fileHash)) {
-                \exec('python -m csscompressor ' . $file . ' -o ' . $file);
-                $this->storeFileHash($file);
-                ++$mininfiedFiles;
+        if ($this->isCssCompressorInstalled()) {
+            foreach ($fileList as $file) {
+                $fileHash = $this->getHashFile($file);
+                if ($this->isFileNotBeMinify($file, $fileHash)) {
+                    \exec('python -m csscompressor ' . $file . ' -o ' . $file);
+                    $this->storeFileHash($file);
+                    ++$mininfiedFiles;
+                }
             }
         }
         return $mininfiedFiles;
@@ -246,20 +248,21 @@ class OptimizeSystem extends BaseOptimize
     private function minifyJavascript($fileList)
     {
         $mininfiedFiles = 0;
-
-        foreach ($fileList as $file) {
-            if (!strstr($file, 'node_modules')) {
-                $fileHash = $this->getHashFile($file);
-                if ($this->isFileNotBeMinify($file, $fileHash)) {
-                    \exec('python -m jsmin ' . $file . ' > /tmp/optimize_tmp.js');
-                    \exec('cp /tmp/optimize_tmp.js ' . $file);
-                    $this->storeFileHash($file);
-                    ++$mininfiedFiles;
+        if ($this->isJsMinInstalled()) {
+            foreach ($fileList as $file) {
+                if (!strstr($file, 'node_modules')) {
+                    $fileHash = $this->getHashFile($file);
+                    if ($this->isFileNotBeMinify($file, $fileHash)) {
+                        \exec('python -m jsmin ' . $file . ' > /tmp/optimize_tmp.js');
+                        \exec('cp /tmp/optimize_tmp.js ' . $file);
+                        $this->storeFileHash($file);
+                        ++$mininfiedFiles;
+                    }
                 }
             }
-        }
-        if (file_exists('/tmp/optimize_tmp.js')) {
-            unlink('/tmp/optimize_tmp.js');
+            if (file_exists('/tmp/optimize_tmp.js')) {
+                unlink('/tmp/optimize_tmp.js');
+            }
         }
         return $mininfiedFiles;
     }
@@ -315,19 +318,32 @@ class OptimizeSystem extends BaseOptimize
     protected function findFilesRecursively($path, $extension)
     {
         $files = array();
-        $itemDirectoryIterator = new \RecursiveDirectoryIterator($path);
-        foreach ($itemDirectoryIterator as $file) {
-            $filename = $file->getFilename();
-            if ($filename != '.' && $filename != '..') {
-                if ($file->isDir()) {
-                    $files = \array_merge($files, $this->findFilesRecursively($file->getPathName(), $extension));
-                }
-                if (\pathinfo($filename, PATHINFO_EXTENSION) == $extension) {
-                    \array_push($files, $file->getPathName());
+        if (!file_exists($path . '/.optimize-ignore')) {
+            $itemDirectoryIterator = new \RecursiveDirectoryIterator($path);
+            foreach ($itemDirectoryIterator as $file) {
+                $filename = $file->getFilename();
+                if ($filename != '.' && $filename != '..') {
+                    if ($file->isDir()) {
+                        $files = \array_merge($files, $this->findFilesRecursively($file->getPathName(), $extension));
+                    }
+                    if (\pathinfo($filename, PATHINFO_EXTENSION) == $extension) {
+                        \array_push($files, $file->getPathName());
+                    }
                 }
             }
         }
         return $files;
+    }
+
+    public function disableLogs($systemLogId)
+    {
+        if ($systemLogId == 'optimize-all') {
+            foreach ($this->systemLogs as $id => $name) {
+                $this->disableSystemLog($id);
+            }
+        } else {
+            $this->disableSystemLog($systemLogId);
+        }
     }
 
     /**
@@ -335,15 +351,15 @@ class OptimizeSystem extends BaseOptimize
      *
      * @param integer $systemLogId Identifiant du scénario
      */
-    public function disableLogs($systemLogId)
+    public function disableSystemLog($systemLogId)
     {
         $systemLogConfig = config::byKey('log::level::' . $systemLogId);
         foreach ($systemLogConfig as $key => $value) {
             if ($value != 0) {
-                $systemLogConfig[$key] = 0;
+                $systemLogConfig[$key] = "0";
             }
         }
-        $systemLogConfig[1000] = 1;
+        $systemLogConfig[1000] = "1";
         config::save('log::level::' . $systemLogId, $systemLogConfig);
     }
 }

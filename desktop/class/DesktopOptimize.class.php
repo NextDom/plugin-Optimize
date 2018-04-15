@@ -56,6 +56,30 @@ class DesktopOptimize
             }
         }
 
+        static::$viewData['scenarios_shortcut'] = array();
+        static::$viewData['scenarios_shortcut']['log'] = 'ok';
+        foreach (static::$viewData['scenarios'] as $scenario) {
+            if ($scenario['rating']['log'] == 'warn') {
+                static::$viewData['scenarios_shortcut']['log'] = 'warn';
+            }
+        }
+
+        static::$viewData['plugins_shortcut'] = array();
+        static::$viewData['plugins_shortcut']['log'] = 'ok';
+        foreach (static::$viewData['plugins'] as $plugin) {
+            if ($plugin['rating']['log'] == 'warn') {
+                static::$viewData['plugins_shortcut']['log'] = 'warn';
+            }
+        }
+
+        static::$viewData['systems_shortcut'] = array();
+        static::$viewData['systems_shortcut']['log'] = 'ok';
+        foreach (static::$viewData['system_logs'] as $system) {
+            if ($system['rating']['log'] == 'warn') {
+                static::$viewData['systems_shortcut']['log'] = 'warn';
+            }
+        }
+
         static::$viewData['currentScore'] = BaseOptimize::getCurrentScore();
         static::$viewData['bestScore'] = BaseOptimize::getBestScore();
     }
@@ -66,16 +90,17 @@ class DesktopOptimize
      * @param array $rating Note de l'élément
      * @param string $category Catégorie
      * @param string $type Type de modification
+     * @param string $container Type de balise du container
      */
-    public static function showActionCell($rating, $category, $type)
+    public static function showActionCell($rating, $category, $type, $container = 'td')
     {
-        echo '<td class="action-cell">';
+        echo '<' . $container . ' class="action-cell">';
         if ($rating[$type] == 'ok') {
             echo '<i class="fa fa-check-circle fa-2x"></i>';
         } else {
             echo '<i class="fa fa-exclamation-triangle fa-2x" data-category="' . $category . '" data-type="' . $type . '"></i>';
         }
-        echo '</td>';
+        echo '</' . $container . '>';
     }
 
     public function show()
@@ -83,5 +108,9 @@ class DesktopOptimize
         include_file('desktop', 'Optimize', 'css', 'Optimize');
         include_file('desktop', 'Optimize', 'js', 'Optimize');
         include(dirname(__FILE__) . '/../templates/view.php');
+        // Chargement du javascript
+        $plugin = plugin::byId('Optimize');
+        sendVarToJS('eqType', $plugin->getId());
+        include_file('core', 'plugin.template', 'js');
     }
 }

@@ -18,6 +18,8 @@
 
 use PHPUnit\Framework\TestCase;
 
+require_once('../../core/class/jeedom.class.php');
+
 class ConfigurationTest extends TestCase
 {
     public $dataStorage;
@@ -42,8 +44,9 @@ class ConfigurationTest extends TestCase
 
     }
 
-    public function testWithUserConnected()
+    public function testWithUserConnectedOnDIY()
     {
+        jeedom::$hardwareName = 'DIY';
         ob_start();
         include(dirname(__FILE__) . '/../plugin_info/configuration.php');
         $content = ob_get_clean();
@@ -52,6 +55,22 @@ class ConfigurationTest extends TestCase
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
         $this->assertContains('<form', $content);
+        $this->assertContains('"minify"', $content);
+        $this->assertNotContains('raspberry-config-file', $content);
+    }
+
+    public function testWithUserConnectedOnRaspberry()
+    {
+        jeedom::$hardwareName = 'RPi';
+        ob_start();
+        include(dirname(__FILE__) . '/../plugin_info/configuration.php');
+        $content = ob_get_clean();
+        $actions = MockedActions::get();
+        $this->assertCount(1, $actions);
+        $this->assertEquals('include_file', $actions[0]['action']);
+        $this->assertEquals('authentification', $actions[0]['content']['name']);
+        $this->assertContains('<form', $content);
+        $this->assertContains('"minify"', $content);
         $this->assertContains('raspberry-config-file', $content);
     }
 }

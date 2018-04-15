@@ -47,12 +47,22 @@ class OptimizeScenariosTest extends TestCase
         $this->assertEquals('realtime', $result[1]['log']);
         $this->assertEquals(0, $result[2]['syncmode']);
         $this->assertEquals(0, $result[3]['enabled']);
-        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'ok'), $result[0]['rating']);
-        $this->assertEquals(array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok'), $result[1]['rating']);
-        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'warn', 'enabled' => 'ok'), $result[2]['rating']);
-        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'warn'), $result[3]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'ok'), $result[0]['rating']);
+        $this->assertEquals(array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'ok'), $result[1]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'warn', 'enabled' => 'ok', 'last_launch' => 'ok'), $result[2]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'warn', 'last_launch' => 'ok'), $result[3]['rating']);
     }
 
+    public function testScenariosGetInformationsLastLaunchOldies()
+    {
+        scenarioItem::$lastLaunch = new \DateTime('1988-08-01');
+        $result = $this->optimize->getInformations();
+        $this->assertCount(4, $result);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'warn'), $result[0]['rating']);
+        $this->assertEquals(array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'warn'), $result[1]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'warn', 'enabled' => 'ok', 'last_launch' => 'warn'), $result[2]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'warn', 'last_launch' => 'warn'), $result[3]['rating']);
+    }
 
     public function testScenarioDisableLogs()
     {
@@ -62,6 +72,23 @@ class OptimizeScenariosTest extends TestCase
         $this->assertEquals('set_configuration', $actions[0]['action']);
         $this->assertEquals('logmode', $actions[0]['content']['config']);
         $this->assertEquals('none', $actions[0]['content']['value']);
+    }
+
+    public function testScenarioDisableAllLogs()
+    {
+        $this->optimize->disableLogs('optimize-all');
+        $actions = MockedActions::get();
+        $this->assertCount(8, $actions);
+        $this->assertEquals('set_configuration', $actions[0]['action']);
+        $this->assertEquals('logmode', $actions[0]['content']['config']);
+        $this->assertEquals('none', $actions[0]['content']['value']);
+        $this->assertEquals('save', $actions[1]['action']);
+        $this->assertEquals('set_configuration', $actions[2]['action']);
+        $this->assertEquals('save', $actions[3]['action']);
+        $this->assertEquals('set_configuration', $actions[4]['action']);
+        $this->assertEquals('save', $actions[5]['action']);
+        $this->assertEquals('set_configuration', $actions[6]['action']);
+        $this->assertEquals('save', $actions[7]['action']);
     }
 
     public function testScenarioSetSyncMode()

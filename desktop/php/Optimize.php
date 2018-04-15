@@ -27,4 +27,3 @@ if (!isConnect('admin')) {
 $desktop = new DesktopOptimize();
 $desktop->init();
 $desktop->show();
-

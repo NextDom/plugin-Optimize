@@ -77,6 +77,30 @@ class OptimizeParserTest extends TestCase
         $this->assertEquals('remove', $actions[0]['action']);
     }
 
+    public function testParserScenarioAllLog()
+    {
+        $this->parser->parse('scenario', 'optimize-all', 'log');
+        $actions = MockedActions::get();
+        $this->assertCount(8, $actions);
+        $this->assertEquals('set_configuration', $actions[0]['action']);
+        $this->assertEquals('logmode', $actions[0]['content']['config']);
+        $this->assertEquals('none', $actions[0]['content']['value']);
+        $this->assertEquals('save', $actions[1]['action']);
+        $this->assertEquals('set_configuration', $actions[2]['action']);
+        $this->assertEquals('save', $actions[3]['action']);
+        $this->assertEquals('set_configuration', $actions[4]['action']);
+        $this->assertEquals('save', $actions[5]['action']);
+        $this->assertEquals('set_configuration', $actions[6]['action']);
+        $this->assertEquals('save', $actions[7]['action']);
+    }
+
+    public function testParserScenarioLastLaunch() {
+        $this->parser->parse('scenario', 1, 'last_launch');
+        $actions = MockedActions::get();
+        $this->assertCount(1, $actions);
+        $this->assertEquals('remove', $actions[0]['action']);
+    }
+
     public function testParserPluginLog()
     {
         $this->parser->parse('plugin', 'thetemplate', 'log');
@@ -86,7 +110,20 @@ class OptimizeParserTest extends TestCase
         $this->assertEquals('save', $actions[0]['action']);
         $this->assertEquals('log::level::thetemplate', $actions[0]['content']['key']);
         $this->assertEquals('save', $actions[1]['action']);
+        $this->assertEquals(1, $actions[1]['content']['data'][1000]);
+    }
+
+    public function testParserPluginAllLog()
+    {
+        $this->parser->parse('plugin', 'optimize-all', 'log');
+        $actions = MockedActions::get();
+        $this->assertCount(3, $actions);
+        $this->assertEquals('save', $actions[0]['action']);
+        $this->assertEquals('log::level::thetemplate', $actions[0]['content']['key']);
+        $this->assertEquals(1, $actions[0]['content']['data'][1000]);
+        $this->assertEquals('save', $actions[1]['action']);
         $this->assertEquals('log::level::IOptimize', $actions[1]['content']['key']);
+        $this->assertEquals(1, $actions[1]['content']['data'][1000]);
     }
 
     public function testParserSystemLog()
@@ -99,6 +136,30 @@ class OptimizeParserTest extends TestCase
         $this->assertEquals('log::level::scenario', $actions[0]['content']['key']);
         $this->assertEquals('save', $actions[1]['action']);
         $this->assertEquals('log::level::plugin', $actions[1]['content']['key']);
+    }
+
+    public function testParserScenarioBadAction()
+    {
+        $result = $this->parser->parse('scenario', 'useless', 'an-error');
+        $this->assertFalse($result);
+    }
+
+    public function testParserPluginBadAction()
+    {
+        $result = $this->parser->parse('plugin', 'useless', 'an-error');
+        $this->assertFalse($result);
+    }
+
+    public function testParserSystemBadAction()
+    {
+        $result = $this->parser->parse('system', 'useless', 'an-error');
+        $this->assertFalse($result);
+    }
+
+    public function testParserRaspberryBadAction()
+    {
+        $result = $this->parser->parse('raspberry', 'useless', 'an-error');
+        $this->assertFalse($result);
     }
 
     /**

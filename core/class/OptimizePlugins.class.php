@@ -138,20 +138,34 @@ class OptimizePlugins extends BaseOptimize
     }
 
     /**
-     * Désactive les logs d'un plugin.
+     * Désactive les logs d'un ou tous les plugins.
      *
-     * @param integer $pluginId Identifiant du plugin
+     * @param integer|string $pluginId Identifiant du plugin ou optimize-all
      */
     public function disableLogs($pluginId)
     {
-        $plugin = $this->getPluginById($pluginId);
+        if ($pluginId == 'optimize-all') {
+            $plugins = $this->getAllPlugins();
+            foreach ($plugins as $plugin) {
+                $this->disablePluginLog($plugin);
+            }
+        } else {
+            $this->disablePluginLog($this->getPluginById($pluginId));
+        }
+    }
+
+    /**
+     * @param $plugin
+     */
+    private function disablePluginLog($plugin)
+    {
         $pluginLogConfig = config::byKey('log::level::' . $plugin->getId());
         foreach ($pluginLogConfig as $key => $value) {
             if ($value != 0) {
-                $pluginLogConfig[$key] = 0;
+                $pluginLogConfig[$key] = "0";
             }
         }
-        $pluginLogConfig[1000] = 1;
+        $pluginLogConfig[1000] = "1";
         config::save('log::level::' . $plugin->getId(), $pluginLogConfig);
     }
 

@@ -46,7 +46,9 @@ class OptimizeScenarios extends BaseOptimize
         $informations['log'] = $scenario->getConfiguration('logmode');
         $informations['syncmode'] = $scenario->getConfiguration('syncmode');
         $informations['enabled'] = $scenario->getIsActive();
-
+//        $informations['consistency'] = $scenario->consystencyCheck(true);
+        $informations['last_launch'] = $scenario->getLastLaunch();
+        $informations['running_state'] = $scenario->running();
         return $informations;
     }
 
@@ -65,7 +67,8 @@ class OptimizeScenarios extends BaseOptimize
         $rating['log'] = 'ok';
         $rating['syncmode'] = 'ok';
         $rating['enabled'] = 'ok';
-        self::$bestScore += 3;
+        $rating['last_launch'] = 'ok';
+        self::$bestScore += 4;
 
         // Les logs doivent être désactivés
         if ($informations['log'] != 'none') {
@@ -83,6 +86,13 @@ class OptimizeScenarios extends BaseOptimize
         if ($informations['enabled'] == 0) {
             self::$badPoints++;
             $rating['enabled'] = 'warn';
+        }
+
+        $today = new \DateTime('now');
+        $lastLaunch = new \DateTime($informations['last_launch']);
+        if ($informations['last_launch'] == '' || $lastLaunch->diff($today)->days > 30) {
+            self::$badPoints++;
+            $rating['last_launch'] = 'warn';
         }
 
         return $rating;
@@ -122,13 +132,21 @@ class OptimizeScenarios extends BaseOptimize
     /**
      * Désactiver les logs d'un scénario.
      *
-     * @param integer $scenarioId Identifiant du scénario
+     * @param mixed $scenarioId Identifiant du scénario ou optimize-all
      */
     public function disableLogs($scenarioId)
     {
-        $scenario = $this->getScenarioById($scenarioId);
-        $scenario->setConfiguration('logmode', 'none');
-        $scenario->save();
+        if ($scenarioId == 'optimize-all') {
+            $scenarios = $this->getAll();
+            foreach ($scenarios as $scenario) {
+                $scenario->setConfiguration('logmode', 'none');
+                $scenario->save();
+            }
+        } else {
+            $scenario = $this->getScenarioById($scenarioId);
+            $scenario->setConfiguration('logmode', 'none');
+            $scenario->save();
+        }
     }
 
     /**
@@ -152,7 +170,17 @@ class OptimizeScenarios extends BaseOptimize
     {
         $scenario = $this->getScenarioById($scenarioId);
         if ($scenario->getIsActive() == 0) {
-            $scenario->remove();
+            $this->remove($scenarioId);
         }
+    }
+
+    /**
+     * Supprime un scénario
+     *
+     * @param integer $scenarioId Identifiant du scénario
+     */
+    public function remove($scenarioId) {
+        $scenario = $this->getScenarioById($scenarioId);
+        $scenario->remove();
     }
 }

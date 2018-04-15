@@ -65,6 +65,8 @@ class scenarioItem
     public $syncmode;
     public $enabled;
     public static $enabledScenario = null;
+    public static $lastLaunch = null;
+    public static $isRunning = null;
 
     /**
      * Constructeur d'un scenario
@@ -141,6 +143,40 @@ class scenarioItem
             if ($this->enabled) {
                 $result = 1;
             }
+        }
+        return $result;
+    }
+
+    /**
+     * Renvoie la date de dernier lancement du scénario
+     * scenarioItem::$lastLaunch permet de forcer la réponse pour tous les scénarios
+     *
+     * @return string Date du jour ou scenarioItem::$lastLaunch
+     */
+    public function getLastLaunch()
+    {
+        $result = "";
+        if (scenarioItem::$lastLaunch != null) {
+            $result = static::$lastLaunch->format('Y-m-d H:i:s');
+        }
+        else {
+            $today = new \DateTime('now');
+            $result = $today->format('Y-m-d H:i:s');
+        }
+        return $result;
+    }
+
+    /**
+     * Renvoie l'état de fonctionnement du scénario
+     * scenarioItem::$isRunning permet de forcer la réponse pour tous les scénarios
+     *
+     * @return bool Etat
+     */
+    public function running()
+    {
+        $result = true;
+        if (scenarioItem::$isRunning != null) {
+            $result = scenarioItem::$isRunning;
         }
         return $result;
     }

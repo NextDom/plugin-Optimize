@@ -1,5 +1,12 @@
 # Changelog
 
+### Version 1.3
+* Un icône indique les scénarios en cours
+* Détection des vieux scénarios
+* Les répertoires peuvent être contournés par la minification avec un fichier
+* Correction des logs en 1 clic
+* Correction du problème avec les logs système
+
 ### Version 1.2.5
 * Documentation
 

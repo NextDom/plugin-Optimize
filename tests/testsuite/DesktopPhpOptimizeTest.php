@@ -49,7 +49,7 @@ class DesktopPhpOptimizeTest extends TestCase
         include(dirname(__FILE__) . '/../desktop/php/Optimize.php');
         $content = ob_get_clean();
         $actions = MockedActions::get();
-        $this->assertCount(3, $actions);
+        $this->assertCount(4, $actions);
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
         $this->assertContains('<ul class="nav nav-tabs">', $content);
