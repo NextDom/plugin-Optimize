@@ -54,6 +54,6 @@ class DesktopOptimizeTest extends TestCase
         ob_start();
         $this->desktopOptimize->showActionCell(array('log' => 'warn'), 'plugin', 'log');
         $result = ob_get_clean();
-        $this->assertEquals('<td class="action-cell"><i class="fa fa-exclamation-triangle fa-2x" data-category="plugin" data-type="log"></i></td>', $result);
+        $this->assertEquals('<td class="action-cell"><i class="fa fa-2x fa-exclamation-triangle action-item" data-category="plugin" data-type="log"></i></td>', $result);
     }
 }
