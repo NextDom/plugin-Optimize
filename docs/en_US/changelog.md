@@ -1,5 +1,12 @@
 # Changelog
 
+### Version 1.3
+* An icon indicates running scenarios
+* Detect old scenarios
+* Directories can be bypassed by the minification with a file
+* All logs in one click
+* System logs issue
+
 ### Version 1.2.5
 * Documentation
 
