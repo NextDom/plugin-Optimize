@@ -328,6 +328,7 @@
     msg['plugin_enabled'] = '{{Do you want to delete this plugin?}}';
     msg['scenario_log'] = '{{Do you want to disable logs for this scenario?}}';
     msg['scenario_syncmode'] = '{{Do you want to enable synchronous mode for this scenario?}}';
+    msg['scenario_last_launch'] = '{{Do you want to delete this scenario?}}';
     msg['scenario_enabled'] = '{{Do you want to delete this scenario?}}';
     msg['system_log'] = '{{Do you want to disable logs for this item?}}';
     msg['raspberry_config_change'] = '{{A backup file of /boot/config.txt was created at /boot/config.txt.bak. Its recommanded to reboot your system.}}';

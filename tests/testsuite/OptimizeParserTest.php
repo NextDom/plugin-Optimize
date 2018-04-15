@@ -94,6 +94,13 @@ class OptimizeParserTest extends TestCase
         $this->assertEquals('save', $actions[7]['action']);
     }
 
+    public function testParserScenarioLastLaunch() {
+        $this->parser->parse('scenario', 1, 'last_launch');
+        $actions = MockedActions::get();
+        $this->assertCount(1, $actions);
+        $this->assertEquals('remove', $actions[0]['action']);
+    }
+
     public function testParserPluginLog()
     {
         $this->parser->parse('plugin', 'thetemplate', 'log');

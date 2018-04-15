@@ -99,7 +99,7 @@ function ajaxPostRequest(item, category, id, type, callbackFunction) {
  */
 function applyCellChange(item, category, type) {
     var row = item.closest('tr');
-    if (type === 'enabled') {
+    if (type === 'enabled' || type === 'last_launch') {
         row.remove();
         var nbCheckItems = row.find('.fa-check-circle').length;
         var nbWarningItems = row.find('.fa-exclamation-triangle').length;

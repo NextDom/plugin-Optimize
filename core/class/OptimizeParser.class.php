@@ -62,6 +62,9 @@ class OptimizeParser
             case 'syncmode':
                 $optimizeScenarios->setSyncMode($scenarioId);
                 break;
+            case 'last_launch':
+                $optimizeScenarios->remove($scenarioId);
+                break;
             case 'enabled':
                 $optimizeScenarios->removeIfDisabled($scenarioId);
                 break;

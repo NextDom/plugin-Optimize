@@ -47,12 +47,22 @@ class OptimizeScenariosTest extends TestCase
         $this->assertEquals('realtime', $result[1]['log']);
         $this->assertEquals(0, $result[2]['syncmode']);
         $this->assertEquals(0, $result[3]['enabled']);
-        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'ok'), $result[0]['rating']);
-        $this->assertEquals(array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok'), $result[1]['rating']);
-        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'warn', 'enabled' => 'ok'), $result[2]['rating']);
-        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'warn'), $result[3]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'ok'), $result[0]['rating']);
+        $this->assertEquals(array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'ok'), $result[1]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'warn', 'enabled' => 'ok', 'last_launch' => 'ok'), $result[2]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'warn', 'last_launch' => 'ok'), $result[3]['rating']);
     }
 
+    public function testScenariosGetInformationsLastLaunchOldies()
+    {
+        scenarioItem::$lastLaunch = new \DateTime('1988-08-01');
+        $result = $this->optimize->getInformations();
+        $this->assertCount(4, $result);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'warn'), $result[0]['rating']);
+        $this->assertEquals(array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'warn'), $result[1]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'warn', 'enabled' => 'ok', 'last_launch' => 'warn'), $result[2]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'warn', 'last_launch' => 'warn'), $result[3]['rating']);
+    }
 
     public function testScenarioDisableLogs()
     {

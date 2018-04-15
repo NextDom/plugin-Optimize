@@ -82,8 +82,6 @@ class DesktopOptimize
 
         static::$viewData['currentScore'] = BaseOptimize::getCurrentScore();
         static::$viewData['bestScore'] = BaseOptimize::getBestScore();
-
-        var_dump(static::$viewData);
     }
 
     /**

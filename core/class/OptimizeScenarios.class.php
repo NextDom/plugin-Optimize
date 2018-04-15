@@ -46,7 +46,7 @@ class OptimizeScenarios extends BaseOptimize
         $informations['log'] = $scenario->getConfiguration('logmode');
         $informations['syncmode'] = $scenario->getConfiguration('syncmode');
         $informations['enabled'] = $scenario->getIsActive();
-        $informations['consistency'] = $scenario->consystencyCheck(true);
+//        $informations['consistency'] = $scenario->consystencyCheck(true);
         $informations['last_launch'] = $scenario->getLastLaunch();
         $informations['running_state'] = $scenario->running();
         return $informations;
@@ -88,8 +88,8 @@ class OptimizeScenarios extends BaseOptimize
             $rating['enabled'] = 'warn';
         }
 
-        $today = new DateTime('now');
-        $lastLaunch = new DateTime($informations['last_launch']);
+        $today = new \DateTime('now');
+        $lastLaunch = new \DateTime($informations['last_launch']);
         if ($informations['last_launch'] == '' || $lastLaunch->diff($today)->days > 30) {
             self::$badPoints++;
             $rating['last_launch'] = 'warn';
@@ -170,7 +170,17 @@ class OptimizeScenarios extends BaseOptimize
     {
         $scenario = $this->getScenarioById($scenarioId);
         if ($scenario->getIsActive() == 0) {
-            $scenario->remove();
+            $this->remove($scenarioId);
         }
+    }
+
+    /**
+     * Supprime un scénario
+     *
+     * @param integer $scenarioId Identifiant du scénario
+     */
+    public function remove($scenarioId) {
+        $scenario = $this->getScenarioById($scenarioId);
+        $scenario->remove();
     }
 }
