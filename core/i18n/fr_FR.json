@@ -2,7 +2,8 @@
   "plugins\/Optimize\/plugin_info\/configuration.php": {
     "Raspberry Pi config file": "Fichier de configuration du Raspberry Pi",
     "Automatic minification": "Minification automatique",
-    "A first files minification must be executed manually before.": "Une première minification des fichiers doit être exécutée manuellement avant d'activer cette option."
+    "A first files minification must be executed manually before.": "Une première minification des fichiers doit être exécutée manuellement avant d'activer cette option.",
+    "Inactivity limit of the scenario": "Limite d'inactivité du scénario"
   },
   "plugins\/Optimize\/core\/ajax\/Optimize.ajax.php": {
     "401 - Refused access": "401 - Accès refusé",

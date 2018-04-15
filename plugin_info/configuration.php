@@ -50,4 +50,10 @@ $rpi = new OptimizeRPi();
             {{A first files minification must be executed manually before.}}
         </div>
     </div>
+    <div class="form-group">
+        <label for="scenario-days-limit" class="col-sm-2 control-label">{{Inactivity limit of the scenario}}</label>
+        <div class="col-sm-10">
+            <input type="text" data-l1key="scenario-days-limit" class="configKey form-control" id="scenario-days-limit" />
+        </div>
+    </div>
 </form>

@@ -90,7 +90,8 @@ class OptimizeScenarios extends BaseOptimize
 
         $today = new \DateTime('now');
         $lastLaunch = new \DateTime($informations['last_launch']);
-        if ($informations['last_launch'] == '' || $lastLaunch->diff($today)->days > 30) {
+        $daysLimit = config::byKey('scenario-days-limit', 'Optimize');
+        if ($informations['last_launch'] == '' || $lastLaunch->diff($today)->days > $daysLimit) {
             self::$badPoints++;
             $rating['last_launch'] = 'warn';
         }
