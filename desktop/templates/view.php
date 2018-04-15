@@ -70,14 +70,18 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>{{Name}}</th>
+                            <th></th>
+                            <th class="name">{{Name}}</th>
                             <th>{{Logs}}</th>
                             <th>{{Mode}}</th>
+                            <th>{{Last launch}}</th>
                             <th>{{Enabled}}</th>
                         </tr>
                         <tr data-id="optimize-all">
                             <th></th>
+                            <th></th>
                             <?php DesktopOptimize::showActionCell(DesktopOptimize::$viewData['scenarios_shortcut'], 'scenario', 'log', 'th'); ?>
+                            <th></th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -85,12 +89,18 @@
                         <tbody>
                         <?php foreach (DesktopOptimize::$viewData['scenarios'] as $scenario) : ?>
                             <tr data-id="<?php echo $scenario['id']; ?>">
+                                <td class="running">
+                                    <?php if ($scenario['running_state'] == true) : ?>
+                                        <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+                                    <?php endif; ?>
+                                </td>
                                 <td>
                                     <a href="/index.php?v=d&p=scenario&id=<?php echo $scenario['id']; ?>"><?php echo $scenario['name']; ?></a>
                                 </td>
                                 <?php
                                 DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'log');
                                 DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'syncmode');
+                                DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'last_launch');
                                 DesktopOptimize::showActionCell($scenario['rating'], 'scenario', 'enabled');
                                 ?>
                             </tr>
@@ -131,7 +141,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>{{Name}}</th>
+                            <th class="name">{{Name}}</th>
                             <th>{{Logs}}</th>
                             <th>{{Path}}</th>
                             <th>{{Enabled}}</th>
@@ -189,7 +199,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>{{Name}}</th>
+                            <th class="name">{{Name}}</th>
                             <th>{{Logs}}</th>
                         </tr>
                         <tr data-id="optimize-all">

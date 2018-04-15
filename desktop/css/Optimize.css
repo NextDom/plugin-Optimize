@@ -31,6 +31,11 @@
     text-align: center
 }
 
+#optimize-plugin th.name {
+    text-align: left
+}
+
+
 #optimize-plugin .hidden-msg {
     display: none
 }
@@ -50,4 +55,8 @@
 
 #optimize-plugin table>thead {
     border-bottom: 2px solid #CCC;
+}
+
+#optimize-plugin table td.running {
+    max-width: 2em;
 }

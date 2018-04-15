@@ -46,7 +46,9 @@ class OptimizeScenarios extends BaseOptimize
         $informations['log'] = $scenario->getConfiguration('logmode');
         $informations['syncmode'] = $scenario->getConfiguration('syncmode');
         $informations['enabled'] = $scenario->getIsActive();
-
+        $informations['consistency'] = $scenario->consystencyCheck(true);
+        $informations['last_launch'] = $scenario->getLastLaunch();
+        $informations['running_state'] = $scenario->running();
         return $informations;
     }
 
@@ -65,7 +67,8 @@ class OptimizeScenarios extends BaseOptimize
         $rating['log'] = 'ok';
         $rating['syncmode'] = 'ok';
         $rating['enabled'] = 'ok';
-        self::$bestScore += 3;
+        $rating['last_launch'] = 'ok';
+        self::$bestScore += 4;
 
         // Les logs doivent être désactivés
         if ($informations['log'] != 'none') {
@@ -83,6 +86,13 @@ class OptimizeScenarios extends BaseOptimize
         if ($informations['enabled'] == 0) {
             self::$badPoints++;
             $rating['enabled'] = 'warn';
+        }
+
+        $today = new DateTime('now');
+        $lastLaunch = new DateTime($informations['last_launch']);
+        if ($informations['last_launch'] == '' || $lastLaunch->diff($today)->days > 30) {
+            self::$badPoints++;
+            $rating['last_launch'] = 'warn';
         }
 
         return $rating;
