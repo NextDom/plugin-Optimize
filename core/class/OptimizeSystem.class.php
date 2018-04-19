@@ -249,7 +249,7 @@ class OptimizeSystem extends BaseOptimize
     {
         $mininfiedFiles = 0;
         if ($this->isJsMinInstalled()) {
-            if (is_writable('/tmp/optimize_tmp.js')) {
+            if (is_writable('/tmp/')) {
                 foreach ($fileList as $file) {
                     if (!strstr($file, 'node_modules')) {
                         $fileHash = $this->getHashFile($file);

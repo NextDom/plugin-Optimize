@@ -39,32 +39,38 @@ class InstallationTest extends TestCase
     {
         Optimize_install();
         $actions = MockedActions::get();
-        $this->assertCount(4, $actions);
+        $this->assertCount(5, $actions);
         $this->assertEquals('save', $actions[0]['action']);
         $this->assertEquals('raspberry-config-file', $actions[0]['content']['key']);
         $this->assertEquals('save', $actions[1]['action']);
         $this->assertEquals('minify', $actions[1]['content']['key']);
-        $this->assertEquals('query_execute', $actions[2]['action']);
+        $this->assertEquals('save', $actions[2]['action']);
+        $this->assertEquals('scenario-days-limit', $actions[2]['content']['key']);
         $this->assertEquals('query_execute', $actions[3]['action']);
+        $this->assertEquals('query_execute', $actions[4]['action']);
     }
 
     public function testUpdate()
     {
         Optimize_update();
         $actions = MockedActions::get();
-        $this->assertCount(0, $actions);
+        $this->assertCount(1, $actions);
+        $this->assertEquals('save', $actions[0]['action']);
+        $this->assertEquals('scenario-days-limit', $actions[0]['content']['key']);
     }
 
     public function testRemove()
     {
         Optimize_remove();
         $actions = MockedActions::get();
-        $this->assertCount(3, $actions);
+        $this->assertCount(4, $actions);
         $this->assertEquals('remove', $actions[0]['action']);
         $this->assertEquals('raspberry-config-file', $actions[0]['content']['key']);
         $this->assertEquals('Optimize', $actions[0]['content']['plugin']);
         $this->assertEquals('remove', $actions[1]['action']);
         $this->assertEquals('minify', $actions[1]['content']['key']);
-        $this->assertEquals('query_execute', $actions[2]['action']);
+        $this->assertEquals('remove', $actions[2]['action']);
+        $this->assertEquals('scenario-days-limit', $actions[2]['content']['key']);
+        $this->assertEquals('query_execute', $actions[3]['action']);
     }
 }

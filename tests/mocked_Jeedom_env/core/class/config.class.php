@@ -135,11 +135,15 @@ class config
      */
     public static function byKey($key, $plugin = 'core')
     {
+        $result = false;
         if ($plugin == 'core') {
-            return config::$byKeyData[$key];
+            $result = config::$byKeyData[$key];
         } else {
-            return config::$byKeyPluginData[$plugin][$key];
+            if (isset(config::$byKeyPluginData[$plugin])) {
+                $result = config::$byKeyPluginData[$plugin][$key];
+            }
         }
+        return $result;
     }
 
     /**
