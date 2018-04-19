@@ -249,14 +249,18 @@ class OptimizeSystem extends BaseOptimize
     {
         $mininfiedFiles = 0;
         if ($this->isJsMinInstalled()) {
-            foreach ($fileList as $file) {
-                if (!strstr($file, 'node_modules')) {
-                    $fileHash = $this->getHashFile($file);
-                    if ($this->isFileNotBeMinify($file, $fileHash)) {
-                        \exec('python -m jsmin ' . $file . ' > /tmp/optimize_tmp.js');
-                        \exec('cp /tmp/optimize_tmp.js ' . $file);
-                        $this->storeFileHash($file);
-                        ++$mininfiedFiles;
+            if (is_writable('/tmp/optimize_tmp.js')) {
+                foreach ($fileList as $file) {
+                    if (!strstr($file, 'node_modules')) {
+                        $fileHash = $this->getHashFile($file);
+                        if (is_writable($file)) {
+                            if ($this->isFileNotBeMinify($file, $fileHash)) {
+                                \exec('python -m jsmin ' . $file . ' > /tmp/optimize_tmp.js');
+                                \exec('cp /tmp/optimize_tmp.js ' . $file);
+                                $this->storeFileHash($file);
+                                ++$mininfiedFiles;
+                            }
+                        }
                     }
                 }
             }
