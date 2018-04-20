@@ -44,6 +44,7 @@ class DesktopPhpOptimizeTest extends TestCase
 
     public function testWithUserConnected()
     {
+        config::$byKeyPluginData = array('Optimize' => array('scenario-days-limit' => 30));
         scenario::init();
         ob_start();
         include(dirname(__FILE__) . '/../desktop/php/Optimize.php');

@@ -27,6 +27,7 @@ function Optimize_install()
 {
     config::save('raspberry-config-file', '/boot/config.txt', 'Optimize');
     config::save('minify', false, 'Optimize');
+    config::save('scenario-days-limit', 30, 'Optimize');
     $dataStorage = new DataStorage('optimize');
     $dataStorage->createDataTable();
 }
@@ -36,7 +37,9 @@ function Optimize_install()
  */
 function Optimize_update()
 {
-
+    if (!config::byKey('scenario-days-limit', 'Optimize')) {
+        config::save('scenario-days-limit', 30, 'Optimize');
+    }
 }
 
 /**
@@ -46,6 +49,7 @@ function Optimize_remove()
 {
     config::remove('raspberry-config-file', 'Optimize');
     config::remove('minify', 'Optimize');
+    config::remove('scenario-days-limit', 'Optimize');
     $dataStorage = new DataStorage('optimize');
     $dataStorage->dropDataTable();
 }

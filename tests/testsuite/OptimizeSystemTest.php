@@ -123,7 +123,7 @@ class OptimizeSystemTest extends TestCase
         $result = $this->optimizeSystem->mock_findFilesRecursively(dirname(__FILE__) . '/../../../core', 'php');
         $this->assertContains(dirname(__FILE__) . '/../../../core/class/config.class.php', $result);
         $this->assertContains(dirname(__FILE__) . '/../../../core/class/jeedom.class.php', $result);
-        $this->assertCount(10, $result);
+        $this->assertCount(11, $result);
     }
 
     public function testFindFilesRecursivelyWithIgnore()

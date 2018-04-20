@@ -55,6 +55,7 @@ class OptimizeScenariosTest extends TestCase
 
     public function testScenariosGetInformationsLastLaunchOldies()
     {
+        config::$byKeyPluginData = array('Optimize' => array('scenario-days-limit' => 30));
         scenarioItem::$lastLaunch = new \DateTime('1988-08-01');
         $result = $this->optimize->getInformations();
         $this->assertCount(4, $result);
@@ -62,6 +63,18 @@ class OptimizeScenariosTest extends TestCase
         $this->assertEquals(array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'warn'), $result[1]['rating']);
         $this->assertEquals(array('log' => 'ok', 'syncmode' => 'warn', 'enabled' => 'ok', 'last_launch' => 'warn'), $result[2]['rating']);
         $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'warn', 'last_launch' => 'warn'), $result[3]['rating']);
+    }
+
+    public function testScenariosGetInformationsLastLaunchRecent()
+    {
+        config::$byKeyPluginData = array('Optimize' => array('scenario-days-limit' => 30));
+        scenarioItem::$lastLaunch = new \DateTime();
+        $result = $this->optimize->getInformations();
+        $this->assertCount(4, $result);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'ok'), $result[0]['rating']);
+        $this->assertEquals(array('log' => 'warn', 'syncmode' => 'ok', 'enabled' => 'ok', 'last_launch' => 'ok'), $result[1]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'warn', 'enabled' => 'ok', 'last_launch' => 'ok'), $result[2]['rating']);
+        $this->assertEquals(array('log' => 'ok', 'syncmode' => 'ok', 'enabled' => 'warn', 'last_launch' => 'ok'), $result[3]['rating']);
     }
 
     public function testScenarioDisableLogs()

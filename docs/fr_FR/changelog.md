@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.3.1
+* Amélioration de l'interface
+* Ajout de tests avant d'appliquer des changement pour la minification
+
 ### Version 1.3
 * Un icône indique les scénarios en cours
 * Détection des vieux scénarios

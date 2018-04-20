@@ -19,6 +19,7 @@
 use PHPUnit\Framework\TestCase;
 
 require_once('../../core/class/system.class.php');
+require_once('../../core/class/log.class.php');
 require_once('core/class/OptimizeParser.class.php');
 
 class OptimizeParserTest extends TestCase
@@ -179,5 +180,17 @@ class OptimizeParserTest extends TestCase
         $this->assertCount(2, $actions);
         $this->assertEquals('get_cmd_sudo', $actions[0]['action']);
         $this->assertEquals('get_cmd_sudo', $actions[1]['action']);
+    }
+
+    public function testParserSystemInstallError()
+    {
+        system::$cmdSudo = 'exit 1 && ';
+        $result = $this->parser->parse('system', 'csscompressor', 'install');
+        $this->assertFalse($result);
+        $actions = MockedActions::get();
+        $this->assertCount(2, $actions);
+        $this->assertEquals('get_cmd_sudo', $actions[0]['action']);
+        $this->assertEquals('log_add', $actions[1]['action']);
+        $this->assertEquals('error', $actions[1]['content']['channel']);
     }
 }

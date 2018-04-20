@@ -27,6 +27,11 @@
     cursor: pointer
 }
 
+#optimize-plugin .fa-exclamation-circle {
+    color: #f23002;
+    cursor: pointer
+}
+
 #optimize-plugin td.action-cell, #optimize-plugin th {
     text-align: center
 }

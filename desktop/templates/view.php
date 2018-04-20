@@ -28,14 +28,14 @@
         </div>
     </div>
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a data-toggle="tab" href="#scenarios">{{Scenarios}}</a></li>
-        <li role="presentation"><a data-toggle="tab" href="#plugins">{{Plugins}}</a></li>
-        <li role="presentation"><a data-toggle="tab" href="#system">{{System}}</a></li>
+        <li role="presentation" class="active"><a data-toggle="tab" href="#scenarios"><i class="fa fa-cogs"></i> {{Scenarios}}</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#plugins"><i class="fa fa-tasks"></i> {{Plugins}}</a></li>
+        <li role="presentation"><a data-toggle="tab" href="#system"><i class="fa fa-pie-chart"></i> {{System}}</a></li>
         <?php if (DesktopOptimize::$viewData['rpi'] === true): ?>
-            <li role="presentation"><a data-toggle="tab" href="#raspberry">{{Raspberry Pi}}</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#raspberry"><i class="fa fa-usb"></i> {{Raspberry Pi}}</a></li>
         <?php endif; ?>
         <li role="presentation">
-            <a data-toggle="tab" class="eqLogicAction cursor" data-action="gotoPluginConf">{{Configuration}}</a>
+            <a data-toggle="tab" class="eqLogicAction cursor" data-action="gotoPluginConf"><i class="fa fa-wrench"></i> {{Configuration}}</a>
         </li>
     </ul>
     <div class="tab-content clearfix">
@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <button class="btn btn-info" data-toggle="collapse" data-target="#scenarios-informations">
-                        {{Informations}}
+                        <i class="fa fa-info-circle"></i> {{Informations}}
                     </button>
                 </div>
             </div>
@@ -114,7 +114,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <button class="btn btn-info" data-toggle="collapse" data-target="#plugins-informations">
-                        {{Informations}}
+                        <i class="fa fa-info-circle"></i> {{Informations}}
                     </button>
                 </div>
             </div>
@@ -175,7 +175,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <button class="btn btn-info" data-toggle="collapse" data-target="#system-informations">
-                        {{Informations}}
+                        <i class="fa fa-info-circle"></i> {{Informations}}
                     </button>
                 </div>
             </div>

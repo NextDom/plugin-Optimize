@@ -94,11 +94,15 @@ class DesktopOptimize
      */
     public static function showActionCell($rating, $category, $type, $container = 'td')
     {
+        $icon = "fa-exclamation-triangle";
+        if ($type == 'enabled' || $type == 'last_launch') {
+            $icon = "fa-exclamation-circle";
+        }
         echo '<' . $container . ' class="action-cell">';
         if ($rating[$type] == 'ok') {
             echo '<i class="fa fa-check-circle fa-2x"></i>';
         } else {
-            echo '<i class="fa fa-exclamation-triangle fa-2x" data-category="' . $category . '" data-type="' . $type . '"></i>';
+            echo '<i class="fa fa-2x '.$icon.' action-item" data-category="' . $category . '" data-type="' . $type . '"></i>';
         }
         echo '</' . $container . '>';
     }

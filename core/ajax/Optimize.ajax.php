@@ -42,7 +42,7 @@ try {
         ajax::success();
     }
 
-    throw new \Exception(__('No method corresponding to : ', __FILE__) . $category . ' ' . $type . ' ' . $id);
+    throw new \Exception(__('No method corresponding to : ', __FILE__) . "$category $type $id\n".__('View channel error in logs of the plugin for more informations'));
 
 } catch (\Exception $e) {
     ajax::error(displayExeption($e), $e->getCode());

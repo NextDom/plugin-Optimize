@@ -33,7 +33,7 @@ class DesktopOptimizeTest extends TestCase
 
     public function testInit()
     {
-        config::$byKeyPluginData = array('Optimize' => array('raspberry-config-file' => '/tmp/rasp-config.txt'));
+        config::$byKeyPluginData = array('Optimize' => array('raspberry-config-file' => '/tmp/rasp-config.txt', 'scenario-days-limit' => 30));
         file_put_contents('/tmp/rasp-config.txt', 'gpu_mem=66');
         $this->desktopOptimize->init();
         $this->assertFalse(DesktopOptimize::$viewData['rpi']);
@@ -54,6 +54,6 @@ class DesktopOptimizeTest extends TestCase
         ob_start();
         $this->desktopOptimize->showActionCell(array('log' => 'warn'), 'plugin', 'log');
         $result = ob_get_clean();
-        $this->assertEquals('<td class="action-cell"><i class="fa fa-exclamation-triangle fa-2x" data-category="plugin" data-type="log"></i></td>', $result);
+        $this->assertEquals('<td class="action-cell"><i class="fa fa-2x fa-exclamation-triangle action-item" data-category="plugin" data-type="log"></i></td>', $result);
     }
 }
