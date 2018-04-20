@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 1.3.1
+* Interface improvements
+* More tests before apply changes (minification)
+
 ### Version 1.3
 * An icon indicates running scenarios
 * Detect old scenarios
