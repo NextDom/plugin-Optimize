@@ -38,6 +38,9 @@ class OptimizeSystem extends BaseOptimize
 
     private $dataStorage;
 
+    /**
+     * Constructeur initialisant la base de données.
+     */
     public function __construct()
     {
         $this->dataStorage = new DataStorage('optimize');
@@ -185,15 +188,19 @@ class OptimizeSystem extends BaseOptimize
     public function minify($item)
     {
         $result = true;
+        $minifiedFilesCount = -1;
         switch ($item) {
             case 'csscompressor':
                 $fileList = $this->findFilesRecursively($this->getJeedomRootDirectory(), 'css');
-                $this->minifyCss($fileList);
+                $minifiedFilesCount = $this->minifyCss($fileList);
                 break;
             case 'jsmin':
                 $fileList = $this->findFilesRecursively($this->getJeedomRootDirectory(), 'js');
-                $this->minifyJavascript($fileList);
+                $minifiedFilesCount = $this->minifyJavascript($fileList);
                 break;
+        }
+        if ($minifiedFilesCount === -1) {
+            $result = false;
         }
         return $result;
     }
@@ -211,6 +218,8 @@ class OptimizeSystem extends BaseOptimize
         \exec(system::getCmdSudo() . ' pip install ' . $packageName, $output, $resultCode);
         if ($resultCode == 0) {
             $result = true;
+        } else {
+            log::add('Optimize', 'error', $output);
         }
         return $result;
     }
@@ -247,7 +256,7 @@ class OptimizeSystem extends BaseOptimize
      */
     private function minifyJavascript($fileList)
     {
-        $mininfiedFiles = 0;
+        $minifiedFiles = 0;
         if ($this->isJsMinInstalled()) {
             if (is_writable('/tmp/')) {
                 foreach ($fileList as $file) {
@@ -258,17 +267,22 @@ class OptimizeSystem extends BaseOptimize
                                 \exec('python -m jsmin ' . $file . ' > /tmp/optimize_tmp.js');
                                 \exec('cp /tmp/optimize_tmp.js ' . $file);
                                 $this->storeFileHash($file);
-                                ++$mininfiedFiles;
+                                ++$minifiedFiles;
                             }
+                        } else {
+                            log::add('Optimize', 'error', 'Le fichier ' . $file . ' ne peut pas être modifié.');
                         }
                     }
                 }
+            } else {
+                log::add('Optimize', 'error', 'Impossible d\'écrire dans le répertoire /tmp');
+                $minifiedFiles = -1;
             }
             if (file_exists('/tmp/optimize_tmp.js')) {
                 unlink('/tmp/optimize_tmp.js');
             }
         }
-        return $mininfiedFiles;
+        return $minifiedFiles;
     }
 
     /**

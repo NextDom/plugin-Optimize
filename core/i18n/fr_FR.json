@@ -7,7 +7,8 @@
   },
   "plugins\/Optimize\/core\/ajax\/Optimize.ajax.php": {
     "401 - Refused access": "401 - Accès refusé",
-    "No method corresponding to : ": "Aucune méthode correspondant à : "
+    "No method corresponding to : ": "Aucune méthode correspondant à : ",
+    "View channel error in logs of the plugin for more informations": "Regardez le canal erreur des logs du plugin pour plus d'informations"
   },
   "plugins\/Optimize\/desktop\/php\/Optimize.php": {
     "401 - Refused access": "401 - Accès refusé",

@@ -1,7 +1,8 @@
 {
   "plugins\/Optimize\/core\/ajax\/Optimize.ajax.php": {
     "401 - Refused access": "401 - Refused access",
-    "No method corresponding to : ": "No method corresponding to : "
+    "No method corresponding to : ": "No method corresponding to : ",
+    "View channel error in logs of the plugin for more informations": "View channel error in logs of the plugin for more informations"
   },
   "plugins\/Optimize\/plugin_info\/configuration.php": {
     "Raspberry Pi config file": "Raspberry Pi config file",

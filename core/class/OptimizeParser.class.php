@@ -19,6 +19,11 @@
 class OptimizeParser
 {
     /**
+     * @var string Message d'erreur renvoyé par certaines actions
+     */
+    private $errorMessage;
+
+    /**
      * Analyse une requête Ajax
      *
      * @param string $category Catégorie de l'optimisation à apporter
@@ -127,7 +132,7 @@ class OptimizeParser
                 $result = $optimizeSystem->install($systemId);
                 break;
             case 'minify':
-                $optimizeSystem->minify($systemId);
+                $result = $optimizeSystem->minify($systemId);
                 break;
             default:
                 $result = false;
@@ -154,5 +159,14 @@ class OptimizeParser
             $result = $optimizeRPi->optimizeL2Cache();
         }
         return $result;
+    }
+
+    /**
+     * Obtenir un potentiel message d'erreur
+     *
+     * @return string Message d'erreur
+     */
+    public function getErrorMessage() {
+        return $this->errorMessage;
     }
 }
