@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase;
 
 require_once('../../core/php/core.inc.php');
 
-class DesktopPhpOptimizeTest extends TestCase
+class ModalDisclaimerOptimizeTest extends TestCase
 {
     protected function setUp()
     {
@@ -35,7 +35,7 @@ class DesktopPhpOptimizeTest extends TestCase
         scenario::init();
         JeedomVars::$isConnected = false;
         try {
-            include(dirname(__FILE__) . '/../desktop/php/Optimize.php');
+            include(dirname(__FILE__) . '/../desktop/modal/disclaimer.Optimize.php');
             $this->fail("L'exception n'a pas été déclenchée.");
         } catch (Exception $e) {
             $this->assertEquals($e->getMessage(), '401 - Refused access');
@@ -44,26 +44,13 @@ class DesktopPhpOptimizeTest extends TestCase
 
     public function testWithUserConnected()
     {
-        config::$byKeyPluginData = array('Optimize' => array('scenario-days-limit' => 30));
-        scenario::init();
         ob_start();
-        include(dirname(__FILE__) . '/../desktop/php/Optimize.php');
+        include(dirname(__FILE__) . '/../desktop/modal/disclaimer.Optimize.php');
         $content = ob_get_clean();
         $actions = MockedActions::get();
-        $this->assertCount(5, $actions);
+        $this->assertCount(1, $actions);
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
-        $this->assertEquals('include_file', $actions[1]['action']);
-        $this->assertEquals('Optimize', $actions[1]['content']['name']);
-        $this->assertEquals('css', $actions[1]['content']['type']);
-        $this->assertEquals('include_file', $actions[2]['action']);
-        $this->assertEquals('Optimize', $actions[2]['content']['name']);
-        $this->assertEquals('js', $actions[2]['content']['type']);
-        $this->assertEquals('sendVarToJs', $actions[3]['action']);
-        $this->assertEquals('eqType', $actions[3]['content']['var']);
-        $this->assertEquals('Optimize', $actions[3]['content']['value']);
-        $this->assertEquals('include_file', $actions[4]['action']);
-        $this->assertEquals('plugin.template', $actions[4]['content']['name']);
-        $this->assertContains('<ul class="nav nav-tabs">', $content);
+        $this->assertContains('panel-body', $content);
     }
 }

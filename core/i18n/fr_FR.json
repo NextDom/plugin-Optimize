@@ -11,7 +11,9 @@
         "Raspberry Pi config file": "Fichier de configuration du Raspberry Pi",
         "Automatic minification": "Minification automatique",
         "A first files minification must be executed manually before.": "Une première minification des fichiers doit être exécutée manuellement avant d'activer cette option.",
-        "Inactivity limit of the scenario": "Limite d'inactivité du scénario"
+        "Inactivity limit of the scenario": "Limite d'inactivité du scénario",
+        "Informations": "Informations",
+        "Plugin \/ Disclaimer": "Plugin \/ Disclaimer"
     },
     "plugins\/Optimize\/desktop\/php\/Optimize.php": {
         "401 - Refused access": "401 - Accès refusé",
@@ -62,5 +64,17 @@
         "Do you want to minify all files of selected type ?": "Voulez-vous minifier tous les fichiers du type sélectionné ?",
         "Configuration": "Configuration",
         "Do you want to limit GPU memory?": "Do you want to limit GPU memory?"
+    },
+    "plugins\/Optimize\/desktop\/modal\/disclaimer.Optimize.php": {
+        "Si vous avez fait l'acquisition d'un Service Pack, la société Jeedom SAS pourra vous refuser le support suite à l'utilisation de ce plugin.": "Si vous avez fait l'acquisition d'un Service Pack, la société Jeedom SAS pourra vous refuser le support suite à l'utilisation de ce plugin.",
+        "Présentation": "Présentation",
+        "<b>Optimize<\/b> vous permettra d'optimiser l'interface et la réactivité de votre installation.": "<b>Optimize<\/b> vous permettra d'optimiser l'interface et la réactivité de votre installation.",
+        "Désactiver des fonctionnalités inutilisées,": "Désactiver des fonctionnalités inutilisées,",
+        "Minifier les fichiers CSS et Javascript,": "Minifier les fichiers CSS et Javascript,",
+        "Améliorer les paramètres système du Raspberry Pi,": "Améliorer les paramètres système du Raspberry Pi,",
+        "Supprimer les objets inutiles.": "Supprimer les objets inutiles.",
+        "Il est conseillé de réaliser une sauvegarde de votre installation avant tout.": "Il est conseillé de réaliser une sauvegarde de votre installation avant tout.",
+        "Faire une sauvegarde": "Faire une sauvegarde",
+        "Supprimer ce plugin": "Supprimer ce plugin"
     }
 }

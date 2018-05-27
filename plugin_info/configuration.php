@@ -28,9 +28,21 @@ if (!isConnect()) {
     // @codeCoverageIgnoreEnd
 }
 
+$showDisclaimer = config::byKey('show-disclaimer', 'Optimize');
+sendVarToJs('showDisclaimer', $showDisclaimer);
+if ($showDisclaimer) {
+    config::save('show-disclaimer', false, 'Optimize');
+}
+
 $rpi = new OptimizeRPi();
 ?>
 <form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{Informations}} : </label>
+        <div class="col-sm-10">
+            <button id="show-disclaimer-modal" class="btn btn-danger"><i class="fa fa-info-circle"></i> {{Plugin / Disclaimer}}</button>
+        </div>
+    </div>
 <?php if ($rpi->isRaspberryPi()) : ?>
     <div class="form-group">
         <label for="raspberry-config-file" class="col-sm-2 control-label">{{Raspberry Pi config file}}</label>
@@ -57,3 +69,5 @@ $rpi = new OptimizeRPi();
         </div>
     </div>
 </form>
+<?php
+    include_file('desktop', 'OptimizeConfiguration', 'js', 'Optimize');

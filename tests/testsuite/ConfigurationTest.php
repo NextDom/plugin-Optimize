@@ -51,9 +51,14 @@ class ConfigurationTest extends TestCase
         include(dirname(__FILE__) . '/../plugin_info/configuration.php');
         $content = ob_get_clean();
         $actions = MockedActions::get();
-        $this->assertCount(1, $actions);
+        $this->assertCount(3, $actions);
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
+        $this->assertEquals('sendVarToJs', $actions[1]['action']);
+        $this->assertEquals('showDisclaimer', $actions[1]['content']['var']);
+        $this->assertEquals(false, $actions[1]['content']['value']);
+        $this->assertEquals('include_file', $actions[2]['action']);
+        $this->assertEquals('OptimizeConfiguration', $actions[2]['content']['name']);
         $this->assertContains('<form', $content);
         $this->assertContains('"minify"', $content);
         $this->assertNotContains('raspberry-config-file', $content);
@@ -66,11 +71,38 @@ class ConfigurationTest extends TestCase
         include(dirname(__FILE__) . '/../plugin_info/configuration.php');
         $content = ob_get_clean();
         $actions = MockedActions::get();
-        $this->assertCount(1, $actions);
+        $this->assertCount(3, $actions);
         $this->assertEquals('include_file', $actions[0]['action']);
         $this->assertEquals('authentification', $actions[0]['content']['name']);
+        $this->assertEquals('sendVarToJs', $actions[1]['action']);
+        $this->assertEquals('showDisclaimer', $actions[1]['content']['var']);
+        $this->assertEquals(false, $actions[1]['content']['value']);
+        $this->assertEquals('include_file', $actions[2]['action']);
+        $this->assertEquals('OptimizeConfiguration', $actions[2]['content']['name']);
         $this->assertContains('<form', $content);
         $this->assertContains('"minify"', $content);
         $this->assertContains('raspberry-config-file', $content);
+    }
+
+    public function testShowDisclaimer() {
+        jeedom::$hardwareName = 'DIY';
+        config::$byKeyPluginData['Optimize']['show-disclaimer'] = true;
+        ob_start();
+        include(dirname(__FILE__) . '/../plugin_info/configuration.php');
+        $content = ob_get_clean();
+        $actions = MockedActions::get();
+        $this->assertCount(4, $actions);
+        $this->assertEquals('include_file', $actions[0]['action']);
+        $this->assertEquals('authentification', $actions[0]['content']['name']);
+        $this->assertEquals('sendVarToJs', $actions[1]['action']);
+        $this->assertEquals('showDisclaimer', $actions[1]['content']['var']);
+        $this->assertEquals(true, $actions[1]['content']['value']);
+        $this->assertEquals('save', $actions[2]['action']);
+        $this->assertEquals('show-disclaimer', $actions[2]['content']['key']);
+        $this->assertEquals('include_file', $actions[3]['action']);
+        $this->assertEquals('OptimizeConfiguration', $actions[3]['content']['name']);
+        $this->assertContains('<form', $content);
+        $this->assertContains('"minify"', $content);
+        $this->assertNotContains('raspberry-config-file', $content);
     }
 }
