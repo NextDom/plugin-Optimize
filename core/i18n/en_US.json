@@ -1,4 +1,7 @@
 {
+  "plugins\/Optimize\/core\/class\/OptimizeParser.class.php": {
+    " fichier(s) minifié(s)": " minified file(s)"
+  },
   "plugins\/Optimize\/core\/ajax\/Optimize.ajax.php": {
     "401 - Refused access": "401 - Refused access",
     "No method corresponding to : ": "No method corresponding to : ",

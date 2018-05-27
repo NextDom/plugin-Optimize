@@ -133,6 +133,7 @@ class OptimizeParser
                 break;
             case 'minify':
                 $result = $optimizeSystem->minify($systemId);
+                message::add('Optimize', $result.__(' fichier(s) minifié(s)', __FILE__));
                 break;
             default:
                 $result = false;

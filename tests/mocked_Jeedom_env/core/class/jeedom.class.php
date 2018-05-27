@@ -36,4 +36,8 @@ class jeedom
     {
         return self::$isCapableAnswer;
     }
+
+    public static function getTmpFolder() {
+        return '/tmp';
+    }
 }

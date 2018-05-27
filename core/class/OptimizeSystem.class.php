@@ -257,15 +257,16 @@ class OptimizeSystem extends BaseOptimize
     private function minifyJavascript($fileList)
     {
         $minifiedFiles = 0;
+        $tmpFolder = jeedom::getTmpFolder();
         if ($this->isJsMinInstalled()) {
-            if (is_writable('/tmp/')) {
+            if (is_writable($tmpFolder)) {
                 foreach ($fileList as $file) {
                     if (!strstr($file, 'node_modules')) {
                         $fileHash = $this->getHashFile($file);
                         if (is_writable($file)) {
                             if ($this->isFileNotBeMinify($file, $fileHash)) {
-                                \exec('python -m jsmin ' . $file . ' > /tmp/optimize_tmp.js');
-                                \exec('cp /tmp/optimize_tmp.js ' . $file);
+                                \exec('python -m jsmin ' . $file . ' > '.$tmpFolder.'/optimize_tmp.js');
+                                \exec('cp '.$tmpFolder.'/optimize_tmp.js ' . $file);
                                 $this->storeFileHash($file);
                                 ++$minifiedFiles;
                             }
@@ -275,11 +276,11 @@ class OptimizeSystem extends BaseOptimize
                     }
                 }
             } else {
-                log::add('Optimize', 'error', 'Impossible d\'écrire dans le répertoire /tmp');
+                log::add('Optimize', 'error', 'Impossible d\'écrire dans le répertoire '.$tmpFolder);
                 $minifiedFiles = -1;
             }
-            if (file_exists('/tmp/optimize_tmp.js')) {
-                unlink('/tmp/optimize_tmp.js');
+            if (file_exists($tmpFolder.'/optimize_tmp.js')) {
+                unlink($tmpFolder.'/optimize_tmp.js');
             }
         }
         return $minifiedFiles;
