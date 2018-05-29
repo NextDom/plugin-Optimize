@@ -91,7 +91,7 @@ class OptimizeParser
     private function optimizePlugin($pluginId, $type)
     {
         $result = true;
-        require_once(dirname(__FILE__) . '/OptimizePlugins.class.php');
+        require_once(__DIR__ . '/OptimizePlugins.class.php');
         $optimizePlugins = new OptimizePlugins();
         switch ($type) {
             case 'log':
@@ -121,7 +121,7 @@ class OptimizeParser
     private function optimizeSystem($systemId, $type)
     {
         $result = true;
-        require_once(dirname(__FILE__) . '/OptimizeSystem.class.php');
+        require_once(__DIR__ . '/OptimizeSystem.class.php');
 
         $optimizeSystem = new OptimizeSystem();
         switch ($type) {
@@ -151,7 +151,7 @@ class OptimizeParser
     private function optimizeRaspberryPi($type)
     {
         $result = false;
-        require_once(dirname(__FILE__) . '/OptimizeRPi.class.php');
+        require_once(__DIR__ . '/OptimizeRPi.class.php');
 
         $optimizeRPi = new OptimizeRPi();
         if ($type == 'gpu_mem') {
