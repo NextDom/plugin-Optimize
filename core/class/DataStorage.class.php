@@ -16,8 +16,8 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once(dirname(__FILE__) . '/../../../../core/config/common.config.php');
-require_once(dirname(__FILE__) . '/../../../../core/class/DB.class.php');
+require_once(__DIR__ . '/../../../../core/config/common.config.php');
+require_once(__DIR__ . '/../../../../core/class/DB.class.php');
 
 class DataStorage
 {
@@ -57,7 +57,8 @@ class DataStorage
     public function createDataTable()
     {
         if (!$this->isDataTableExists()) {
-            $statement = DB::getConnection()->prepare("CREATE TABLE `" . $this->dataTableName . "` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `code` VARCHAR(256) NOT NULL, `data` TEXT NULL)");
+            $statement = DB::getConnection()
+                ->prepare("CREATE TABLE `" . $this->dataTableName . "` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY, `code` VARCHAR(256) NOT NULL, `data` TEXT NULL)");
             $statement->execute();
         }
     }
@@ -77,7 +78,8 @@ class DataStorage
      */
     public function deleteData($code)
     {
-        $statement = DB::getConnection()->prepare("DELETE FROM `" . $this->dataTableName . "` WHERE `code` = ?");
+        $statement = DB::getConnection()
+            ->prepare("DELETE FROM `" . $this->dataTableName . "` WHERE `code` = ?");
         $statement->execute(array($code));
     }
 
@@ -124,7 +126,8 @@ class DataStorage
      */
     public function addRawData($code, $data)
     {
-        $statement = DB::getConnection()->prepare("INSERT INTO `" . $this->dataTableName . "` (`code`, `data`) VALUES (?, ?)");
+        $statement = DB::getConnection()
+            ->prepare("INSERT INTO `" . $this->dataTableName . "` (`code`, `data`) VALUES (?, ?)");
         $statement->execute(array($code, $data));
     }
 
@@ -136,7 +139,8 @@ class DataStorage
      */
     public function updateRawData($code, $data)
     {
-        $statement = DB::getConnection()->prepare("UPDATE `" . $this->dataTableName . "` SET `data` = ? WHERE `code` = ?");
+        $statement = DB::getConnection()
+            ->prepare("UPDATE `" . $this->dataTableName . "` SET `data` = ? WHERE `code` = ?");
         $statement->execute(array($data, $code));
 
     }
