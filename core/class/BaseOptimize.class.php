@@ -74,6 +74,6 @@ class BaseOptimize
      */
     public function getJeedomRootDirectory()
     {
-        return realpath(dirname(__FILE__) . '/../../../../');
+        return realpath(__DIR__ . '/../../../../');
     }
 }
