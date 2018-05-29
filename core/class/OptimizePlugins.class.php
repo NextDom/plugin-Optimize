@@ -134,7 +134,7 @@ class OptimizePlugins extends BaseOptimize
      */
     private function getPluginsDirectory()
     {
-        return \realpath(dirname(__FILE__) . '/../../../');
+        return \realpath(__DIR__ . '/../../../');
     }
 
     /**
